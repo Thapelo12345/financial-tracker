@@ -17,11 +17,11 @@ export default function MiniPots() {
       <div className="h-40 flex flex-row">
 
         <div className="flex flex-row bg-black/5 w-1/2 h-full rounded-lg ">
-          <DocumentCurrencyDollarIcon className=" text-green-400 w-full h-full m-2" />
+          <DocumentCurrencyDollarIcon className=" text-green-400 w-30 h-30 m-2" />
 
           <div className="flex flex-col w-full justify-center pb-5">
             <h4 className="text-xs font-medium text-black text-black/50 m-2">Total Saving</h4>
-            <label className="text-xs font-extrabold text-black">R12 000</label>
+            <label className="text-xs md:text-md font-extrabold text-black">R12 000</label>
           </div>
 
         </div>

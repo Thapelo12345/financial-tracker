@@ -1,6 +1,7 @@
 "use client";
 
 import { TrashIcon } from "@heroicons/react/20/solid";
+import { useGSAP } from '@gsap/react'
 import BillLabel from "../ui/billsUi/billLabel";
 
 type Props = {
@@ -28,6 +29,8 @@ export default function BillCard({
   ReminderDaysBefore,
 }: Props) {
   return (
+
+
     <div className="bg-white shadow-2xl flex flex-col m-2 w-full sm:w-80 lg:w-[34%] p-1 rounded-lg">
       {/* name and amount */}
       <div className="bg-black/5 rounded-sm flex flex-row justify-between w-[95%] overflow-y-auto p-2 m-2 shadow-md">

@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className='relative flex flex-col md:flex-row bg-white w-screen'
+      <body className='relative flex flex-col md:flex-row bg-white w-screen overflow-y-hidden'
       >
     <SelectDashBoard />
         {children}
@@ -26,3 +26,4 @@ export default function RootLayout({
     </html>
   );
 }
+ 
