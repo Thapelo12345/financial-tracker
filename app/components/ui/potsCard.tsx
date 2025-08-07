@@ -2,19 +2,34 @@
 
 import { PencilIcon } from '@heroicons/react/20/solid';
 import { motion } from 'framer-motion'
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
 
 type Props = {
   title: string;
   amount: string;
 };
 
-export default function BudgetCard({ title, amount }: Props) {
+export default function PotsCard({ title, amount }: Props) {
+
+     useGSAP(() =>{
+      gsap.fromTo(".potsCard",{
+        scale: 0.4,
+        rotateY: 90,
+      },
+      {
+        scale: 1,
+        rotateY: 0,
+        duration: 0.4,
+        stagger: 0.4,
+      })
+    })
+
   return (
-    <motion.div className="flex flex-col item-center w-[30%] sm:w-40 h-[15%] bg-white m-2 p-2  rounded-md 
-    "
+
+    <motion.div className="potsCard flex flex-col item-center w-[30%] sm:w-40 h-[15%] bg-white m-2 p-2  rounded-md"
     style={{
       backgroundImage: 'linear-gradient(0deg, black, rgba(0, 0, 0, 0.2))'
-      // backgroundColor: 'white'
     }}
     whileHover ={{
       boxShadow: '1px 3px 30px blue',

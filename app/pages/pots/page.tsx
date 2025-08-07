@@ -1,6 +1,6 @@
 import PageHeader from '../../components/ui/pageHeader';
 import BalanceContainer from '../../components/balanceContainer'
-import BudgetCard from '../../components/ui/budgetCard'
+import PotsCard from '../../components/ui/potsCard'
 
 export default function Pots() {
   return (
@@ -13,10 +13,12 @@ export default function Pots() {
       <BalanceContainer title='Pots Value' amount={368.45}/>
       </div>
 
-      <div className='flex flex-row flex-wrap justify-start w-full'>
-<BudgetCard  title='Gift cards' amount='500'/>
-<BudgetCard  title='Savings' amount='12 000'/>
-<BudgetCard  title='Voucher' amount='300'/>
+      <div className='flex flex-row flex-wrap justify-start w-full'
+      style={{ perspective: '1000px' }}
+      >
+<PotsCard  title='Gift cards' amount='500'/>
+<PotsCard  title='Savings' amount='12 000'/>
+<PotsCard  title='Voucher' amount='300'/>
 
 
       </div>
