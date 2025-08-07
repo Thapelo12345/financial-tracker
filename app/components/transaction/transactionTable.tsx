@@ -94,7 +94,7 @@ const transactions: {
 
 export default function TransactionTable() {
     return(
-        <div className="w-[99%] h-[80%] overflow-y-auto p-0 md:p-2 pt-20">
+        <div className="w-[99%] h-[87%] overflow-y-auto overflow-x-hidden p-0 md:p-2 pt-20">
 
             <ul className='w-full h-full'>
 {

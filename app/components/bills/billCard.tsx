@@ -2,6 +2,7 @@
 
 import { TrashIcon } from "@heroicons/react/20/solid";
 import { useGSAP } from '@gsap/react'
+import gsap from "gsap"
 import BillLabel from "../ui/billsUi/billLabel";
 
 type Props = {
@@ -28,12 +29,44 @@ export default function BillCard({
   PaymentMethod,
   ReminderDaysBefore,
 }: Props) {
+
+  useGSAP(() =>{
+    gsap.fromTo('.bill-card', {
+      scale: 0.1,
+      opacity: 0.3,
+      duration: 0.9,
+      boxShadow: 0
+      
+    },
+    {
+      scale: 1,
+      opacity: 1,
+      boxShadow: "1px 7px 10px rgba(0,0,0,0.5)",
+      stagger: 0.2
+    }
+  )
+
+  gsap.fromTo("#name-amount", {
+    boxShadow: "0px 0px 0px rgba(0, 0, 0, 0.2)",
+  },
+
+  {
+    boxShadow: "1px 5px 10px rgba(0, 0, 0, 0.2)",
+    duration: 0.1,
+    delay: 1.5,
+    ease: "bounce.out"
+  })
+
+  
+  })
+
   return (
 
 
-    <div className="bg-white shadow-2xl flex flex-col m-2 w-full sm:w-80 lg:w-[34%] p-1 rounded-lg">
+    <div 
+    className="bill-card bg-white shadow-2xl flex flex-col m-2 w-full sm:w-80 lg:w-[34%] p-1 rounded-lg">
       {/* name and amount */}
-      <div className="bg-black/5 rounded-sm flex flex-row justify-between w-[95%] overflow-y-auto p-2 m-2 shadow-md">
+      <div id="name-amount" className="bg-black/5 rounded-sm flex flex-row justify-between w-[95%] overflow-y-auto p-2 m-2 shadow-md">
         <h2 className="text-blue-600 text-lg text-start font-semibold">{Name}</h2>
         <h2 className="text-green-600 font-serif text-end">R {Amount}</h2>
       </div>

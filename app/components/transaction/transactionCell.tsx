@@ -3,6 +3,8 @@
 import Avatar from "./avtatarGenerator";
 import { motion } from "framer-motion";
 import { TrashIcon } from "@heroicons/react/20/solid";
+import { useGSAP } from '@gsap/react'
+import gsap from "gsap"
 
 type Props = {
   Date: string;
@@ -22,9 +24,22 @@ export default function TransactionCell({
   Amount,
 }: Props) {
 
+  useGSAP(() => {
+    gsap.fromTo(".transac", {
+      x: 970
+    },
+     {
+        x: 0,
+        duration: 0.7,
+        stagger: 0.2,
+        ease: "circ.inOut"
+     })
+  })
+
   return (
+
     <motion.li 
-    className="group shadow-md flex flex-row flex-nowrap items-start m-2 w-full p-2"
+    className="transac group shadow-md flex flex-row flex-nowrap items-start m-2 w-full p-2"
     whileHover={{
       width: "98%",
       scale: 1.02,

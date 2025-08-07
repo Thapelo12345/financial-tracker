@@ -1,16 +1,34 @@
 'use client';
 
 import { motion } from 'framer-motion'
-
+import { useGSAP } from '@gsap/react'
+import gsap from 'gsap'
+ 
 type Props = {
   title: string;
   amount: number;
 };
 
 export default function BalanceContainer({ title, amount }: Props) {
+
+  useGSAP(() => {
+    gsap.fromTo(".main-header", {
+      scale: 0.1,
+      opacity: 0.2
+    },
+    {
+      scale: 1,
+      opacity: 1,
+      duration: 0.4,
+      ease: "bounce.inOut",
+      stagger: 0.2
+    }
+  )
+  })
   return (
     <motion.div 
-    className=" shadow-md transition-all duration-100 ease-in-out group flex flex-col items-center bg-white w-1/2 sm:w-1/3 md:w-1/6 m-2 p-2 md:p-4 rounded-[10px]"
+    // id='main-header'
+    className="main-header shadow-md transition-all duration-100 ease-in-out group flex flex-col items-center bg-white w-1/2 sm:w-1/3 md:w-1/6 m-2 p-2 md:p-4 rounded-[10px]"
     whileHover={{
       scale: 1,
       zIndex: 10,
