@@ -1,0 +1,21 @@
+"use client"
+import { UserCircleIcon } from "@heroicons/react/20/solid"
+import LabelInput from "./labelInput"
+
+export default function AuthForm(){
+    return(
+<form 
+className="bg-gradient-to-t from-blue-600 to-blue-300 shadow-2xl shadow-black flex flex-col items-center rounded-lg justify-center border-2 border-white w-full sm:w-1/2 p-2 m-2">
+<UserCircleIcon className="w-30 h-20 text-white" />
+
+<LabelInput InputType="text" title="Usename" />
+<LabelInput InputType="password" title="Password" />
+
+<div className="w-full flex flex-row justify-evenly">
+    <button className="text-white self-start p-2 m-2 rounded-lg">LogIn</button>
+    <button className="text-xs text-white self-end p-2 m-2 rounded-lg">register an acc</button>
+</div>
+
+</form>
+    )
+}

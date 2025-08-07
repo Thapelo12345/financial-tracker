@@ -46,15 +46,18 @@ export default function BillCard({
     }
   )
 
-  gsap.fromTo("#name-amount", {
+  gsap.fromTo(".name-amount", {
     boxShadow: "0px 0px 0px rgba(0, 0, 0, 0.2)",
+    backgroundColor: "white"
   },
 
   {
     boxShadow: "1px 5px 10px rgba(0, 0, 0, 0.2)",
-    duration: 0.1,
-    delay: 1.5,
-    ease: "bounce.out"
+    backgroundColor: "rgba(0,0,0,0.05)",
+    duration: 0.5,
+    ease: "bounce",
+    delay: 1.2,
+    stagger: 0.2
   })
 
   
@@ -66,7 +69,7 @@ export default function BillCard({
     <div 
     className="bill-card bg-white shadow-2xl flex flex-col m-2 w-full sm:w-80 lg:w-[34%] p-1 rounded-lg">
       {/* name and amount */}
-      <div id="name-amount" className="bg-black/5 rounded-sm flex flex-row justify-between w-[95%] overflow-y-auto p-2 m-2 shadow-md">
+      <div className="name-amount bg-black/5 rounded-md flex flex-row justify-between w-[95%] overflow-y-auto p-2 m-2 shadow-md">
         <h2 className="text-blue-600 text-lg text-start font-semibold">{Name}</h2>
         <h2 className="text-green-600 font-serif text-end">R {Amount}</h2>
       </div>

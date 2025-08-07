@@ -13,7 +13,7 @@ export default function Dash(){
   
   return(
     <header 
-    className={`sticky bg-black/80 w-[16%] rounded-tr-lg rounded-br-lg items-center`}
+    className={`bg-black/80 w-[16%] rounded-tr-lg rounded-br-lg items-center`}
     >
     <DashAvatar username='Thapelo Sikhosana'/>
       <DashNav />
