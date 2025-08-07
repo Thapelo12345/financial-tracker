@@ -1,5 +1,6 @@
 import BalanceContainer from '@/app/components/balanceContainer';
 import PageHeader from '../../components/ui/pageHeader';
+import BillsContainer from '@/app/components/bills/billsContainer';
 
 export default function Bills() {
   return (
@@ -13,8 +14,8 @@ export default function Bills() {
 <BalanceContainer title='Upcoming Bills' amount={400.56} />
 </div>
 
-<div className='border w-[98%] h-[60%]'>
-  
+<div className='flex flex-row w-screen h-auto overflow-y-auto'>
+  <BillsContainer />
 </div>
 
     </main>
