@@ -4,24 +4,24 @@ import { UserCircleIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
 import LabelInput from "./labelInput";
 
-type Props = {
-  logIn: (credentials: {
-    username: string;
-    password: string;
-    email: string;
-    reEnterPassword: string;
-  }) => void;
-};
+type Prop = {
+    sendData:(data: {username:string; password:string}) => void;
+}
 
+export default function AuthForm({ sendData }:Prop) {
 
-export default function AuthForm() {
-  const [useranme, setUsername] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [reEnter, setReEnter] = useState("");
 
   return (
-    <form className="bg-gradient-to-t from-blue-600 to-blue-300 shadow-2xl shadow-black flex flex-col items-center rounded-lg justify-center border-2 border-white w-full sm:w-1/2 p-2 m-2">
+    <form
+    onSubmit={(e) => {
+        e.preventDefault();
+        sendData({ username, password });
+      }}
+    className="bg-gradient-to-t from-blue-600 to-blue-300 shadow-2xl shadow-black flex flex-col items-center rounded-lg justify-center border-2 border-white w-full sm:w-1/2 p-2 m-2">
       <UserCircleIcon className="w-30 h-20 text-white" />
 
       <LabelInput InputType="text" title="Usename" sendValue={setUsername} />

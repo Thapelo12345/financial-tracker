@@ -1,16 +1,15 @@
 import AuthForm from "@/app/components/Auth/authForm";
 
+async function handleFormSubmit(data: { username: string; password: string }) {
+"use server";
+  console.log("Data from client:", data);
+}
 
 export default function Auth() {
 
-  function authSubmit(formData: { username: string; password: string }) {
-    console.log(`Email: ${formData.username}\n password: ${formData.password}`);
-  }
-  
-
   return (
     <div className="flex items-center justify-center w-screen h-screen">
-      <AuthForm />
+      <AuthForm sendData={handleFormSubmit} />
     </div>
   );
 }
