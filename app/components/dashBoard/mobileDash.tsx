@@ -20,10 +20,12 @@ export default function MobileDash() {
 
   return (
     <header
-      className='fixed z-10 bottom-0 left-0 bg-[rgb(13,13,13)] flex flex-row justify-evenly w-full rounded-none h-auto'
+      className=
+      {`fixed z-10 bottom-0 left-0 bg-[rgb(13,13,13)] flex flex-row justify-evenly w-full rounded-none h-auto ${currentPage === "/" ? "hidden" : "block"}`}
     >
       <nav className="w-full flex flex-row justify-evenly items-start">
-        <MobileLinks pageUrl={"/"} toolTip={"Overview"} icon={<HomeIcon />} />
+
+        <MobileLinks pageUrl={"/pages/home"} toolTip={"Overview"} icon={<HomeIcon />} />
 
         <MobileLinks
           pageUrl={"/pages/transactions"}

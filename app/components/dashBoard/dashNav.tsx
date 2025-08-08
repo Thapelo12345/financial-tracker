@@ -11,7 +11,7 @@ export default function DashNav(){
   return(
     <nav className='flex flex-col'>
 
-<LinkBtns pageUrl="/" 
+<LinkBtns pageUrl="/pages/home" 
 linkText="Overview" 
 icon={
 <HomeIcon />
