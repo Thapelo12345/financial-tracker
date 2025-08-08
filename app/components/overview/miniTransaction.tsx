@@ -4,9 +4,13 @@ import MiniHeader from "../ui/overviewUi/minHeader"
 import MiniDetailsBtn from "../ui/overviewUi/detailsBtn";
 import MiniTable from "./miniTable";
 
-export default function MiniTransaction() {
+type Prop ={
+    animate: string
+}
+
+export default function MiniTransaction({animate}:Prop) {
     return(
-        <div>
+        <div className={animate}>
             <div className="bg-white rounded-lg">
 
                  <div className="flex flex-row justify-between">

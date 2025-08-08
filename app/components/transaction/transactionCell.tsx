@@ -32,7 +32,7 @@ export default function TransactionCell({
         x: 0,
         duration: 0.7,
         stagger: 0.2,
-        ease: "circ.inOut"
+        ease: "power4"
      })
   })
 

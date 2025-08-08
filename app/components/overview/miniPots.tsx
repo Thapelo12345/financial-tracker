@@ -5,9 +5,13 @@ import MiniDetailsBtn from "../ui/overviewUi/detailsBtn";
 import MiniPotsCard from "./miniPotCard";
 import { DocumentCurrencyDollarIcon } from "@heroicons/react/20/solid";
 
-export default function MiniPots() {
+type Prop = {
+  animate: string
+}
+
+export default function MiniPots({animate}:Prop) {
   return (
-    <div className="bg-white m-2 p-1 hover:shadow-2xl rounded-lg">
+    <div className={`bg-white m-2 p-1 hover:shadow-2xl rounded-lg ${animate}`}>
       <div className="flex flex-row justify-between">
         <MiniHeader title={"Pots"} />
         <MiniDetailsBtn />

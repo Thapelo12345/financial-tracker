@@ -14,13 +14,11 @@ export default function BalanceContainer({ title, amount }: Props) {
   useGSAP(() => {
     gsap.fromTo(".main-header", {
       scale: 0.1,
-      opacity: 0.2
     },
     {
       scale: 1,
-      opacity: 1,
       duration: 0.4,
-      ease: "bounce.inOut",
+      ease: "bounce",
       stagger: 0.2
     }
   )

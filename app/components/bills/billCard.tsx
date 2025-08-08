@@ -54,7 +54,7 @@ export default function BillCard({
   {
     boxShadow: "1px 5px 10px rgba(0, 0, 0, 0.2)",
     backgroundColor: "rgba(0,0,0,0.05)",
-    duration: 0.5,
+    duration: 2,
     ease: "bounce",
     delay: 1.2,
     stagger: 0.2
