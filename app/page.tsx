@@ -1,15 +1,11 @@
-import PageHeader from "./components/ui/pageHeader";
-import Balances from "./components/balances";
-import Widgets from "./components/overview/widgetContainer";
+import AuthForm from "@/app/components/Auth/authForm"
 
-export default function Home() {
-  return (
-    <div className="m-0 p-4 bg-white/50 w-screen h-screen overflow-y-auto">
-      <PageHeader title="Overview" />
-      <Balances />
+export default function Auth(){
+    return(
+      <div className="flex items-center justify-center w-screen h-screen">
 
-     <Widgets />
-     
-    </div>
-  );
+      <AuthForm />
+        
+      </div>
+    )
 }
