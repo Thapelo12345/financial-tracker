@@ -1,6 +1,6 @@
 import AuthForm from "@/app/components/Auth/authForm";
 
-async function handleFormSubmit(data: { username: string; password: string }) {
+async function handleFormSubmit(data: { username: string; email:string; password: string; reEnter:string }) {
 "use server";
   console.log("Data from client:", data);
 }

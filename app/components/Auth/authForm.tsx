@@ -5,7 +5,7 @@ import { useState } from "react";
 import LabelInput from "./labelInput";
 
 type Prop = {
-    sendData:(data: {username:string; password:string}) => void;
+    sendData:(data: {username: string; email:string; password: string; reEnter:string}) => void;
 }
 
 export default function AuthForm({ sendData }:Prop) {
@@ -19,7 +19,7 @@ export default function AuthForm({ sendData }:Prop) {
     <form
     onSubmit={(e) => {
         e.preventDefault();
-        sendData({ username, password });
+        sendData({ username, email, password, reEnter });
       }}
     className="bg-gradient-to-t from-blue-600 to-blue-300 shadow-2xl shadow-black flex flex-col items-center rounded-lg justify-center border-2 border-white w-full sm:w-1/2 p-2 m-2">
       <UserCircleIcon className="w-30 h-20 text-white" />
@@ -38,7 +38,9 @@ export default function AuthForm({ sendData }:Prop) {
       />
 
       <div className="w-full flex flex-row justify-evenly">
-        <button className="text-white self-start p-2 m-2 rounded-lg">
+        <button className="text-white self-start p-2 m-2 rounded-lg"
+        type="submit"
+        >
           LogIn
         </button>
         <button className="text-white text-xs self-center p-2 m-2">
