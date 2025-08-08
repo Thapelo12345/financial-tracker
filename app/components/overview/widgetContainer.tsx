@@ -34,7 +34,7 @@ export default function Widgets() {
         <MiniTransaction animate={animateWidgets} />
       </div>
 
-      <div className="flex flex-col w-full md:w-1/2 h-[60%] m-1 p-2 shadow-sm ">
+      <div className="flex flex-col w-full md:w-1/2 h-[60%] m-2 p-2 shadow-sm ">
         <MiniBudget animate={animateWidgets} />
         <MiniBills animate={animateWidgets} />
       </div>

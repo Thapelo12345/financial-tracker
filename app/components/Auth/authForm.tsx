@@ -13,6 +13,7 @@ className="bg-gradient-to-t from-blue-600 to-blue-300 shadow-2xl shadow-black fl
 
 <div className="w-full flex flex-row justify-evenly">
     <button className="text-white self-start p-2 m-2 rounded-lg">LogIn</button>
+    <button className="text-white text-xs self-center p-2 m-2">Forgot password</button>
     <button className="text-xs text-white self-end p-2 m-2 rounded-lg">register an acc</button>
 </div>
 
