@@ -1,5 +1,6 @@
 import PageHeader from '../../components/ui/pageHeader';
 import TransactionTable from '@/app/components/transaction/transactionTable';
+import BalanceContainer from '@/app/components/balanceContainer';
 
 export default function Transactions() {
   return (
@@ -7,6 +8,10 @@ export default function Transactions() {
      style={{ backgroundColor: 'whitesmoke' }}
      >
       <PageHeader title="Transactions" />
+      <div className='flex flex-row w-full'>
+        <BalanceContainer title='Total Income' amount={389.45} />
+        <BalanceContainer title='Tota Expense' amount={39.45} />
+      </div>
  
     <TransactionTable />
 

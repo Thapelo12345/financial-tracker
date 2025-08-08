@@ -9,7 +9,7 @@ type Prop = {
 
 export default function MiniBudget({ animate }: Prop) {
   return (
-    <div className={`w-full h-[85%] ${animate}`}>
+    <div className={`w-full h-[85%] bg-white rounded-lg ${animate}`}>
       <div className="flex flex-row justify-between">
         <MiniHeader title={"Budget"} />
         <MiniDetailsBtn />
