@@ -5,11 +5,15 @@ import { useState } from "react";
 import LabelInput from "./labelInput";
 
 type Prop = {
-    sendData:(data: {username: string; email:string; password: string; reEnter:string}) => void;
-}
+  sendData: (data: {
+    username: string;
+    email: string;
+    password: string;
+    reEnter: string;
+  }) => void;
+};
 
-export default function AuthForm({ sendData }:Prop) {
-
+export default function AuthForm({ sendData }: Prop) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -17,11 +21,12 @@ export default function AuthForm({ sendData }:Prop) {
 
   return (
     <form
-    onSubmit={(e) => {
+      onSubmit={(e) => {
         e.preventDefault();
         sendData({ username, email, password, reEnter });
       }}
-    className="bg-gradient-to-t from-blue-600 to-blue-300 shadow-2xl shadow-black flex flex-col items-center rounded-lg justify-center border-2 border-white w-full sm:w-1/2 p-2 m-2">
+      className="bg-gradient-to-t from-blue-600 to-blue-300 shadow-2xl shadow-black flex flex-col items-center rounded-lg justify-center border-2 border-white w-full sm:w-1/2 p-2 m-2"
+    >
       <UserCircleIcon className="w-30 h-20 text-white" />
 
       <LabelInput InputType="text" title="Usename" sendValue={setUsername} />
@@ -38,8 +43,9 @@ export default function AuthForm({ sendData }:Prop) {
       />
 
       <div className="w-full flex flex-row justify-evenly">
-        <button className="text-white self-start p-2 m-2 rounded-lg"
-        type="submit"
+        <button
+          className="text-white self-start p-2 m-2 rounded-lg"
+          type="submit"
         >
           LogIn
         </button>
