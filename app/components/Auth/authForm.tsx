@@ -1,6 +1,6 @@
 "use client";
 
-import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signInWithRedirect } from "firebase/auth";
+import { createUserWithEmailAndPassword, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "@/lib/firebaseConfig";
 import { UserCircleIcon } from "@heroicons/react/20/solid";
 import { SiFacebook, SiGoogle } from "react-icons/si";
@@ -16,7 +16,9 @@ type Prop = {
   }) => void;
 };
 
-const provider = new GoogleAuthProvider();
+const googleProvider = new GoogleAuthProvider();
+const faceBookProvider = new FacebookAuthProvider()
+faceBookProvider.addScope("email")
 
 export default function AuthForm({ sendData }: Prop) {
 
@@ -27,15 +29,25 @@ export default function AuthForm({ sendData }: Prop) {
   const [reEnter, setReEnter] = useState("");
 
   // google login
-async function handleGoogle(){
-
+async function handleGoogleRegister(){
   try {
-    const result = await signInWithRedirect(auth, provider)
+    const result = await signInWithPopup(auth, googleProvider)
     alert("login successful!.")
   } catch (error) {
    alert(error)
   }
-}//end of google handle
+}
+
+//facebook log in
+async function handleFacebookRegister(){
+  try{
+      await signInWithPopup(auth, faceBookProvider)
+      alert("successfuly signed in!..")
+  }
+  catch(error){
+    alert(error)
+  }
+}
 
   async function handleCreateAccount(){
     try{
@@ -85,14 +97,18 @@ async function handleGoogle(){
 }
       </label>
       <div className="w-full flex flex-row items-center justify-center">
-        <button className="text-lg rounded-lg text-white hover:border-2 hover:border-white m-2 p-2">
+        <button 
+        className="text-lg rounded-lg text-white hover:border-2 hover:border-white m-2 p-2"
+        type="button"
+        onClick={handleFacebookRegister}
+        >
           <SiFacebook className="w-7 h-7" color="#0866FF" />
         </button>
 
         <button 
         className="text-lg rounded-lg text-white hover:border-2 hover:border-white m-2 p-2"
         type="button"
-        onClick={handleGoogle}
+        onClick={handleGoogleRegister}
         >
           <SiGoogle className="w-7 h-7" color="4285F4" />
         </button>
