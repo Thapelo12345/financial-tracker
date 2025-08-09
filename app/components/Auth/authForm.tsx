@@ -53,7 +53,12 @@ export default function AuthForm({ sendData }: Prop) {
       {/* socila media log in */}
 
       <label className="text-white text-xs m-2">
-        Log In with your social media account
+{
+  formState === 'logIn'?
+    "Log In with your social media account" :
+    "Create account with social media "
+  
+}
       </label>
       <div className="w-full flex flex-row items-center justify-center">
         <button className="text-lg rounded-lg text-white hover:border-2 hover:border-white m-2 p-2">
