@@ -1,5 +1,7 @@
 "use client";
 
+import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signInWithRedirect } from "firebase/auth";
+import { auth } from "@/lib/firebaseConfig";
 import { UserCircleIcon } from "@heroicons/react/20/solid";
 import { SiFacebook, SiGoogle } from "react-icons/si";
 import { useState } from "react";
@@ -14,19 +16,41 @@ type Prop = {
   }) => void;
 };
 
+const provider = new GoogleAuthProvider();
+
 export default function AuthForm({ sendData }: Prop) {
+
   const [formState, setForm] = useState("logIn");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [reEnter, setReEnter] = useState("");
 
+  // google login
+async function handleGoogle(){
+
+  try {
+    const result = await signInWithRedirect(auth, provider)
+    alert("login successful!.")
+  } catch (error) {
+   alert(error)
+  }
+}//end of google handle
+
+  async function handleCreateAccount(){
+    try{
+      await createUserWithEmailAndPassword(auth, email, password)
+      alert("account created successfully!.")
+    }
+    catch(error){
+      alert(error)
+      console.log(error)
+    }
+  }
+
   return (
     <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        sendData({ username, email, password, reEnter });
-      }}
+      onSubmit={handleCreateAccount}
       className="bg-gradient-to-t from-black to-blue-300 shadow-2xl shadow-black flex flex-col items-center rounded-lg justify-center border-2 border-white w-full sm:w-1/2 p-2 m-2"
     >
       <UserCircleIcon className="w-30 h-20 text-white" />
@@ -65,7 +89,11 @@ export default function AuthForm({ sendData }: Prop) {
           <SiFacebook className="w-7 h-7" color="#0866FF" />
         </button>
 
-        <button className="text-lg rounded-lg text-white hover:border-2 hover:border-white m-2 p-2">
+        <button 
+        className="text-lg rounded-lg text-white hover:border-2 hover:border-white m-2 p-2"
+        type="button"
+        onClick={handleGoogle}
+        >
           <SiGoogle className="w-7 h-7" color="4285F4" />
         </button>
       </div>
