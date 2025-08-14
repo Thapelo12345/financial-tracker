@@ -3,11 +3,15 @@ import LabelInput from "./ui/form/labelInput";
 import { useState } from "react";
 import { SiGoogle } from "react-icons/si";
 import { useGSAP } from "@gsap/react";
+import { handleGooglAthentication } from "./auth/sendingToFireBase";
 import gsap from "gsap";
+import { useNavigate } from "react-router-dom";
 
 export default function AuthenticationForm(){
 
-    const [formState, setForm] = useState("logIn");
+  const navigate = useNavigate()
+
+  const [formState, setForm] = useState("logIn");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -29,6 +33,9 @@ export default function AuthenticationForm(){
     );
   });
 
+   const handleGoogleAuthClick = async () => {
+    await handleGooglAthentication(navigate);
+  };
     return(
         <form 
         id="formAnimation"
@@ -79,7 +86,7 @@ export default function AuthenticationForm(){
         <button
           className="text-lg rounded-lg text-white hover:border-2 hover:border-white m-2 p-2"
           type="button"
-        //   onClick={handleGoogleRegister}
+          onClick={handleGoogleAuthClick}
         >
           <SiGoogle className="w-7 h-7" color="4285F4" />
         </button>

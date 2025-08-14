@@ -1,4 +1,5 @@
-import Dash from "../components/dash/dash";
+// import Dash from "../components/dash/dash";
+import SelectDashBoard from "../components/dash/selectDashBoard";
 import TransactionTable from "./transactions";
 import Budget from "./budget";
 import Pots from "./pots";
@@ -9,7 +10,8 @@ import { Routes, Route } from "react-router-dom";
 export default function Home() {
   return (
     <div className="flex flex-row bg-red-100/5 w-full h-full overflow-hidden m-0 p-0">
-      <Dash />
+      {/* <Dash /> */}
+      <SelectDashBoard />
       
       <Routes>
         <Route path="overview" element={<Overview />} />
