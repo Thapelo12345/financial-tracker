@@ -25,13 +25,14 @@ export default function Widgets() {
     );
   });
   return (
-    <div className="flex flex-col justify-evenly md:flex-row w-full p-2">
-      <div className="w-full md:w-1/2 h-90 md:h-10 m-2 mb-4 p-4">
+    <div className="flex flex-col justify-evenly md:justify-evenly md:flex-row w-full p-2">
+
+      <div className="w-full md:w-1/2 md:h-10 m-2 mb-4 p-4">
         <MiniPots animate={animateWidgets} />
         <MiniTransaction animate={animateWidgets} />
       </div>
 
-      <div className="flex flex-col w-full md:w-1/2 h-[60%] m-2 p-4">
+      <div className="flex flex-col w-full md:w-1/2  m-2 p-4">
         <MiniBudget animate={animateWidgets} />
         <MiniBills animate={animateWidgets} />
       </div>

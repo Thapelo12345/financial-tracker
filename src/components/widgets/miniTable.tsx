@@ -93,7 +93,7 @@ const transactions: {
 
 export default function MiniTable() {
     return(
-        <div className="w-full h-full overflow-hidden">
+        <div className="w-full h-full overflow-x-hidden overflow-y-auto">
 
             <ul className='w-full h-full'>
 {
