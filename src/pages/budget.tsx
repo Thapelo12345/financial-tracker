@@ -6,12 +6,18 @@ import Barchart from "../components/budget/barchat";
 import { PlusIcon } from "@heroicons/react/20/solid";
 import { useState, useEffect } from "react";
 
+interface budgetItem {
+  description:string,
+  transactionAmount:number,
+  color:string
+}
 
 export default function Budget() {
 
   const [budgetAmount, setBugdetAmount] = useState(0);
   const [budgetExpense, setBudgetExpense] = useState(0);
   const [budgetSurplus, setBudgetSurplus] = useState(0);
+  const [budgetExpenses, setExpense] = useState<budgetItem[]>([])
 
   useEffect(()=>{
     const data = localStorage.getItem("currentUser")
@@ -22,6 +28,7 @@ export default function Budget() {
       setBugdetAmount(user.budgetAmount)
       setBudgetExpense(user.budgetExpense)
       setBudgetSurplus(user.budgetSurplus)
+      setExpense(user.graphDetails)
     }
   },[])
 
@@ -38,14 +45,14 @@ export default function Budget() {
         <BalanceContainer title="Budget Surplus" amount={budgetSurplus} />
       </div>
 
-      <GraphDetails />
+      <GraphDetails budgetItem={budgetExpenses} />
       <button className="m-2">
         <PlusIcon className="w-10 h-10 text-green-300" />
       </button>
 
       <div className="flex flex-col-reverse sm:flex-row w-full h-full md:h-[50%] p-1">
-        <Barchart />
-        <Piechart />
+        <Barchart budgetItem={budgetExpenses}/>
+        <Piechart budgetItem={budgetExpenses} amount={budgetAmount}/>
       </div>
     </main>
   );

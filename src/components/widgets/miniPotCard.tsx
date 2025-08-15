@@ -2,7 +2,7 @@
 
 type Props = {
   title: string;
-  amount: string;
+  amount: number;
   color: string;
 };
 

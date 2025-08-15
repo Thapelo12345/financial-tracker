@@ -11,6 +11,7 @@ interface Transaction {
 }
 
 export default function TransactionTable() {
+  
   const [transactions, setTransactions] = useState<Transaction[]>([]);
 
   useEffect(() => {
