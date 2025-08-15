@@ -23,7 +23,7 @@ export default function Bills() {
 
   return (
     <main className="m-2 p-4 w-screen h-screen overflow-y-auto"
-     style={{ backgroundColor: 'whitesmoke' }}
+    //  style={{ backgroundColor: 'whitesmoke' }}
     >
       <PageHeader title="Recurring Bills" />
 <div className='flex flex-row flex-wrap justify-start'>
