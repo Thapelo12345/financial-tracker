@@ -6,6 +6,7 @@ import selectdailogReducer from './selectDialog'
 
 const store = configureStore({
   reducer: {
+   
     loggedIn: loggedInReducer,
     openDialog: openDialogReducer,
     dialogMessage: dialogMessageReducer,

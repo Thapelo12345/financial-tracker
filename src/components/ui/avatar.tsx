@@ -1,4 +1,3 @@
-
 const colors: string[] = [
   "blue",
   "cyan",
@@ -27,6 +26,7 @@ const alphabet: string[] = Array.from({ length: 26 }, (_, i) =>
 
 type Props = {
   name: string;
+  avatar: string;
 };
 
 function getInitials(name: string): string {
@@ -38,14 +38,31 @@ function getInitials(name: string): string {
 }
 
 
-export default function Avatar({ name }: Props){
+
+export default function Avatar({ name,  avatar }: Props){
+
     return(
         <div
-        className="shadow-lg rounded-full w-10 h-10 flex items-center justify-center border-4 border-white m-2"
+        className={`shadow-lg rounded-full 
+          ${avatar === "" ? "w-10 h-10 border-4 border-white" : "w-15 h-15 border-0 overflow-hidden"}  
+          flex items-center justify-center m-2`}
         style={{ backgroundColor: colors[alphabet.indexOf(name[0].toUpperCase()) % colors.length] }}
         >
-        <h1 className="text-md text-white font-bold">{getInitials(name)}</h1>
 
+        {
+          avatar === "" &&
+          <h1 className="text-md text-white font-bold">{getInitials(name)}</h1>
+        }
+
+        {
+          avatar !== "" &&
+          <img
+          className="w-full h-full cover"
+          src={avatar}
+          alt="User image"
+          >
+          </img>
+        }
         </div>
     )
 }

@@ -20,7 +20,7 @@ export default function MiniCell({
 }: Props) {
   return (
     <motion.li className="w-[97%] group border-b-2 border-black/5 flex flex-row flex-nowrap items-start m-2 pr-2">
-      <Avatar name={Name} />
+      <Avatar name={Name} avatar=""/>
 
       <div className="flex flex-col w-full h-full">
         <div className="flex flex-row justify-between">

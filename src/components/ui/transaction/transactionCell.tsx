@@ -52,7 +52,7 @@ export default function TransactionCell({
       duration: 0.6
     }}
     >
-      <Avatar name={Name} />
+      <Avatar name={Name} avatar="" />
 
       <div className="flex flex-col w-full h-full">
         <div className="flex flex-row justify-between">

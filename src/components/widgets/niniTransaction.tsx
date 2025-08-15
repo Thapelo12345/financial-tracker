@@ -12,7 +12,7 @@ export default function MiniTransaction({ animate }: Prop) {
       <div className="bg-white rounded-lg">
         <div className="flex flex-row justify-between">
           <MiniHeader title={"Transaction"} />
-          <MiniDetailsBtn />
+          <MiniDetailsBtn pageUrl="/home/transactions"/>
         </div>
 
         <div className="w-full h-80 p-2">
