@@ -18,10 +18,21 @@ interface user {
   budgetAmount: number;
   income: number;
   expense: number;
+  transactionTotal: number,
+  transactionExpense: number,
+  budgetExpense:number;
+  budgetSurplus:number;
   budgetExpenses: [];
+  giftCard: number;
+  savings:number;
+  vouchers:number;
+  potsValue:number;
   pots: [];
   graphDetails: [];
   transactions: [];
+  paidBills: number;
+  billsDue: number;
+  upcomingBills: number;
   recurringBills: [];
 }
 
@@ -51,10 +62,21 @@ export async function handleGooglAthentication(navigate: NavigateFunction) {
         budgetAmount: 0,
         income: 0,
         expense: 0,
+        transactionTotal: 0,
+        transactionExpense: 0,
+        budgetExpense: 0,
+        budgetSurplus: 0,
         budgetExpenses: [],
+        giftCard:  0,
+        savings: 0,
+        vouchers: 0,
+        potsValue: 0,
         pots: [],
         graphDetails: [],
         transactions: [],
+        paidBills: 0,
+        billsDue: 0,
+        upcomingBills: 0,
         recurringBills: [],
       };
 

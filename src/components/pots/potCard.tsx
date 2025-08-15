@@ -7,7 +7,7 @@ import gsap from "gsap";
 
 type Props = {
   title: string;
-  amount: string;
+  amount: number;
 };
 
 export default function PotsCard({ title, amount }: Props) {

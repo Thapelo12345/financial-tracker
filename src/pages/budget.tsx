@@ -4,10 +4,27 @@ import GraphDetails from "../components/budget/graphDetails";
 import Piechart from "../components/budget/piechat";
 import Barchart from "../components/budget/barchat";
 import { PlusIcon } from "@heroicons/react/20/solid";
+import { useState, useEffect } from "react";
 
-// let budgetAmount: number = 0.0;
 
 export default function Budget() {
+
+  const [budgetAmount, setBugdetAmount] = useState(0);
+  const [budgetExpense, setBudgetExpense] = useState(0);
+  const [budgetSurplus, setBudgetSurplus] = useState(0);
+
+  useEffect(()=>{
+    const data = localStorage.getItem("currentUser")
+
+    if(data){
+      const user = JSON.parse(data)
+
+      setBugdetAmount(user.budgetAmount)
+      setBudgetExpense(user.budgetExpense)
+      setBudgetSurplus(user.budgetSurplus)
+    }
+  },[])
+
   return (
     <main
       className="m-2 p-4 w-screen h-screen overflow-y-auto"
@@ -16,9 +33,9 @@ export default function Budget() {
       <PageHeader title="Budget" />
 
       <div className="flex flex-col md:flex-row w-full justify-evenly p-2">
-        <BalanceContainer title="Budget Amount" amount={36.45} />
-        <BalanceContainer title="Budget Expense" amount={11.23} />
-        <BalanceContainer title="Budget Surplus" amount={5.13} />
+        <BalanceContainer title="Budget Amount" amount={budgetAmount} />
+        <BalanceContainer title="Budget Expense" amount={budgetExpense} />
+        <BalanceContainer title="Budget Surplus" amount={budgetSurplus} />
       </div>
 
       <GraphDetails />
