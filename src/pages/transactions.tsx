@@ -1,9 +1,14 @@
 import PageHeader from "../components/ui/pageHeader";
 import TransactionTable from "../components/transactionTable";
 import BalanceContainer from "../components/ui/balanceContainer";
+import { useDispatch } from "react-redux";
+import { onOffSubmit } from "../state management/openSubmition";
+import { settingSelected } from "../state management/selectSubmit";
 import { useState, useEffect } from "react";
 
 export default function Transactions() {
+
+  const dispatch = useDispatch();
 
   const [totalAmount, setAmount] = useState(0);
   const [totalExpense, setExpense] = useState(0)
@@ -31,6 +36,10 @@ export default function Transactions() {
         <BalanceContainer title="Tota Expense" amount={totalExpense} />
         <button
         className="w-fit text-xs m-2 p-2"
+        onClick={()=>{
+          dispatch(settingSelected("transaction"))
+          dispatch(onOffSubmit())
+        }}
         >Add transaction</button>
       </div>
 

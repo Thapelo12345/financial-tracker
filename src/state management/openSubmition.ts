@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 interface openCloseSubmition {
-    submit: boolean;
+    openToSubmit: boolean;
 };
 
 const initialState: openCloseSubmition= {
-    submit: false,
+    openToSubmit: false,
 };
 
 const submitSlice = createSlice({
@@ -13,7 +13,7 @@ const submitSlice = createSlice({
     initialState,
     reducers: {
         onOffSubmit: (state) => {
-            state.submit = !state.submit
+            state.openToSubmit = !state.openToSubmit
         },
     },
 })

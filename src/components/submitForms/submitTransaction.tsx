@@ -1,4 +1,6 @@
 import LabelInput from "../ui/form/labelInput";
+import { useDispatch } from "react-redux";
+import { onOffSubmit } from "../../state management/openSubmition";
 import { useState } from "react";
 
 type Categories = string[];
@@ -19,6 +21,8 @@ const categories: Categories = [
 ];
 
 export default function TransactionSubmit() {
+
+  const dispatch = useDispatch()
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
 
@@ -82,7 +86,10 @@ export default function TransactionSubmit() {
         <div className="flex flex-row items-center justify-evenly w-full p-2">
           <button className="text-white">Submitt</button>
 
-          <button className="text-white">Back</button>
+          <button 
+          className="text-white"
+          onClick={()=> dispatch(onOffSubmit())}
+          >Back</button>
         </div>
       </form>
     </div>

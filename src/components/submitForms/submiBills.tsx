@@ -1,4 +1,6 @@
 import LabelInput from "../ui/form/labelInput"
+import { useDispatch } from "react-redux";
+import { onOffSubmit } from "../../state management/openSubmition";
 import { useState } from "react"
 
 type Bills = string[];
@@ -8,6 +10,8 @@ const bills: Bills = [
 ];
 
 export default function SubmitBills(){
+
+  const dispatch = useDispatch()
 
     const [name, setName] = useState("")
     const [amount, setAmount] = useState("")
@@ -95,7 +99,10 @@ export default function SubmitBills(){
 
       <div className="flex flex-row items-center justify-evenly w-full p-2">
         <button className="p-2 text-white">Submit</button>
-        <button className="p-2 text-white">Back</button>
+        <button 
+        className="p-2 text-white"
+        onClick={()=> dispatch(onOffSubmit())}
+        >Back</button>
 
       </div>
 

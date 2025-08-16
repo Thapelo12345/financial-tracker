@@ -1,7 +1,11 @@
 import LabelInput from "../ui/form/labelInput"
+import { useDispatch } from "react-redux"
+import { onOffSubmit } from "../../state management/openSubmition"
 import { useState } from "react"
 
 export default function SubmitBudget(){
+const dispatch = useDispatch()
+
     const [name, setName] = useState("")
     const [color, setColor] = useState("")
     const [amount, setAmount] = useState("")
@@ -32,7 +36,10 @@ export default function SubmitBudget(){
 
          <div className="flex flex-row items-center justify-evenly w-full p-2">
             <button className="text-white p-2">Submit</button>
-            <button className="text-white p-2">Back</button>
+            <button 
+            className="text-white p-2"
+            onClick={()=> dispatch(onOffSubmit())}
+            >Back</button>
          </div>
 
 </form>

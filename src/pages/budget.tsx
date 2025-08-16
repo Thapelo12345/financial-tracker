@@ -3,6 +3,9 @@ import BalanceContainer from "../components/ui/balanceContainer";
 import GraphDetails from "../components/budget/graphDetails";
 import Piechart from "../components/budget/piechat";
 import Barchart from "../components/budget/barchat";
+import { useDispatch } from "react-redux";
+import { onOffSubmit } from "../state management/openSubmition";
+import { settingSelected } from "../state management/selectSubmit";
 import { PlusIcon } from "@heroicons/react/20/solid";
 import { useState, useEffect } from "react";
 
@@ -13,6 +16,8 @@ interface budgetItem {
 }
 
 export default function Budget() {
+
+  const dispatch = useDispatch()
 
   const [budgetAmount, setBugdetAmount] = useState(0);
   const [budgetExpense, setBudgetExpense] = useState(0);
@@ -45,7 +50,13 @@ export default function Budget() {
       </div>
 
       <GraphDetails budgetItem={budgetExpenses} />
-      <button className="m-2">
+      <button
+       className="m-2"
+       onClick={()=>{
+        dispatch(settingSelected("budget"))
+        dispatch(onOffSubmit())
+       }}
+       >
         <PlusIcon className="w-10 h-10 text-green-300" />
       </button>
 
