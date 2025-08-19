@@ -61,7 +61,7 @@ export default function TransactionCell({
           </label>
           <label
             className={`${
-              Type !== "Income" ? "text-red-500" : "text-green-500"
+              Type === "Income" ? "text-green-500" : "text-red-500"
             } text-md text-end font-semibold  `}
           >
             {Type === "Income" ? "+ " : "- "}R {Amount}

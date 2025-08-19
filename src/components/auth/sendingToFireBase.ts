@@ -53,6 +53,7 @@ export async function handleGooglAthentication(navigate: NavigateFunction) {
     const snapshot = await getDocs(userExist);
 
     if (snapshot.empty) {
+      
       const newUser: user = {
         id: result.user.uid,
         avatar: result.user.photoURL || "",

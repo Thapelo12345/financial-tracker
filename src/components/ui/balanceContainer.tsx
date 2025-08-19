@@ -16,8 +16,8 @@ export default function BalanceContainer({ title, amount }: Props) {
       },
       {
         scale: 1,
-        duration: 0.4,
-        ease: "bounce",
+        duration: 0.6,
+        ease: "spring(1, 0.5, 0, 1)",
         stagger: 0.2,
       }
     );

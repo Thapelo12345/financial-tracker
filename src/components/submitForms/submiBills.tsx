@@ -1,4 +1,6 @@
 import LabelInput from "../ui/form/labelInput"
+// import LabelInputNumber from "../ui/submitionForm/labelInputNumber";
+import LabelInputText from "../ui/submitionForm/labelInputText";
 import { useDispatch } from "react-redux";
 import { onOffSubmit } from "../../state management/openSubmition";
 import { useState } from "react"
@@ -18,15 +20,17 @@ export default function SubmitBills(){
     const [date, setDate] = useState("")
     const [startDate, setStateDate] = useState("")
 
-
     return(
 <div className="absolute w-screen h-screen overflow-y-auto z-50">
     <form className="w-[70%] md:w-1/2 bg-black/50 m-auto p-2 rounded-lg">
-<LabelInput
-          InputType="text"
-          title="Name"
-          inputedValue={name}
-          sendValue={setName}
+
+
+        <LabelInputText 
+        animationClass="animate"
+        stateValue={name}
+        title="title"
+        inputType="tex"
+        setValue={setName}
         />
 
         <LabelInput

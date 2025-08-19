@@ -5,10 +5,11 @@ import dialogMessageReducer from "./dialogMessage";
 import selectdailogReducer from './selectDialog'
 import submitReducer from './openSubmition'
 import selectedSubmitReducer from './selectSubmit'
+import updateAPpReducer from './UpdateAllComponents'
 
 const store = configureStore({
   reducer: {
-   
+    updateApp: updateAPpReducer,
     selectedSubmittion: selectedSubmitReducer, 
     submit: submitReducer,
     loggedIn: loggedInReducer,
