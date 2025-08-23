@@ -1,116 +1,100 @@
-import LabelInput from "../ui/form/labelInput"
-// import LabelInputNumber from "../ui/submitionForm/labelInputNumber";
+import DateInput from "../ui/submitionForm/dateInputs";
+import DropDown from "../ui/submitionForm/dropDown";
+import LabelInputNumber from "../ui/submitionForm/labelInputNumber";
 import LabelInputText from "../ui/submitionForm/labelInputText";
 import { useDispatch } from "react-redux";
 import { onOffSubmit } from "../../state management/openSubmition";
-import { useState } from "react"
+import { useState } from "react";
 
 type Bills = string[];
+type Frequent = string[];
+type Status = string[];
 
 const bills: Bills = [
-"Housing", "Utilities", "Insurance", "Loans & Debt", "Subscriptions", "Transportation", "Healthcare", "Childcare & Education", "Business Expenses"
+  "Housing",
+  "Utilities",
+  "Insurance",
+  "Loans & Debt",
+  "Subscriptions",
+  "Transportation",
+  "Healthcare",
+  "Childcare & Education",
+  "Business Expenses",
 ];
 
-export default function SubmitBills(){
+const frenquent: Frequent = ["daily", "weekly", "monthly", "yearly"];
 
-  const dispatch = useDispatch()
+const status: Status = ["active", "pause", "cancel", "inactive"];
 
-    const [name, setName] = useState("")
-    const [amount, setAmount] = useState("")
-    const [date, setDate] = useState("")
-    const [startDate, setStateDate] = useState("")
+export default function SubmitBills() {
+  const dispatch = useDispatch();
 
-    return(
-<div className="absolute w-screen h-screen overflow-y-auto z-50">
-    <form className="w-[70%] md:w-1/2 bg-black/50 m-auto p-2 rounded-lg">
+  const [name, setName] = useState("");
+  const [category, setCategory] = useState("Housing");
+  const [Frenquently, setFrenquently] = useState("daily");
+  const [state, setStatus] = useState("inactive");
+  const [amount, setAmount] = useState(0);
+  const [date, setDate] = useState("");
+  const [startDate, setStateDate] = useState("");
 
+  return (
+    <div className="absolute w-screen h-screen overflow-y-auto z-50">
+      <form className="w-[70%] md:w-1/2 bg-[whitesmoke] m-auto mb-24 p-2 rounded-lg">
+        <h1 className="text-black/50 text-2xl font-serif text-center font-bold">
+          Add Bill
+        </h1>
 
-        <LabelInputText 
-        animationClass="animate"
-        stateValue={name}
-        title="title"
-        inputType="tex"
-        setValue={setName}
+        <LabelInputText
+          stateValue={name}
+          title="Title"
+          inputType="tex"
+          setValue={setName}
         />
 
-        <LabelInput
-          InputType="number"
+        <LabelInputNumber
+          inputType="number"
           title="Amount"
-          inputedValue={amount}
-          sendValue={setAmount}
+          setValue={setAmount}
         />
 
-         <LabelInput
-          InputType="date"
-          title="Due Date"
-          inputedValue={date}
-          sendValue={setDate}
+        <DateInput title="Due Date" state={date} setValue={setDate} />
+
+        <DateInput
+          title="Start Date"
+          state={startDate}
+          setValue={setStateDate}
         />
 
-         <LabelInput
-          InputType="date"
-          title="Start date"
-          inputedValue={startDate}
-          sendValue={setStateDate}
-        />
+        <div className="flex flex-col sm:flex-row items-center justify-evenly w-full">
 
-        <div className="w-full bg-black/20 p-2 rounded-lg">
-          <label className="text-white text-center block mb-2">
-            Select Category
-          </label>
-          <div className="flex flex-wrap gap-4 m-2">
-            {bills.map((bill) => (
-              <div key={bill} className="flex items-center gap-2">
-                {" "}
-                {/* Align items in center with gap */}
-                <input
-                  type="radio"
-                  id={bill}
-                  name="category"
-                  value={bill}
-                />
-                <label
-                  htmlFor={bill}
-                  className="text-white text-sm cursor-pointer p-2"
-                >
-                  {bill}
-                </label>
-              </div>
-            ))}
-          </div>
-        </div>
-<div className="flex flex-row items-center  justify-evenly w-full">
-        <div className="flex flex-col gap-4 items-center m-2">
-            <label className="text-white">Frenquently</label>
-            <select className="bg-white text-cyan rounded-lg p-1">
-            <option value="daily">Daily</option>
-            <option value="weekly">Weekly</option>
-            <option value="monthly">Monthly</option>
-            <option value="Yearly">Yearly</option>
-            </select>
+          <DropDown title="Category" items={bills} setValue={setCategory} />
+
+          <DropDown
+            title="Frenquently"
+            items={frenquent}
+            setValue={setFrenquently}
+          />
+
+          <DropDown title="Status" items={status} setValue={setStatus} />
         </div>
 
-        <div className="flex flex-col gap-4 items-center m-2">
-            <label className="text-white">Status</label>
-            <select className="bg-white text-cyan rounded-lg p-1">
-            <option value="active">Active</option>
-            <option value="pause">Pause</option>
-            <option value="cancel">Cancel</option>
-            <option value="inactive">Inactive</option>
-            </select>
+        <div className="flex flex-row items-center justify-evenly w-full p-2">
+          <button
+            type="submit"
+            className="text-green-700 font-medium p-2 w-fit rounded-sm cursor-pointer"
+          >
+            Submitt
+          </button>
+
+          <button
+            className="text-red-700 font-medium p-2 w-fit rounded-sm cursor-pointer"
+            type="button"
+            onClick={() => dispatch(onOffSubmit())}
+          >
+            Back
+          </button>
         </div>
-</div>
-
-      <div className="flex flex-row items-center justify-evenly w-full p-2">
-        <button className="p-2 text-white">Submit</button>
-        <button 
-        className="p-2 text-white"
-        onClick={()=> dispatch(onOffSubmit())}
-        >Back</button>
-
-      </div>
-
-    </form>
-</div>
-    )
+      </form>
+    </div>
+  );
 }

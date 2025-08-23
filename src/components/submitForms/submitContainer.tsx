@@ -25,11 +25,9 @@ export default function SubmitContainer() {
     <div
       className={`${
         open ? "block" : "hidden"
-      } absolute w-screen h-screen bg-black/50 z-40 overflow-hidden`}
+      } absolute w-screen h-screen bg-black/70 z-40 overflow-hidden`}
     >
-      <h1 className="text-white text-center text-5xl m-2 ">
-        {selectedForm1.toUpperCase()}
-      </h1>
+     
 
       {selectedForm1 === "transaction" && <TransactionSubmit />}
       {selectedForm1 === "bills" && <SubmitBills />}

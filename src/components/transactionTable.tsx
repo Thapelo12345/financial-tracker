@@ -1,4 +1,6 @@
 import TransactionCell from "./ui/transaction/transactionCell";
+import type { RootState } from "../state management/store";
+import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 
 interface Transaction {
@@ -6,12 +8,13 @@ interface Transaction {
   name: string;
   description: string;
   category: string;
-  type: "Income" | "Expense";
+  type:string;
   amount: number;
 }
 
 export default function TransactionTable() {
   
+  const checkUpdate = useSelector((state: RootState) => state.updateApp.updateApp);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
 
   useEffect(() => {
@@ -20,8 +23,9 @@ export default function TransactionTable() {
     if (data) {
       const user = JSON.parse(data);
       setTransactions(user.transactions);
+
     }
-  }, []);
+  }, [checkUpdate]);
 
   return (
     <div className="w-[99%] h-[87%] overflow-y-auto overflow-x-hidden p-0 md:p-2 pt-32">

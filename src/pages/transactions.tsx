@@ -4,12 +4,15 @@ import BalanceContainer from "../components/ui/balanceContainer";
 import { useDispatch } from "react-redux";
 import { onOffSubmit } from "../state management/openSubmition";
 import { settingSelected } from "../state management/selectSubmit";
+import { useSelector } from "react-redux";
+import type { RootState } from "../state management/store";
 import { useState, useEffect } from "react";
 
 export default function Transactions() {
 
   const dispatch = useDispatch();
 
+ const checkUpdate = useSelector((state: RootState) => state.updateApp.updateApp); 
   const [totalAmount, setAmount] = useState(0);
   const [totalExpense, setExpense] = useState(0)
 
@@ -23,7 +26,7 @@ export default function Transactions() {
       setExpense(currentUser.transactionExpense)
     }
 
-  },[])
+  },[checkUpdate])
 
   return (
     <main

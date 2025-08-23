@@ -7,18 +7,24 @@ type Prop ={
 
 export default function LabelInputText({title, inputType, stateValue, setValue}:Prop){
     return(
-        <div className="flex flex-col items-start w-[90%]">
+        <div className="flex flex-col items-start w-[90%] m-2">
             <label
-            className={`text-white bg-black/80 rounded-sm m-2 font-bold text-lg p-2`}
-            >{title}</label>
+            className={`text-black w-full font-serif rounded-tr-lg rounded-br-lg m-2 font-extrabold text-lg p-2`}
 
-            <input 
+            >
+             <input 
             value={stateValue}
             type={inputType}
             onChange={(e) => setValue(e.target.value)}
-            className="rounded-md w-full p-2 border-2 border-black/10 focus:outline-0 focus:border-2 focus:border-green-700"
+            placeholder={title}
+            className="text-green-700 text-sm bg-white/40 rounded-md w-full p-2 border-0 focus:outline-0"
+            style={{boxShadow: "inset 2px 2px 5px #BABECC, inset -5px -5px 10px #FFF"}}
              required
              ></input>
+
+            </label>
+
+           
 
         </div>
     )

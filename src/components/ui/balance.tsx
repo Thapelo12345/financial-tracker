@@ -1,7 +1,11 @@
 import BalanceContainer from './balanceContainer'
+import { useSelector } from 'react-redux';
+import type { RootState } from '../../state management/store';
 import { useState, useEffect } from 'react'
 
 export default function Balances(){
+
+  const checkUpdate = useSelector((state: RootState) => state.updateApp.updateApp);
 
   const [currentBalance, setCurrentBalance] = useState(0.00);
   const [income, setIncome] = useState(0.00)
@@ -16,7 +20,7 @@ export default function Balances(){
       setIncome(currentUser.income)
       setExpense(currentUser.expense)
     }
-  },[])
+  },[checkUpdate])
 
   return(
     <div className='flex flex-col sm:flex-row w-full'>

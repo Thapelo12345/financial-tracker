@@ -23,6 +23,10 @@ export default function TransactionCell({
   Amount,
 }: Props) {
 
+  console.log(Type)
+  console.log(Type === "Income")
+  
+
   useGSAP(() => {
     gsap.fromTo(".transac", {
       x: 970
