@@ -16,7 +16,7 @@ export default function SubmitBudget() {
     <div className="absolute w-screen h-screen overflow-y-auto z-50">
       <form className="w-[70%] md:w-1/2 bg-[whitesmoke] m-auto p-2 rounded-lg mt-10">
         <h1 className="text-black/50 text-2xl font-serif text-center font-bold">
-          Budget
+          Budget Expense
         </h1>
 
         <LabelInputText

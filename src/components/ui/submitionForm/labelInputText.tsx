@@ -17,7 +17,7 @@ export default function LabelInputText({title, inputType, stateValue, setValue}:
             type={inputType}
             onChange={(e) => setValue(e.target.value)}
             placeholder={title}
-            className="text-green-700 text-sm bg-white/40 rounded-md w-full p-2 border-0 focus:outline-0"
+            className="text-black text-sm bg-white/40 rounded-md w-full p-2 border-0 focus:outline-0"
             style={{boxShadow: "inset 2px 2px 5px #BABECC, inset -5px -5px 10px #FFF"}}
              required
              ></input>

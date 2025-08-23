@@ -16,7 +16,7 @@ export default function LabelInputNumber({ title, inputType, setValue}:Prop){
             type={inputType}
             placeholder={title}
             onChange={(e) => setValue(Number(e.target.value))}
-            className="text-black text-sm bg-white/40 rounded-md w-full p-2 border-0 focus:outline-0 focus:shadow-lg focus:shadow-black"
+            className="text-black text-sm bg-white/40 rounded-md w-full p-2 border-0 focus:outline-0"
             style={{boxShadow: "inset 2px 2px 5px #BABECC, inset -5px -5px 10px #FFF"}}
             required
              >
