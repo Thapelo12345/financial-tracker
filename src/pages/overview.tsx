@@ -8,7 +8,6 @@ export default function Overview() {
     <div className="m-0 p-4 pb-8 bg-white/50 w-screen h-screen overflow-y-auto">
       <PageHeader title={"Overview"} />
       <Balances />
-
       <Widgets />
     </div>
   );

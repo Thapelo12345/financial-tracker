@@ -1,4 +1,3 @@
-// import LabelInput from "../ui/form/labelInput"
 import LabelInputText from "../ui/submitionForm/labelInputText";
 import LabelInputNumber from "../ui/submitionForm/labelInputNumber";
 import { useDispatch } from "react-redux";

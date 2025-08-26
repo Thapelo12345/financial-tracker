@@ -5,9 +5,10 @@ import { motion } from "framer-motion";
 type Props = {
   title: string;
   amount: number;
+  actOnClick?: () => void; // Optional click handler
 };
 
-export default function BalanceContainer({ title, amount }: Props) {
+export default function BalanceContainer({ title, amount, actOnClick }: Props) {
   useGSAP(() => {
     gsap.fromTo(
       ".main-header",
@@ -23,6 +24,12 @@ export default function BalanceContainer({ title, amount }: Props) {
     );
   });
 
+  const handleClick = () => {
+    if (actOnClick) {
+      actOnClick();
+    }
+  };
+
   return (
     <motion.div
       className="main-header overflow-x-auto shadow-md transition-all duration-100 ease-in-out group flex flex-col items-center bg-white w-1/2 sm:w-1/3 md:w-1/6 m-2 p-2 md:p-4 rounded-[10px]"
@@ -32,6 +39,8 @@ export default function BalanceContainer({ title, amount }: Props) {
         boxShadow: "1px 9px 20px rgba(0,0,0,0.7)",
         backgroundColor: "rgba(0,0,0,0.8)",
       }}
+      onClick={handleClick}
+      style={{ cursor: actOnClick ? "pointer" : "default" }}
     >
       <h4 className="group-hover:text-white text-black text-xs font-light">
         {title}
