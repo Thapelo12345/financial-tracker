@@ -12,7 +12,7 @@ export default function Balances(){
   const [expense, setExpense] = useState(0.00)
 
   useEffect(()=>{
-    const data = localStorage.getItem("currentUser")
+    const data = sessionStorage.getItem("currentUser")
 
     if(data){
       const currentUser = JSON.parse(data)
@@ -25,9 +25,9 @@ export default function Balances(){
   return(
     <div className='flex flex-col sm:flex-row w-full'>
 
-<BalanceContainer title='current balance' amount={currentBalance} />
-<BalanceContainer title='Income' amount={income} />
-<BalanceContainer title='Expenses' amount={expense} />
+<BalanceContainer activeClick={false} title='current balance' amount={currentBalance} />
+<BalanceContainer activeClick={false} title='Income' amount={income} />
+<BalanceContainer activeClick={false} title='Expenses' amount={expense} />
 
     </div>
   )

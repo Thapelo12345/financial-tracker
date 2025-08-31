@@ -39,9 +39,9 @@ export default function AuthenticationForm(){
     return(
         <form 
         id="formAnimation"
-        className="backface-hidden bg-gradient-to-t from-black to-blue-300 shadow-2xl shadow-black flex flex-col items-center rounded-lg justify-center border-2 border-white w-full sm:w-1/2 p-2 m-2"
+        className="backface-hidden bg-[whitesmoke] shadow-2xl shadow-black flex flex-col items-center rounded-lg justify-center border-2 border-white w-full sm:w-1/2 p-2 m-2"
         >
-      <UserCircleIcon className="w-30 h-20 text-white" />
+      <UserCircleIcon className="w-30 h-20 text-black/50" />
 
       {formState === "register" && (
         <LabelInput
@@ -76,7 +76,7 @@ export default function AuthenticationForm(){
       )}
 
       {/* socila media log in */}
-       <label className="text-white text-xs m-2">
+       <label className="text-black text-xs m-2">
         {formState === "logIn"
           ? "Log In with your social media account"
           : "Create account with social media "}
@@ -84,7 +84,7 @@ export default function AuthenticationForm(){
 
        <div className="w-full flex flex-row items-center justify-center">
         <button
-          className="text-lg rounded-lg text-white hover:border-2 hover:border-white m-2 p-2"
+          className="text-lg rounded-lg text-black hover:border-2 hover:border-white m-2 p-2"
           type="button"
           onClick={handleGoogleAuthClick}
         >
@@ -98,18 +98,18 @@ export default function AuthenticationForm(){
         {formState === "logIn" && (
           <>
             <button
-              className="text-white self-start p-2 m-2 rounded-lg"
+              className="text-black self-start p-2 m-2 rounded-lg"
               type="submit"
             >
               LogIn
             </button>
-            <button className="text-white text-xs self-center p-2 m-2">
+            <button className="text-black text-xs self-center p-2 m-2">
               Forgot password
             </button>
 
             {/* reset btn */}
             <button
-              className="text-xs text-white self-end p-2 m-2 rounded-lg"
+              className="text-xs text-black self-end p-2 m-2 rounded-lg"
               type="button"
               onClick={() => setForm("register")}
             >
@@ -121,13 +121,13 @@ export default function AuthenticationForm(){
         {formState === "register" && (
           <>
             <button
-              className="text-white self-start p-2 m-2 rounded-lg"
+              className="text-black self-start p-2 m-2 rounded-lg"
               type="submit"
             >
               Submit
             </button>
             <button
-              className="text-white self-start p-2 m-2 rounded-lg"
+              className="text-black self-start p-2 m-2 rounded-lg"
               onClick={() => setForm("logIn")}
             >
               Back

@@ -16,7 +16,7 @@ export default function MiniPots({animate}:Prop) {
   const [saving, setSaving] = useState(0)
 
   useEffect(()=>{
-    const data = localStorage.getItem("currentUser")
+    const data = sessionStorage.getItem("currentUser")
 
     if(data){
       const user = JSON.parse(data)

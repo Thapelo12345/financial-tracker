@@ -82,11 +82,11 @@ export async function handleGooglAthentication(navigate: NavigateFunction) {
       };
 
       await addDoc(collection(db, "users"), newUser);
-      localStorage.setItem("currentUser", JSON.stringify(newUser));
+      sessionStorage.setItem("currentUser", JSON.stringify(newUser));
     } //end of if
     else {
   const userData = snapshot.docs[0].data();
-  localStorage.setItem("currentUser", JSON.stringify(userData));
+  sessionStorage.setItem("currentUser", JSON.stringify(userData));
     }
 
     store.dispatch(selectDialog("confirm"));

@@ -18,7 +18,7 @@ export default function Transactions() {
 
   useEffect(()=>{
 
-    const data = localStorage.getItem("currentUser")
+    const data = sessionStorage.getItem("currentUser")
 
     if(data){
       const currentUser = JSON.parse(data)
@@ -35,8 +35,8 @@ export default function Transactions() {
       <PageHeader title="Transactions" />
 
       <div className="flex flex-col sm:flex-row justify-items-start w-full">
-        <BalanceContainer title="Total Income" amount={totalAmount} />
-        <BalanceContainer title="Tota Expense" amount={totalExpense} />
+        <BalanceContainer activeClick={false} title="Total Income" amount={totalAmount} />
+        <BalanceContainer activeClick={false} title="Tota Expense" amount={totalExpense} />
         <button
         className="w-fit text-xs m-2 p-2"
         onClick={()=>{

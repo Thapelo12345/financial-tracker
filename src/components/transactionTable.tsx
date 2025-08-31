@@ -18,7 +18,7 @@ export default function TransactionTable() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
 
   useEffect(() => {
-    const data = localStorage.getItem("currentUser");
+    const data = sessionStorage.getItem("currentUser");
 
     if (data) {
       const user = JSON.parse(data);

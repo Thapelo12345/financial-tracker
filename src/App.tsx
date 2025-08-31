@@ -8,7 +8,7 @@ import { Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div className=" relative w-screen h-screen bg-red-300/10 p-0">
+    <div className=" relative w-screen h-screen bg-red-50 p-0 m-0">
       <BrowserRouter>
 <Provider store={store}>
   <DialogContainer />

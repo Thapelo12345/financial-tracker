@@ -3,7 +3,6 @@ import BalanceContainer from "../components/ui/balanceContainer";
 import GraphDetails from "../components/budget/graphDetails";
 import Piechart from "../components/budget/piechat";
 import Barchart from "../components/budget/barchat";
-import BudgetInputAmount from "../components/ui/budget/budgetAmountInput";
 import { useDispatch } from "react-redux";
 import { onOffSubmit } from "../state management/openSubmition";
 import { settingSelected } from "../state management/selectSubmit";
@@ -16,18 +15,17 @@ interface budgetItem {
   color: string;
 }
 
-
 export default function Budget() {
   const dispatch = useDispatch();
 
-  const [addBudgetAmount, setEditBudget] = useState(false);
   const [budgetAmount, setBugdetAmount] = useState(0);
   const [budgetExpense, setBudgetExpense] = useState(0);
   const [budgetSurplus, setBudgetSurplus] = useState(0);
   const [budgetExpenses, setExpense] = useState<budgetItem[]>([]);
 
+
   useEffect(() => {
-    const data = localStorage.getItem("currentUser");
+    const data = sessionStorage.getItem("currentUser");
 
     if (data) {
       const user = JSON.parse(data);
@@ -39,33 +37,29 @@ export default function Budget() {
     }
   }, []);
 
- 
-  const handleBudgetAmountClick = ()=>{
-    setEditBudget(true)
+function updateAmount(newAmount: number){
+  let data = JSON.parse(sessionStorage.getItem('currentUser') || '{}');
+  
+  if(data){
+    data.budgetAmount = newAmount;
+    data.budgetSurplus = newAmount - data.budgetExpense;
+    sessionStorage.setItem('currentUser', JSON.stringify(data));
   }
-
+}
+ 
   return (
     <main className="m-2 p-4 w-screen h-screen overflow-y-auto">
       <PageHeader title="Budget" />
 
       <div className="flex flex-col md:flex-row w-full justify-evenly p-2">
-        {!addBudgetAmount && (
           <BalanceContainer
+            activeClick={true}
             title="Budget Amount"
             amount={budgetAmount}
-            actOnClick={handleBudgetAmountClick}
           />
-        )}
-        {addBudgetAmount && (
-          <BudgetInputAmount
-            title="Budget Amoount"
-            setAmount={setBugdetAmount}
-           close={setEditBudget}
-          />
-        )}
-
-        <BalanceContainer title="Budget Expense" amount={budgetExpense} />
-        <BalanceContainer title="Budget Surplus" amount={budgetSurplus} />
+        
+        <BalanceContainer activeClick={false} title="Budget Expense" amount={budgetExpense} />
+        <BalanceContainer activeClick={false} title="Budget Surplus" amount={budgetSurplus} />
       </div>
 
       <GraphDetails budgetItem={budgetExpenses} />
