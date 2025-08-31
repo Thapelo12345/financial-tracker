@@ -5,15 +5,15 @@ import PotsCard from "../components/pots/potCard";
 import { useState, useEffect } from "react";
 
 export default function Pots() {
-  const [postValue, setpotValue] = useState(0);
+  const [potValue, setPotValue] = useState(0);
   const [giftCard, setGiftCard] = useState(0);
   const [voucher, setVoucher] = useState(0);
   const [saving, setSaving] = useState(0);
 
-  useEffect(()=>{
-    setpotValue(0)
-    setpotValue(giftCard + voucher + saving)
-  }, [giftCard, voucher, saving])
+
+  useEffect(() => {
+    setPotValue(giftCard + voucher + saving);
+  }, [giftCard, voucher, saving]);
 
   useEffect(() => {
     const data = sessionStorage.getItem("currentUser");
@@ -21,7 +21,7 @@ export default function Pots() {
     if (data) {
       const user = JSON.parse(data);
 
-      setpotValue(user.potsValue);
+      setPotValue(user.potsValue);
       setGiftCard(user.giftCard);
       setVoucher(user.vouchers);
       setSaving(user.savings);
@@ -36,7 +36,7 @@ export default function Pots() {
         <BalanceContainer
           activeClick={false}
           title="Pots Value"
-          amount={postValue}
+          amount={potValue}
         />
       </div>
 
@@ -47,22 +47,28 @@ export default function Pots() {
         <PotsCard title="Gift cards" amount={giftCard} getAmount={setGiftCard} />
         <PotsCard title="Savings" amount={saving} getAmount={setSaving} />
         <PotsCard title="Voucher" amount={voucher} getAmount={setVoucher} />
-        <button className="relative group w-15 h-15 m-2 p-2 ">
+        
+        <button 
+          className="group relative group w-15 h-15 m-2 p-2"
+        >
           <PlusCircleIcon className="w-10 h-10 text-green-400" />
+
           <div
-           className="hidden group-hover:block border-2 border-[cyan] shadow-2xl bg-green-400 absolute bottom-16 left-0 w-40 rounded-lg"
-           style={{
-            boxShadow: "1px 3px 30px blue",
-           border: "1px solid cyan",
-            backgroundImage: "linear-gradient(0deg, blue, cyan)",
-           }}
-           >
-            <span 
-            className="text-white"
+            className="absolute transition duration-500 rotate-y-3 group-hover:rotate-y-360 scale-0 group-hover:scale-100 opacity-0 group-hover:opacity-100 bottom-16 left-0 w-40 rounded-lg"
             style={{
-              textShadow: "1px 1px 2px black"
+              boxShadow: "1px 3px 30px blue",
+              border: "1px solid cyan",
+              backgroundImage: "linear-gradient(0deg, blue, cyan)",
             }}
-            >Add custom Pot</span>
+          >
+            <span 
+              className="text-white"
+              style={{
+                textShadow: "1px 1px 2px black"
+              }}
+            >
+              Add custom Pot
+            </span>
           </div>
         </button>
       </div>

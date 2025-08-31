@@ -16,6 +16,8 @@ export default function PotsCard({ title, amount, getAmount }: Props) {
 
   const [openInput, setOpenInput] = useState(false)
   const [changeAmount, setChangeAmount] = useState(0)
+
+
   useGSAP(() => {
     gsap.fromTo(
       ".potsCard",
@@ -74,6 +76,7 @@ export default function PotsCard({ title, amount, getAmount }: Props) {
   }}
   ></input>
 <motion.button
+
 animate={{
    rotate: 360
 }}

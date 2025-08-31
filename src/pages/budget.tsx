@@ -1,12 +1,12 @@
 import PageHeader from "../components/ui/pageHeader";
 import BalanceContainer from "../components/ui/balanceContainer";
-import GraphDetails from "../components/budget/graphDetails";
+// import GraphDetails from "../components/budget/graphDetails";
 import Piechart from "../components/budget/piechat";
 import Barchart from "../components/budget/barchat";
 import { useDispatch } from "react-redux";
 import { onOffSubmit } from "../state management/openSubmition";
 import { settingSelected } from "../state management/selectSubmit";
-import { PlusIcon } from "@heroicons/react/20/solid";
+import { PlusCircleIcon } from "@heroicons/react/20/solid";
 import { useState, useEffect } from "react";
 
 interface budgetItem {
@@ -62,7 +62,7 @@ function updateAmount(newAmount: number){
         <BalanceContainer activeClick={false} title="Budget Surplus" amount={budgetSurplus} />
       </div>
 
-      <GraphDetails budgetItem={budgetExpenses} />
+      {/* <GraphDetails budgetItem={budgetExpenses} />
       <button
         className="m-2"
         onClick={() => {
@@ -71,7 +71,34 @@ function updateAmount(newAmount: number){
         }}
       >
         <PlusIcon className="w-10 h-10 text-green-300" />
-      </button>
+      </button> */}
+      <button 
+          className="group relative group w-15 h-15 m-2 p-2"
+          onClick={() => {
+          dispatch(settingSelected("budget"));
+          dispatch(onOffSubmit());
+        }}
+        >
+          <PlusCircleIcon className="w-10 h-10 text-green-400" />
+
+          <div
+            className="absolute transition duration-500 rotate-y-3 group-hover:rotate-y-360 scale-0 group-hover:scale-100 opacity-0 group-hover:opacity-100 bottom-16 left-0 w-40 rounded-lg"
+            style={{
+              boxShadow: "1px 3px 30px blue",
+              border: "1px solid cyan",
+              backgroundImage: "linear-gradient(0deg, blue, cyan)",
+            }}
+          >
+            <span 
+              className="text-white"
+              style={{
+                textShadow: "1px 1px 2px black"
+              }}
+            >
+            Add an Expense
+            </span>
+          </div>
+        </button>
 
       <div className="flex flex-col-reverse sm:flex-row w-full h-full md:h-[50%] p-1">
         <Barchart budgetItem={budgetExpenses} />
