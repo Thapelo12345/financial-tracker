@@ -1,8 +1,8 @@
 import PageHeader from "../components/ui/pageHeader";
-import { PlusCircleIcon } from "@heroicons/react/20/solid";
 import BalanceContainer from "../components/ui/balanceContainer";
 import PotsCard from "../components/pots/potCard";
 import { useState, useEffect } from "react";
+import AddItemBtn from "../components/ui/addItemBtn";
 
 export default function Pots() {
   const [potValue, setPotValue] = useState(0);
@@ -11,6 +11,9 @@ export default function Pots() {
   const [saving, setSaving] = useState(0);
 
 
+  const addPot = () => {
+    console.log("pot added!..")
+  }
   useEffect(() => {
     setPotValue(giftCard + voucher + saving);
   }, [giftCard, voucher, saving]);
@@ -48,29 +51,7 @@ export default function Pots() {
         <PotsCard title="Savings" amount={saving} getAmount={setSaving} />
         <PotsCard title="Voucher" amount={voucher} getAmount={setVoucher} />
         
-        <button 
-          className="group relative group w-15 h-15 m-2 p-2"
-        >
-          <PlusCircleIcon className="w-10 h-10 text-green-400" />
-
-          <div
-            className="absolute transition duration-500 rotate-y-3 group-hover:rotate-y-360 scale-0 group-hover:scale-100 opacity-0 group-hover:opacity-100 bottom-16 left-0 w-40 rounded-lg"
-            style={{
-              boxShadow: "1px 3px 30px blue",
-              border: "1px solid cyan",
-              backgroundImage: "linear-gradient(0deg, blue, cyan)",
-            }}
-          >
-            <span 
-              className="text-white"
-              style={{
-                textShadow: "1px 1px 2px black"
-              }}
-            >
-              Add custom Pot
-            </span>
-          </div>
-        </button>
+      <AddItemBtn tipText="Add custom pot" btnFunction={addPot} />
       </div>
     </main>
   );

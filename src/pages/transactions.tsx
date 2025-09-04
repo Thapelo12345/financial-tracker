@@ -1,7 +1,8 @@
 import PageHeader from "../components/ui/pageHeader";
 import TransactionTable from "../components/transactionTable";
 import BalanceContainer from "../components/ui/balanceContainer";
-import { PlusCircleIcon } from "@heroicons/react/20/solid";
+// import { PlusCircleIcon } from "@heroicons/react/20/solid";
+import AddItemBtn from "../components/ui/addItemBtn";
 import { useDispatch } from "react-redux";
 import { onOffSubmit } from "../state management/openSubmition";
 import { settingSelected } from "../state management/selectSubmit";
@@ -29,6 +30,11 @@ export default function Transactions() {
 
   },[checkUpdate])
 
+  const addTransaction = () => {
+    dispatch(settingSelected("transaction"))
+    dispatch(onOffSubmit())
+  }
+
   return (
     <main
       className="flex flex-col w-screen h-screen m-2 p-4 pb-10 overflow-y-auto"
@@ -38,41 +44,9 @@ export default function Transactions() {
       <div className="flex flex-col sm:flex-row justify-items-start w-full">
         <BalanceContainer activeClick={false} title="Total Income" amount={totalAmount} />
         <BalanceContainer activeClick={false} title="Tota Expense" amount={totalExpense} />
-        {/* <button
-        className="w-fit text-xs m-2 p-2"
-        onClick={()=>{
-          dispatch(settingSelected("transaction"))
-          dispatch(onOffSubmit())
-        }}
-        >Add transaction</button> */}
-
-        <button 
-          className="group relative group w-15 h-15 m-2 p-2"
-          onClick={()=>{
-          dispatch(settingSelected("transaction"))
-          dispatch(onOffSubmit())
-        }}
-        >
-          <PlusCircleIcon className="w-10 h-10 text-green-400" />
-
-          <div
-            className="absolute transition duration-500 rotate-y-3 group-hover:rotate-y-360 scale-0 group-hover:scale-100 opacity-0 group-hover:opacity-100 bottom-16 left-0 w-40 rounded-lg"
-            style={{
-              boxShadow: "1px 3px 30px blue",
-              border: "1px solid cyan",
-              backgroundImage: "linear-gradient(0deg, blue, cyan)",
-            }}
-          >
-            <span 
-              className="text-white"
-              style={{
-                textShadow: "1px 1px 2px black"
-              }}
-            >
-              Add a Transaction
-            </span>
-          </div>
-        </button>
+     
+<AddItemBtn tipText="Add a Transaction" btnFunction={addTransaction} />
+       
       </div>
 
       <TransactionTable />

@@ -7,7 +7,7 @@ export default function Dash() {
   const [userAvatar, setAvatar] = useState("");
 
   useEffect(() => {
-    const currentUser = localStorage.getItem("currentUser");
+    const currentUser = sessionStorage.getItem("currentUser");
     try {
       const user = currentUser ? JSON.parse(currentUser) : null;
       if (user && user.name) {

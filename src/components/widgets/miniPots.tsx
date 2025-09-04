@@ -29,7 +29,7 @@ export default function MiniPots({animate}:Prop) {
   },[])
 
   return (
-    <div className={`bg-white m-4 p-2 hover:shadow-2xl rounded-lg ${animate}`}>
+    <div className={`bg-white w-full m-0 sm:m-4 p-2 hover:shadow-2xl rounded-lg ${animate}`}>
       <div className="flex flex-row justify-between">
         <MiniHeader title={"Pots"} />
         <MiniDetailsBtn pageUrl="/home/pots"/>
