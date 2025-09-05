@@ -23,7 +23,6 @@ export default function TransactionCell({
   Amount,
 }: Props) {
 
-
   useGSAP(() => {
     gsap.fromTo(".transac", {
       x: 970
@@ -56,6 +55,7 @@ export default function TransactionCell({
       <Avatar name={Name} avatar="" />
 
       <div className="flex flex-col w-full h-full">
+
         <div className="flex flex-row justify-between">
           <label className="text-black text-md text-start font-semibold">
             {Name}
@@ -68,9 +68,7 @@ export default function TransactionCell({
             {Type === "Income" ? "+ " : "- "}R {Amount}
           </label>
 
-          <button className="hidden group-hover:block">
-            <TrashIcon className="w-5 h-5 text-red-500" />
-          </button>
+        
         </div>
 
         <div className="flex flex-row justify-between">
@@ -79,11 +77,24 @@ export default function TransactionCell({
           </label>
           <label className="text-black/50 text-xs text-end">{Date}</label>
         </div>
+
+  
       </div>
+
+        <button className="m-2 self-end">
+          <TrashIcon className="w-5 h-5 text-red-400 m-2" />
+        </button>
 {/* Description tag */}
-      <div className="shadow-lg shadow-black/40 text-sm text-black bg-white font-serif hidden group-hover:block left-1/2 rounded-lg top-1/2 z-10 absolute p-2">
-<p>{Description}</p>
+
+  <div 
+  className="bg-green-500 border-2 border-white  font-serif hidden group-hover:block left-1/2 rounded-lg top-1/2 z-10 absolute p-2"
+  style={{boxShadow: "3px -6px 10px black"}}
+  >
+<p
+className="text-white text-sm font-extrabold"
+>{Description}</p>
       </div>
+
     </motion.li>
   );
 }

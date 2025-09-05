@@ -8,7 +8,7 @@ interface Transaction {
   name: string;
   description: string;
   category: string;
-  type:string;
+  transactionType:string;
   amount: number;
 }
 
@@ -22,14 +22,15 @@ export default function TransactionTable() {
 
     if (data) {
       const user = JSON.parse(data);
-      setTransactions(user.transactions);
-
+      setTransactions(user.transactions || []);
     }
+    else{setTransactions([]);}
+
   }, [checkUpdate]);
 
   return (
-    <div className="w-[99%] h-[87%] overflow-y-auto overflow-x-hidden p-0 md:p-2 pt-32">
-      <ul className="w-full h-full">
+    <div className="w-[99%] h-[87%] overflow-y-auto overflow-x-hidden p-0  md:p-2">
+      <ul className="w-full h-full pr-2 pt-4">
         {transactions.map((transaction, index) => (
           <TransactionCell
             key={`${transaction.date}-${transaction.name}-${index}`}
@@ -37,7 +38,7 @@ export default function TransactionTable() {
             Name={transaction.name}
             Description={transaction.description}
             Category={transaction.category}
-            Type={transaction.type}
+            Type={transaction.transactionType}
             Amount={transaction.amount}
           />
         ))}

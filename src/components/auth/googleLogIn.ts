@@ -84,6 +84,7 @@ export async function handleGooglAthentication(navigate: NavigateFunction) {
       await addDoc(collection(db, "users"), newUser);
       sessionStorage.setItem("currentUser", JSON.stringify(newUser));
     } //end of if
+    
     else {
   const userData = snapshot.docs[0].data();
   sessionStorage.setItem("currentUser", JSON.stringify(userData));

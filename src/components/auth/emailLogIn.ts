@@ -147,13 +147,30 @@ try{
   const userSignIn = await signInWithEmailAndPassword(auth, email, password)
 
   if(userSignIn.user){
+
+    const searchUser = query(collection(db, "users"), where("email", "==", email))
+    const snap =  await getDocs(searchUser)
+
+    if(!snap.empty){
+
+  const userData = snap.docs[0].data();
+  sessionStorage.setItem("currentUser", JSON.stringify(userData));
+
     store.dispatch(getMessage("Congratulation you have successfully LoggedIn to your acount"))
     store.dispatch(selectDialog("confirm"))
     navigate("/home")
 
-    setTimeout(()=>{
+      setTimeout(()=>{
       store.dispatch(openCloseDialog())
     }, 3000)
+
+    }//end of snap if
+
+    else{
+    store.dispatch(getMessage("Sorry the is no user With Such credentials"))
+    store.dispatch(selectDialog("error"))
+    }//end of snap else
+  
   }
 }
 catch(error){

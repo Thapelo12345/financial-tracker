@@ -97,7 +97,7 @@ interface Transaction {
   name: string;
   description: string;
   category: string;
-  type: "Income" | "Expense";
+  transactionType: string;
   amount: number;
 }
 
@@ -109,7 +109,10 @@ export default function MiniTable() {
 
     if (data) {
       const user = JSON.parse(data);
-      setTransactions(user.transactions);
+      setTransactions(user.transactions || []);
+    }
+    else{
+      setTransactions([]);
     }
   }, []);
 
@@ -122,7 +125,7 @@ export default function MiniTable() {
             Date={transaction.date}
             Name={transaction.name}
             Category={transaction.category}
-            Type={transaction.type}
+            Type={transaction.transactionType}
             Amount={transaction.amount}
           />
         ))}

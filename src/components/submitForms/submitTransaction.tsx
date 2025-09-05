@@ -4,7 +4,7 @@ import DropDown from "../ui/submitionForm/dropDown";
 import { useDispatch } from "react-redux";
 import { onOffSubmit } from "../../state management/openSubmition";
 import { useState } from "react";
-import AddTransaction from "./AddTransaction";
+import AddTransaction from "./transactionFunctions/AddTransaction";
 
 type Categories = string[];
 
@@ -30,7 +30,7 @@ export default function TransactionSubmit() {
   const [transactionType, setTransactionType] = useState("Income");
   const [amount, setAmount] = useState(0.0);
   const [description, setDescription] = useState("");
-  const [selectedCategory, setCategory] = useState("");
+  const [selectedCategory, setCategory] = useState("Salary");
 
   return (
     <div className="absolute w-screen h-screen overflow-y-auto">
@@ -88,12 +88,14 @@ export default function TransactionSubmit() {
           <DropDown
             title="Category"
             items={categories}
+            currentValue={selectedCategory}
             setValue={setCategory}
           />
 
           <DropDown
             title="Transaction Type"
             items={["income", "expense"]}
+            currentValue={transactionType}
             setValue={setTransactionType}
           />
         </div>

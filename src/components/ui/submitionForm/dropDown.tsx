@@ -1,10 +1,14 @@
 type Props = {
   title: string;
   items: string[];
+  currentValue: string;
   setValue: (value: string) => void;
 };
 
-export default function DropDown({ title, items, setValue }: Props) {
+export default function DropDown({ title, items, currentValue, setValue }: Props) {
+
+  setValue(currentValue)
+  
   return (
     <div 
     className="flex flex-col items-center justify-center w-1/2">
@@ -17,6 +21,7 @@ export default function DropDown({ title, items, setValue }: Props) {
           boxShadow: "inset 2px 2px 5px #BABECC, inset -5px -5px 10px #FFF",
         }}
         onChange={(e) => setValue(e.target.value)}
+        required
       >
         {items.map((item: string) => (
           <option 

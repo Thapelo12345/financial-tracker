@@ -1,23 +1,30 @@
 const colors: string[] = [
-  "blue",
-  "cyan",
-  "magenta",
-  "orange",
-  "purple",
-  "teal",
-  "indigo",
-  "violet",
-  "turquoise",
-  "navy",
-  "brown",
-  "beige",
-  "lavender",
-  "gold",
-  "plum",
-  "tan",
-  "peach",
-  "amber",
-  "midnightblue"
+  "Navy",
+  "DarkRed",
+  "DarkGreen",
+  "Maroon",
+  "Purple",
+  "Indigo",
+  "Teal",
+  "Olive",
+  "DarkSlateGray",
+  "DarkBlue",
+  "DarkCyan",
+  "DarkMagenta",
+  "DarkOliveGreen",
+  "DarkSlateBlue",
+  "DarkGoldenrod",
+  "DarkSlateGrey",
+  "DarkKhaki",
+  "DarkOrchid",
+  "DarkSeaGreen",
+  "FireBrick",
+  "SaddleBrown",
+  "MidnightBlue",
+  "Chocolate",
+  "DimGray",
+  "DarkViolet",
+  "Brown"
 ];
 
 const alphabet: string[] = Array.from({ length: 26 }, (_, i) =>
@@ -37,14 +44,12 @@ function getInitials(name: string): string {
   return initials.toUpperCase();
 }
 
-
-
 export default function Avatar({ name,  avatar }: Props){
 
     return(
         <div
         className={`shadow-lg rounded-full 
-          ${avatar === "" ? "w-10 h-10 border-4 border-white" : "w-15 h-15 border-0 overflow-hidden"}  
+          ${avatar === "" ? "w-[calc(2.5rem-8px)] h-[calc(2.5rem-8px)] border-4 border-white" : "w-15 h-15 border-0 overflow-hidden"}  
           flex items-center justify-center m-2`}
         style={{ backgroundColor: colors[alphabet.indexOf(name[0].toUpperCase()) % colors.length] }}
         >
