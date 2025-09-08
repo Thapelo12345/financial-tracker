@@ -3,11 +3,14 @@ import BalanceContainer from "../components/ui/balanceContainer";
 import GraphDetails from "../components/budget/graphDetails";
 import Piechart from "../components/budget/piechat";
 import Barchart from "../components/budget/barchat";
+import { db } from "../firebaseConfig";
+import { collection, getDocs, updateDoc } from "firebase/firestore";
 import { useDispatch } from "react-redux";
 import { onOffSubmit } from "../state management/openSubmition";
 import { settingSelected } from "../state management/selectSubmit";
 import { useState, useEffect } from "react";
 import AddItemBtn from "../components/ui/addItemBtn";
+import { BudgetContext } from "../components/submitForms/budgetFunctions/budgetContext";
 
 interface budgetItem {
   description: string;
@@ -22,7 +25,6 @@ export default function Budget() {
   const [budgetExpense, setBudgetExpense] = useState(0);
   const [budgetSurplus, setBudgetSurplus] = useState(0);
   const [budgetExpenses, setExpense] = useState<budgetItem[]>([]);
-
 
   useEffect(() => {
     const data = sessionStorage.getItem("currentUser");
@@ -40,46 +42,66 @@ export default function Budget() {
   const addBudgetExpense = () => {
     dispatch(settingSelected("budget"));
     dispatch(onOffSubmit());
+  };
 
-  }
+  const updateAmount = async (newAmount: number) => {
+    const data = sessionStorage.getItem("currentUser");
+    setBugdetAmount(newAmount);
 
-// function updateAmount(newAmount: number){
-//   let data = JSON.parse(sessionStorage.getItem('currentUser') || '{}');
-  
-//   if(data){
-//     data.budgetAmount = newAmount;
-//     data.budgetSurplus = newAmount - data.budgetExpense;
-//     sessionStorage.setItem('currentUser', JSON.stringify(data));
-//   }
-// }
- 
+    if (data) {
+      const user = JSON.parse(data);
+
+      user.budgetAmount = newAmount;
+      user.budgetSurplus = newAmount - user.budgetExpense;
+      sessionStorage.setItem("currentUser", JSON.stringify(user));
+
+      try {
+        const usersSnapshot = await getDocs(collection(db, "users"));
+        const matchingUser = usersSnapshot.docs.find((doc) => {
+          const userData = doc.data();
+          return userData.email === user.email;
+        });
+
+        if (!matchingUser) {
+          console.log("User not found!.");
+        } else {
+          await updateDoc(matchingUser.ref, {
+            budgetAmount: newAmount,
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
   return (
     <main className="m-2 p-4 w-screen h-screen overflow-y-auto">
       <PageHeader title="Budget" />
 
       <div className="flex flex-col md:flex-row w-full justify-evenly p-2">
+        <BudgetContext.Provider value={{ amount: budgetAmount, updateAmount }}>
           <BalanceContainer
             activeClick={true}
             title="Budget Amount"
             amount={budgetAmount}
           />
-        
-        <BalanceContainer activeClick={false} title="Budget Expense" amount={budgetExpense} />
-        <BalanceContainer activeClick={false} title="Budget Surplus" amount={budgetSurplus} />
+          <BalanceContainer
+            activeClick={false}
+            title="Budget Expense"
+            amount={budgetExpense}
+          />
+          <BalanceContainer
+            activeClick={false}
+            title="Budget Surplus"
+            amount={budgetSurplus}
+          />
+        </BudgetContext.Provider>
       </div>
 
       <GraphDetails budgetItem={budgetExpenses} />
-       {/*
-      <button
-        className="m-2"
-        onClick={() => {
-          dispatch(settingSelected("budget"));
-          dispatch(onOffSubmit());
-        }}
-      >
-        <PlusIcon className="w-10 h-10 text-green-300" />
-      </button> */}
-     <AddItemBtn tipText="Add Expense" btnFunction={addBudgetExpense}/>
+
+      <AddItemBtn tipText="Add Expense" btnFunction={addBudgetExpense} />
 
       <div className="flex flex-col-reverse sm:flex-row w-full h-full md:h-[50%] p-1">
         <Barchart budgetItem={budgetExpenses} />

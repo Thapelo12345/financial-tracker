@@ -6,8 +6,6 @@ type Props = {
 };
 
 export default function DropDown({ title, items, currentValue, setValue }: Props) {
-
-  setValue(currentValue)
   
   return (
     <div 
@@ -20,6 +18,7 @@ export default function DropDown({ title, items, currentValue, setValue }: Props
         style={{
           boxShadow: "inset 2px 2px 5px #BABECC, inset -5px -5px 10px #FFF",
         }}
+        value={currentValue}
         onChange={(e) => setValue(e.target.value)}
         required
       >

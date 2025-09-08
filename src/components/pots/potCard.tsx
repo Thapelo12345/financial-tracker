@@ -17,7 +17,6 @@ export default function PotsCard({ title, amount, getAmount }: Props) {
   const [openInput, setOpenInput] = useState(false)
   const [changeAmount, setChangeAmount] = useState(0)
 
-
   useGSAP(() => {
     gsap.fromTo(
       ".potsCard",
@@ -41,9 +40,9 @@ export default function PotsCard({ title, amount, getAmount }: Props) {
         backgroundImage: "linear-gradient(0deg, black, rgba(0, 0, 0, 0.2))",
       }}
       whileHover={{
-        boxShadow: "1px 3px 30px blue",
-        border: "1px solid cyan",
-        backgroundImage: "linear-gradient(0deg, blue, cyan)",
+        boxShadow: "1px 3px 30px green",
+        border: "1px solid lime",
+        backgroundImage: "linear-gradient(0deg, darkgreen, lightgreen)",
         textShadow: "1px 1px 2px black",
         scale: 1.05,
       }}

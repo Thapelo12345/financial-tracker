@@ -35,13 +35,21 @@ export default async function AddTransaction({
     const formattedDate = `${year}-${month}-${day}`;
 
     type TransactObj = {
-      transactionId: number;
       name: string;
       amount: number;
       category: string;
       description: string;
       transactionType: string;
       date: string;
+    };
+
+    const newTransaction: TransactObj = {
+      name: Name,
+      amount: Amount,
+      category: Category,
+      description: Description,
+      transactionType: TransactionType,
+      date: formattedDate,
     };
 
     const data = sessionStorage.getItem("currentUser");
@@ -53,16 +61,6 @@ export default async function AddTransaction({
       try {
         const currentUser = JSON.parse(data);
         const searchName = currentUser.name;
-        
-    const newTransaction: TransactObj = {
-      transactionId: currentUser.transactions.length + 1,
-      name: Name,
-      amount: Amount,
-      category: Category,
-      description: Description,
-      transactionType: TransactionType,
-      date: formattedDate,
-    };
 
         // 1. Get all users
         const usersSnapshot = await getDocs(collection(db, "users"));
@@ -158,7 +156,6 @@ export default async function AddTransaction({
         console.log(error);
       }
     } //end of if
-
     else {
       alert("No data was found!..");
     }

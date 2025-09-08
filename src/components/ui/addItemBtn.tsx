@@ -16,9 +16,9 @@ export default function AddItemBtn({ tipText, btnFunction }: Props) {
       <div
         className="absolute w-40 p-2 transition duration-500 rotate-y-3 group-hover:rotate-y-360 scale-0 group-hover:scale-100 opacity-0 group-hover:opacity-100 bottom-16 left-0 rounded-lg"
         style={{
-          boxShadow: "1px 3px 30px blue",
-          border: "1px solid cyan",
-          backgroundImage: "linear-gradient(0deg, blue, cyan)",
+          boxShadow: "1px 3px 30px darkgreen",
+          border: "1px solid lime",
+          backgroundImage: "linear-gradient(0deg, darkgreen, lime)",
         }}
       >
         <span

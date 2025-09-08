@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import { ArrowPathIcon } from "@heroicons/react/20/solid";
 import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { BudgetContext } from "./submitForms/budgetFunctions/budgetContext";
 import { selectDialog } from "../state management/selectDialog";
 import { getMessage } from "../state management/dialogMessage";
 import { openCloseDialog } from "../state management/openCloseDialog";
@@ -9,12 +10,13 @@ import { openCloseDialog } from "../state management/openCloseDialog";
 type Props ={
     currentBalance: number;
     closing:() => void;
-    // updateCurrentValue:(value: number)=> void
 }
 
 export default function BalanceInput({ currentBalance, closing }:Props){
 
-const [finalAmount, setFinalAmount] = useState(0)
+const update = useContext(BudgetContext)
+
+const [finalAmount, setFinalAmount] = useState(update.amount)
 const dispatch = useDispatch()
 
 return(
@@ -56,6 +58,7 @@ return(
           }}
           onClick={()=> 
             {
+            update.updateAmount(finalAmount)
             closing()
             }}
         >

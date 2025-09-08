@@ -2,6 +2,7 @@
 import Avatar from "../avatar";
 import { motion } from "framer-motion";
 import { TrashIcon } from "@heroicons/react/20/solid";
+import DeleteTransaction from "../../submitForms/transactionFunctions/deleteTransaction";
 import { useGSAP } from '@gsap/react'
 import gsap from "gsap"
 
@@ -12,6 +13,7 @@ type Props = {
   Category: string;
   Type: string;
   Amount: number;
+  itemId: number;
 };
 
 export default function TransactionCell({
@@ -21,6 +23,7 @@ export default function TransactionCell({
   Category,
   Type,
   Amount,
+  itemId
 }: Props) {
 
   useGSAP(() => {
@@ -40,16 +43,14 @@ export default function TransactionCell({
     <motion.li 
     className="transac group shadow-md flex flex-row flex-nowrap items-start m-2 w-full p-2"
     whileHover={{
-      width: "98%",
-      scale: 1.02,
-      boxShadow: "0px 10px 100px rgba(0,0,0, 0.7)",
+      scale: 1.01,
+      boxShadow: "0px 10px 10px rgba(0,0,0, 0.7), inset 0px 0px 3px rgba(0, 0, 0, 0.5)",
       backgroundColor: "white",
-      borderRadius: "10px",
-      translateY: "-25px"
+      borderRadius: "105px",
     }}
 
     transition={{
-      duration: 0.6
+      duration: 0.5
     }}
     >
       <Avatar name={Name} avatar="" />
@@ -81,17 +82,23 @@ export default function TransactionCell({
   
       </div>
 
-        <button className="m-2 self-end">
+        <button 
+        className="m-2 self-end"
+        onClick={()=>{
+          DeleteTransaction({ transactionId: itemId })
+        }}
+        >
           <TrashIcon className="w-5 h-5 text-red-400 m-2" />
         </button>
 {/* Description tag */}
 
   <div 
-  className="bg-green-500 border-2 border-white  font-serif hidden group-hover:block left-1/2 rounded-lg top-1/2 z-10 absolute p-2"
-  style={{boxShadow: "3px -6px 10px black"}}
+  className="bg-[whitesmoke] font-serif hidden group-hover:block left-48 rounded-md top-10 z-10 absolute p-2"
+  style={{
+    boxShadow: "inset 2px 2px 2px black, inset -2px -2px 2px white"}}
   >
 <p
-className="text-white text-sm font-extrabold"
+className="text-black/50 text-xs font-extrabold p-2"
 >{Description}</p>
       </div>
 

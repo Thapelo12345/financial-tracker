@@ -36,7 +36,6 @@ export default function BalanceContainer({ activeClick, title, amount, actOnClic
     );
   });
 
-
     useEffect(() => {
       const data = localStorage.getItem("currentUser");
   
@@ -49,12 +48,15 @@ export default function BalanceContainer({ activeClick, title, amount, actOnClic
   return (
     <motion.div
       className="main-header overflow-x-hidden shadow-md transition-all duration-100 ease-in-out group flex flex-col items-center bg-white w-1/2 sm:w-1/3 md:w-1/6 m-2 p-2 md:p-4 rounded-[10px]"
-      whileHover={{
-        scale: 1,
-        zIndex: 10,
-        boxShadow: "1px 9px 20px rgba(0,0,0,0.7)",
-        backgroundColor: "rgba(0,0,0,0.8)",
-      }}
+      {...(!activateInput && {
+        whileHover: {
+          scale: 1,
+          zIndex: 10,
+          boxShadow: "1px 9px 20px rgba(0,0,0,0.7)",
+          backgroundColor: "rgba(0,0,0,0.8)",
+        }
+      })
+    }
       style={{ cursor: actOnClick ? "pointer" : "default" }}
       onClick={()=>{
         if(activeClick && !activateInput){

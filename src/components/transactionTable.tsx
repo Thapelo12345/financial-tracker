@@ -10,6 +10,7 @@ interface Transaction {
   category: string;
   transactionType:string;
   amount: number;
+  transactionId: number;
 }
 
 export default function TransactionTable() {
@@ -23,6 +24,7 @@ export default function TransactionTable() {
     if (data) {
       const user = JSON.parse(data);
       setTransactions(user.transactions || []);
+
     }
     else{setTransactions([]);}
 
@@ -40,6 +42,8 @@ export default function TransactionTable() {
             Category={transaction.category}
             Type={transaction.transactionType}
             Amount={transaction.amount}
+            itemId={transaction.transactionId
+}
           />
         ))}
       </ul>
