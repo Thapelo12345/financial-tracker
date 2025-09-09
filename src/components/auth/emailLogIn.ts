@@ -72,6 +72,7 @@ const usersCollection = collection(db, "users");
 
 // Then execute the query:
 const querySnapshot2 = await getDocs(query(usersCollection, where("email", "==", email)));
+console.log(querySnapshot2.empty)
 
 if(querySnapshot2.empty) {
 
@@ -127,12 +128,12 @@ if(querySnapshot2.empty) {
 else{
   store.dispatch(selectDialog("error"));
   store.dispatch(getMessage("Sorry This user Already Exist's"));
-  // store.dispatch(openCloseDialog());
 }
 
     } catch (error) {
       store.dispatch(selectDialog("error"));
-      store.dispatch(getMessage(error as string));
+      store.dispatch(getMessage("Sorry Something wrong with you credentails"));
+      alert(error)
       store.dispatch(openCloseDialog());
     }
   }

@@ -2,6 +2,8 @@ import MiniHeader from "./minHeader";
 import MiniDetailsBtn from "./miniDetailsBtn";
 import MiniPiechart from "./miniPieChart";
 import MiniDetails from "./miniDetails";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../state management/store";
 import { useState, useEffect } from "react";
 
 type Prop = {
@@ -16,18 +18,19 @@ type details = {
 
 export default function MiniBudget({ animate }: Prop) {
 
+  const checkUpdate = useSelector((state: RootState) => state.updateApp.updateApp);
   const [minBudget, setMiniBudget] = useState<details[]>([])
   const [miniAmount, setAmount] = useState(0)
 
   useEffect(()=>{
-    const data = localStorage.getItem("currentUser")
+    const data = sessionStorage.getItem("currentUser")
 
     if(data){
       const user = JSON.parse(data)
       setMiniBudget(user.graphDetails)
       setAmount(user.budgetAmount)
     }
-  },[])
+  },[checkUpdate])
 
   return (
     <div className={`w-[95%] h-[60%] bg-white rounded-lg ${animate} m-2 mb-4`}>

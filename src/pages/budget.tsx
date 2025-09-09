@@ -8,6 +8,7 @@ import { collection, getDocs, updateDoc } from "firebase/firestore";
 import { useDispatch } from "react-redux";
 import { onOffSubmit } from "../state management/openSubmition";
 import { settingSelected } from "../state management/selectSubmit";
+import { appUpdated } from "../state management/UpdateAllComponents";
 import { useState, useEffect } from "react";
 import AddItemBtn from "../components/ui/addItemBtn";
 import { BudgetContext } from "../components/submitForms/budgetFunctions/budgetContext";
@@ -60,6 +61,7 @@ export default function Budget() {
         const matchingUser = usersSnapshot.docs.find((doc) => {
           const userData = doc.data();
           return userData.email === user.email;
+          dispatch(appUpdated())
         });
 
         if (!matchingUser) {
