@@ -2,13 +2,6 @@ import { ArrowPathIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useGSAP } from "@gsap/react";
-import { db } from "../../firebaseConfig";
-import { collection, getDocs, updateDoc } from "firebase/firestore";
-import { useDispatch } from "react-redux";
-import { openCloseDialog } from "../../state management/openCloseDialog";
-import { getMessage } from "../../state management/dialogMessage";
-import { selectDialog } from "../../state management/selectDialog";
-import { appUpdated } from "../../state management/UpdateAllComponents";
 import gsap from "gsap";
 
 type Props = {
@@ -18,7 +11,6 @@ type Props = {
 };
 
 export default function PotsCard({ title, amount, getAmount }: Props) {
-  const dispatch = useDispatch();
   const [openInput, setOpenInput] = useState(false);
   const [changeAmount, setChangeAmount] = useState(amount);
 
@@ -37,68 +29,6 @@ export default function PotsCard({ title, amount, getAmount }: Props) {
       }
     );
   });
-
-  //function to update pots data base in firestore
-  async function updatePotValue(potTitle: string, newAmount: number) {
-    const data = sessionStorage.getItem("currentUser");
-    let newPotValue: number = 0;
-
-    if (data) {
-      const user = JSON.parse(data);
-
-      try {
-        
-        const allUsers = await getDocs(collection(db, "users"));
-        const matchUser = allUsers.docs.find((doc) => {
-          const userData = doc.data();
-          return userData.email === user.email;
-        });
-
-        if (!matchUser) {
-          dispatch(getMessage("Sorry cant find your user account"));
-          dispatch(selectDialog("error"));
-          dispatch(openCloseDialog());
-        } 
-        else {
-
-          if(potTitle === "Gift cards") {
-              user.gifCard = newAmount;
-              newPotValue += newAmount + user.savings + user.vouchers
-              await updateDoc(matchUser.ref, {
-                giftCard: newAmount,
-              });
-            }//end of first if
-
-            else if(potTitle === "Savings"){
-              user.savings = newAmount;
-              newPotValue += newAmount + user.giftCard + user.vouchers
-              await updateDoc(matchUser.ref, {
-                savings: newAmount,
-              });
-          }//end of first else if
-
-          else if(potTitle === "Voucher"){
-              user.vouchers = newAmount;
-              newPotValue += newAmount + user.giftCard + user.savings
-              await updateDoc(matchUser.ref, {
-                vouchers: newAmount,
-              });
-             }//end of last else if
-
-          user.potsValue = newPotValue
-
-          await updateDoc(matchUser.ref, {
-            potsValue: newPotValue,
-          });
-
-          sessionStorage.setItem("currentUser", JSON.stringify(user));
-          dispatch(appUpdated());
-        } //end of else
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  }
 
   return (
     <motion.div
@@ -155,7 +85,6 @@ export default function PotsCard({ title, amount, getAmount }: Props) {
             onClick={() => {
               setOpenInput(false);
               getAmount(changeAmount);
-              updatePotValue(title, changeAmount);
             }}
           >
             <ArrowPathIcon className="w-5 h-5 text-green-500" />

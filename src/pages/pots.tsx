@@ -2,25 +2,82 @@ import PageHeader from "../components/ui/pageHeader";
 import BalanceContainer from "../components/ui/balanceContainer";
 import PotsCard from "../components/pots/potCard";
 import { useState, useEffect } from "react";
+import { db } from "../firebaseConfig";
+import { collection, getDocs, updateDoc } from "firebase/firestore";
+import { useDispatch } from "react-redux";
+import { selectDialog } from "../state management/selectDialog";
+import { openCloseDialog } from "../state management/openCloseDialog";
+import { getMessage } from "../state management/dialogMessage";
+import { appUpdated } from "../state management/UpdateAllComponents";
 import AddItemBtn from "../components/ui/addItemBtn";
 
 export default function Pots() {
+
+  const dispatch = useDispatch()
+
   const [potValue, setPotValue] = useState(0);
   const [giftCard, setGiftCard] = useState(0);
   const [voucher, setVoucher] = useState(0);
   const [saving, setSaving] = useState(0);
 
+  useEffect(()=>{
+    setPotValue(giftCard + voucher + saving)
+    const newPotValue = giftCard + voucher + saving
 
+    const data = sessionStorage.getItem("currentUser")
+    if(data){
+      const currentUser = JSON.parse(data)
+
+      getDocs(collection(db, "users"))
+      .then((getDocuments)=> getDocuments.docs.find((doc) => doc.data().email === currentUser.email))
+      .then((foundUser)=>{
+        if(!foundUser){
+          dispatch(selectDialog("error"))
+          dispatch(getMessage("User credentials not found"))
+          dispatch(openCloseDialog())
+        }
+
+        else{
+
+          dispatch(selectDialog("load"))
+          dispatch(openCloseDialog())
+
+          updateDoc(foundUser.ref, {
+            potsValue: newPotValue,
+            giftCard: giftCard,
+            savings: saving,
+            vouchers: voucher
+          }).then(()=> {
+            dispatch(openCloseDialog())
+            dispatch(appUpdated())
+          })
+          .catch((error)=> console.log(error))
+
+          currentUser.potsValue = potValue
+          currentUser.giftCard = giftCard
+          currentUser.savings = saving
+          currentUser.vouchers = voucher
+          sessionStorage.setItem("currentUser", JSON.stringify(currentUser))
+        }
+      })
+      .catch(()=>{
+        dispatch(selectDialog("error"))
+        dispatch(getMessage("Sorry!.., The was an error while updating your data. Please try again"))
+        dispatch(openCloseDialog())
+      })
+    }
+
+
+  },[giftCard, saving, voucher])
+
+  
   const addPot = () => {
     console.log("pot added!..")
   }
-  useEffect(() => {
-    setPotValue(giftCard + voucher + saving);
-  }, [giftCard, voucher, saving]);
 
   useEffect(() => {
-    const data = sessionStorage.getItem("currentUser");
 
+  const data = sessionStorage.getItem("currentUser");
     if (data) {
       const user = JSON.parse(data);
 
@@ -30,6 +87,7 @@ export default function Pots() {
       setSaving(user.savings);
     }
   }, []);
+
 
   return (
     <main className="m-2 p-4 w-screen h-screen overflow-y-auto">
