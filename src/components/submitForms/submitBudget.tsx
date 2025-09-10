@@ -3,6 +3,7 @@ import LabelInputNumber from "../ui/submitionForm/labelInputNumber";
 import { useDispatch } from "react-redux";
 import { onOffSubmit } from "../../state management/openSubmition";
 import { useState } from "react";
+import { AddBudgetExpense } from "./budgetFunctions/addBudgetExpense";
 
 export default function SubmitBudget() {
   const dispatch = useDispatch();
@@ -13,7 +14,14 @@ export default function SubmitBudget() {
 
   return (
     <div className="absolute w-screen h-screen overflow-y-auto z-50">
-      <form className="w-[70%] md:w-1/2 bg-[whitesmoke] m-auto p-2 rounded-lg mt-10">
+      <form 
+      className="w-[70%] md:w-1/2 bg-[whitesmoke] m-auto p-2 rounded-lg mt-10"
+      onSubmit={(e)=>{
+        e.preventDefault()
+        dispatch(onOffSubmit())
+        AddBudgetExpense(amount, name, color)
+      }}
+      >
         <h1 className="text-black/50 text-2xl font-serif text-center font-bold">
           Budget Expense
         </h1>
@@ -32,11 +40,10 @@ export default function SubmitBudget() {
 
         <div className="flex flex-row items-start w-full p-4">
           <input
-            value={color}
             type="color"
             onChange={(e) => setColor(e.target.value)}
             placeholder={color}
-            className="text-black text-sm bg-white/40 rounded-md p-5 border-0 focus:outline-0 focus:shadow-lg focus:shadow-black"
+            className="w-20 h-10 bg-white/40 rounded-md p-5 border-0 focus:outline-0 focus:shadow-lg focus:shadow-black"
             style={{
               boxShadow: "inset 2px 2px 5px #BABECC, inset -5px -5px 10px #FFF",
             }}

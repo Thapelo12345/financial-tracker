@@ -1,7 +1,6 @@
 import PageHeader from "../components/ui/pageHeader";
 import TransactionTable from "../components/transactionTable";
 import BalanceContainer from "../components/ui/balanceContainer";
-// import { PlusCircleIcon } from "@heroicons/react/20/solid";
 import AddItemBtn from "../components/ui/addItemBtn";
 import { useDispatch } from "react-redux";
 import { onOffSubmit } from "../state management/openSubmition";

@@ -1,4 +1,5 @@
 import { useGSAP } from "@gsap/react";
+import { TrashIcon } from "@heroicons/react/20/solid";
 import gsap from "gsap";
 
 // const graphTransaction = [
@@ -25,9 +26,10 @@ import gsap from "gsap";
 // ];
 
 type details = {
-  description: string;
-  transactionAmount: number;
-  color: string;
+  budgetExpenseId: number;
+  DescriptionTitle: string;
+  Amount: number;
+  Color: string;
 };
 
 type GraphDetailsProps = {
@@ -59,20 +61,30 @@ export default function GraphDetails({ budgetItem = [] }: GraphDetailsProps) {
     <div className="flex flex-wrap rounded-sm items-center justify-start w-full overflow-x-hidden overflow-y-auto p-2 m-2">
       {budgetItem.map((details) => (
         <div
-          key={details.description}
-          className="details-animation flex flex-row items-center justify-evenly h-8 bg-white  p-2 shadow-lg m-2"
+          key={details.DescriptionTitle}
+          className="details-animation flex flex-row items-center justify-evenly h-8 ml-2"
+        >
+        <div
+        className="flex flex-row items-center justify-evenly rounded-sm h-full bg-white p-2 shadow-lg m-2"
         >
           <div
             className="border-4 h-full m-2"
             style={{
-              borderColor: details.color,
-              backgroundColor: details.color,
+              borderColor: details.Color,
+              backgroundColor: details.Color,
               perspective: 1000,
             }}
           ></div>
           <h4 className="text-black text-sm font-normal">
-            {details.description}
+            {details.DescriptionTitle}
           </h4>
+        </div>
+
+        <button
+        value={details.budgetExpenseId}
+        >
+<TrashIcon className="w-4 h-4 text-red-500" />
+        </button>
         </div>
       ))}
     </div>

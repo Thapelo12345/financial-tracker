@@ -5,6 +5,8 @@ import Piechart from "../components/budget/piechat";
 import Barchart from "../components/budget/barchat";
 import { db } from "../firebaseConfig";
 import { collection, getDocs, updateDoc } from "firebase/firestore";
+import { useSelector } from "react-redux";
+import type { RootState } from "../state management/store";
 import { useDispatch } from "react-redux";
 import { onOffSubmit } from "../state management/openSubmition";
 import { settingSelected } from "../state management/selectSubmit";
@@ -12,15 +14,21 @@ import { appUpdated } from "../state management/UpdateAllComponents";
 import { useState, useEffect } from "react";
 import AddItemBtn from "../components/ui/addItemBtn";
 import { BudgetContext } from "../components/submitForms/budgetFunctions/budgetContext";
+import store from "../state management/store";
+import { selectDialog } from "../state management/selectDialog";
+import { getMessage } from "../state management/dialogMessage";
+import { openCloseDialog } from "../state management/openCloseDialog";
 
 interface budgetItem {
-  description: string;
-  transactionAmount: number;
-  color: string;
+  budgetExpenseId: number;
+  DescriptionTitle: string;
+  Amount: number;
+  Color: string;
 }
 
 export default function Budget() {
   const dispatch = useDispatch();
+ const checkUpdate = useSelector((state: RootState) => state.updateApp.updateApp); 
 
   const [budgetAmount, setBugdetAmount] = useState(0);
   const [budgetExpense, setBudgetExpense] = useState(0);
@@ -36,9 +44,9 @@ export default function Budget() {
       setBugdetAmount(user.budgetAmount);
       setBudgetExpense(user.budgetExpense);
       setBudgetSurplus(user.budgetSurplus);
-      setExpense(user.graphDetails);
+      setExpense(user.budgetExpenses);
     }
-  }, []);
+  }, [checkUpdate]);
 
   const addBudgetExpense = () => {
     dispatch(settingSelected("budget"));
@@ -47,21 +55,23 @@ export default function Budget() {
 
   const updateAmount = async (newAmount: number) => {
     const data = sessionStorage.getItem("currentUser");
-    setBugdetAmount(newAmount);
-
+    
     if (data) {
       const user = JSON.parse(data);
 
-      user.budgetAmount = newAmount;
-      user.budgetSurplus = newAmount - user.budgetExpense;
-      sessionStorage.setItem("currentUser", JSON.stringify(user));
+      if(newAmount >= user.budgetExpense){
+      setBugdetAmount(newAmount);
 
+      user.budgetAmount = newAmount;
+      const surplus = newAmount - user.budgetExpense;
+      user.budgetSurplus = Number(surplus.toFixed(2))
+      sessionStorage.setItem("currentUser", JSON.stringify(user));
+      
       try {
         const usersSnapshot = await getDocs(collection(db, "users"));
         const matchingUser = usersSnapshot.docs.find((doc) => {
           const userData = doc.data();
           return userData.email === user.email;
-          dispatch(appUpdated())
         });
 
         if (!matchingUser) {
@@ -69,11 +79,22 @@ export default function Budget() {
         } else {
           await updateDoc(matchingUser.ref, {
             budgetAmount: newAmount,
+            budgetSurplus: Number(surplus.toFixed(2))
           });
         }
+          dispatch(appUpdated())
+
       } catch (error) {
         console.log(error);
       }
+
+      }//end of less budget amount if
+     
+else{
+  store.dispatch(selectDialog("error"))
+  store.dispatch(getMessage("Sorry amount cant be less than expenses"))
+  store.dispatch(openCloseDialog())
+}//end of less budget amount else
     }
   };
 

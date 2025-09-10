@@ -95,7 +95,7 @@ export default function TransactionCell({
   <div 
   className="bg-[whitesmoke] font-serif hidden group-hover:block left-48 rounded-md top-10 z-10 absolute p-2"
   style={{
-    boxShadow: "inset 2px 2px 2px black, inset -2px -2px 2px white"}}
+    boxShadow: "-1px -9px 15px rgba(0, 0, 0, 0.5), 1px 9px 10px rgba(0, 0, 0, 0.5), inset 2px 2px 6px black, inset -2px -2px 6px white"}}
   >
 <p
 className="text-black/50 text-xs font-extrabold p-2"

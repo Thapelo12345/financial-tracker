@@ -32,9 +32,9 @@ import {
 // ];
 
 type details = {
-  description: string;
-  transactionAmount: number;
-  color: string;
+  DescriptionTitle: string;
+  Amount: number;
+  Color: string;
 };
 
 type GraphDetailsProps = {
@@ -51,7 +51,7 @@ export default function Barchart({ budgetItem = [] }: GraphDetailsProps) {
           barSize={35}
         >
           <XAxis
-            dataKey="description"
+            dataKey="DescriptionTitle"
             axisLine={false}
             tickLine={false}
             tick={{ fill: "#6b7280", fontSize: 12 }}
@@ -72,9 +72,9 @@ export default function Barchart({ budgetItem = [] }: GraphDetailsProps) {
             formatter={(value) => [`R ${value}`, "Amount"]}
             labelStyle={{ fontWeight: 500, color: "#111827" }}
           />
-          <Bar dataKey="transactionAmount" radius={[4, 4, 0, 0]}>
+          <Bar dataKey="Amount" radius={[4, 4, 0, 0]}>
             {budgetItem.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={entry.color} />
+              <Cell key={`cell-${index}`} fill={entry.Color} />
             ))}
           </Bar>
         </BarChart>

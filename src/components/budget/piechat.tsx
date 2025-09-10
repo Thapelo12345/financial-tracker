@@ -25,9 +25,9 @@ import { ResponsiveContainer, Cell, Pie, PieChart } from 'recharts';
 // ];
 
 type details = {
-  description: string;
-  transactionAmount: number;
-  color: string;
+  DescriptionTitle: string;
+  Amount: number;
+  Color: string;
 };
 
 type GraphDetailsProps = {
@@ -48,10 +48,10 @@ export default function Piechart({ budgetItem = [], amount }: GraphDetailsProps)
               innerRadius={60}
               outerRadius={85}
               paddingAngle={5}
-              dataKey="transactionAmount"
+              dataKey="Amount"
             >
               {budgetItem.map((entry) => (
-                <Cell key={`cell-${entry.description}`} fill={entry.color} />
+                <Cell key={`cell-${entry.DescriptionTitle}`} fill={entry.Color} />
               ))}
             </Pie>
 
