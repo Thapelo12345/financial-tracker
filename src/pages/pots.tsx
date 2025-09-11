@@ -9,7 +9,7 @@ import { selectDialog } from "../state management/selectDialog";
 import { openCloseDialog } from "../state management/openCloseDialog";
 import { getMessage } from "../state management/dialogMessage";
 import { appUpdated } from "../state management/UpdateAllComponents";
-import AddItemBtn from "../components/ui/addItemBtn";
+// import AddItemBtn from "../components/ui/addItemBtn";
 
 export default function Pots() {
 
@@ -71,9 +71,9 @@ export default function Pots() {
   },[giftCard, saving, voucher])
 
   
-  const addPot = () => {
-    console.log("pot added!..")
-  }
+  // const addPot = () => {
+  //   console.log("pot added!..")
+  // }
 
   useEffect(() => {
 
@@ -109,7 +109,7 @@ export default function Pots() {
         <PotsCard title="Savings" amount={saving} getAmount={setSaving} />
         <PotsCard title="Voucher" amount={voucher} getAmount={setVoucher} />
         
-      <AddItemBtn tipText="Add custom pot" btnFunction={addPot} />
+      {/* <AddItemBtn tipText="Add custom pot" btnFunction={addPot} /> */}
       </div>
     </main>
   );
