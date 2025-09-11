@@ -23,10 +23,8 @@ interface user {
   avatar: string;
   name: string;
   email: string;
-  currentBalance: number;
   budgetAmount: number;
   income: number;
-  expense: number;
   transactionTotal: number;
   transactionExpense: number;
   budgetExpense: number;
@@ -37,7 +35,6 @@ interface user {
   vouchers: number;
   potsValue: number;
   pots: [];
-  graphDetails: [];
   transactions: [];
   paidBills: number;
   billsDue: number;
@@ -88,10 +85,8 @@ if(querySnapshot2.empty) {
           avatar: "",
           name: userName,
           email: email,
-          currentBalance: 0,
           budgetAmount: 0,
           income: 0,
-          expense: 0,
           transactionTotal: 0,
           transactionExpense: 0,
           budgetExpense: 0,
@@ -102,7 +97,6 @@ if(querySnapshot2.empty) {
           vouchers: 0,
           potsValue: 0,
           pots: [],
-          graphDetails: [],
           transactions: [],
           paidBills: 0,
           billsDue: 0,
@@ -130,7 +124,8 @@ else{
   store.dispatch(getMessage("Sorry This user Already Exist's"));
 }
 
-    } catch (error) {
+    } 
+    catch (error) {
       store.dispatch(selectDialog("error"));
       store.dispatch(getMessage("Sorry Something wrong with you credentails"));
       alert(error)

@@ -3,8 +3,10 @@ import LabelInputNumber from "../ui/submitionForm/labelInputNumber";
 import DropDown from "../ui/submitionForm/dropDown";
 import { useDispatch } from "react-redux";
 import { onOffSubmit } from "../../state management/openSubmition";
-import { useState } from "react";
+import { useState,  useEffect  } from "react";
 import AddTransaction from "./transactionFunctions/AddTransaction";
+import { useSelector } from 'react-redux';
+import type { RootState } from '../../state management/store';
 
 type Categories = string[];
 
@@ -26,11 +28,18 @@ const categories: Categories = [
 
 export default function TransactionSubmit() {
   const dispatch = useDispatch();
+  const checkUpdate = useSelector((state: RootState) => state.updateApp.updateApp);
+
   const [name, setName] = useState("");
   const [transactionType, setTransactionType] = useState("Income");
   const [amount, setAmount] = useState(0.0);
   const [description, setDescription] = useState("");
   const [selectedCategory, setCategory] = useState("Salary");
+
+  useEffect(()=>{
+    setTransactionType("Income")
+    setCategory("Salary")
+  },[checkUpdate])
 
   return (
     <div className="absolute w-screen h-screen overflow-y-auto">

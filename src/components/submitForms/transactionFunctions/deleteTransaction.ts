@@ -1,7 +1,10 @@
+import { db } from "../../../firebaseConfig";
+import { getDocs, collection, updateDoc, arrayRemove } from "firebase/firestore";
 import store from "../../../state management/store";
 import { selectDialog } from "../../../state management/selectDialog";
 import { openCloseDialog } from "../../../state management/openCloseDialog";
 import { getMessage } from "../../../state management/dialogMessage";
+import { appUpdated } from "../../../state management/UpdateAllComponents";
 
 type TransactObj = {
   transactionId: number;
@@ -16,42 +19,113 @@ type TransactObj = {
 type Props = {
   transactionId: number;
 };
-export default function DeleteTransaction({ transactionId }: Props) {
+export async function DeleteTransaction({ transactionId }: Props) {
   const id: number = transactionId;
   const data = sessionStorage.getItem("currentUser");
 
   if (data) {
     const user = JSON.parse(data);
-    const transactions: TransactObj[] = user.transactions;
-    const currentTransaction = transactions.find(
-      (item) => item.transactionId === id
-    );
 
-    if (currentTransaction) {
+    const crrTransaction: TransactObj = user.transactions.find((transaction:TransactObj)=> transaction.transactionId === id);
 
-      if (currentTransaction.transactionType === "Income") {
+    if(crrTransaction !== undefined) {
 
-        if(user.currentBalance >= currentTransaction.amount){
-            user.currentBalance -= currentTransaction.amount
-        }
+      store.dispatch(selectDialog("load"))
+      store.dispatch(openCloseDialog())
 
-        else{
-            store.dispatch(getMessage("Sorry expense cant be more than the current Balance, REMOVE AN EXPENSE FIRST"))
+      if(crrTransaction.transactionType === "Income"){
+        const newIncome = user.income - crrTransaction.amount
+        const newTransactionTotal = user.transactionTotal - crrTransaction.amount
+
+        try{
+          const getDocuments = await getDocs(collection(db, "users"))
+          const matchingUser = getDocuments.docs.find((doc)=> doc.data().email === user.email)
+
+          if(!matchingUser){
             store.dispatch(selectDialog("error"))
-            store.dispatch(openCloseDialog())
+           store.dispatch(getMessage("Sorry User credentials where not found"))
+           store.dispatch(openCloseDialog())
+          }
+          else{
+            await updateDoc(matchingUser.ref, {
+              income: Number(newIncome.toFixed(2)),
+              transactionTotal: Number(newTransactionTotal.toFixed(2)),
+              transactions: arrayRemove(crrTransaction)
+              // arrayRemove
+            })
+            .then(()=>{
+              user.income = Number(newIncome.toFixed(2))
+              user.transactionTotal = Number(newTransactionTotal.toFixed(2))
+
+              user.transactions.splice(user.transactions.indexOf(crrTransaction), 1)
+
+              sessionStorage.setItem("currentUser", JSON.stringify(user))
+
+              store.dispatch(appUpdated())
+              store.dispatch(getMessage("Transaction deleted successfully"))
+              store.dispatch(selectDialog("confirm"))
+
+              setTimeout(()=>{store.dispatch(openCloseDialog())}, 3000)
+            
+            })
+          }
         }
-      } 
-      
-      
-      
-      
-      else {
-        user.transactionExpense -= currentTransaction.amount;
-        user.currentBalance += currentTransaction.amount;
+
+        catch(error){
+          console.log(error)
+        }
+
+      }//end of traction type if
+      else{
+        const newTransactionExpense = user.transactionExpense - crrTransaction.amount
+
+        try{
+
+          const getDocuments = await getDocs(collection(db, "users"))
+          const matchingUser = getDocuments.docs.find((doc)=> doc.data().email === user.email)
+
+          if(!matchingUser){
+            store.dispatch(selectDialog("error"))
+            store.dispatch(getMessage("Sorry User credentials where not found"))
+            store.dispatch(openCloseDialog())
+          }
+
+          else{
+            await updateDoc(matchingUser.ref, {
+              transactionExpense: Number(newTransactionExpense.toFixed(2)),
+              transactions: arrayRemove(crrTransaction)
+            })
+            .then(()=>{
+              user.transactionExpense = Number(newTransactionExpense.toFixed(2))
+              user.transactions.splice(user.transactions.indexOf(crrTransaction),1)
+
+              sessionStorage.setItem("currentUser", JSON.stringify(user))
+
+              store.dispatch(appUpdated())
+              store.dispatch(getMessage("Transaction deleted successfully"))
+              store.dispatch(selectDialog("confirm"))
+
+              setTimeout(()=>{store.dispatch(openCloseDialog())}, 3000)
+            })
+            .catch(()=> console.log("failed to update"))
+          }
+        }
+        catch(error){console.log(error)}
       }
-      //change current balance or expense
-      //change income
-      // change transactionTotal
-    }
-  }
+
+    }//end of find crrTransaction if
+    else{
+      store.dispatch(selectDialog("error"))
+      store.dispatch(getMessage("Sorry User credentials where not found"))
+      store.dispatch(openCloseDialog())
+    }//end of find crrTransaction if
+
+  }//end of data if
+
+  else{
+    store.dispatch(selectDialog("error"))
+    store.dispatch(getMessage("User credentials not found"))
+    store.dispatch(openCloseDialog())
+  }//end of data else
+
 }

@@ -16,9 +16,11 @@ export default function Balances(){
 
     if(data){
       const currentUser = JSON.parse(data)
-      setCurrentBalance(currentUser.currentBalance)
+      const currentBalance = currentUser.transactionTotal - currentUser.transactionExpense
+      
+      setCurrentBalance(Number(currentBalance.toFixed(2)))
       setIncome(currentUser.income)
-      setExpense(currentUser.expense)
+      setExpense(currentUser.transactionExpense)
     }
   },[checkUpdate])
 

@@ -14,6 +14,7 @@ export default function Transactions() {
   const dispatch = useDispatch();
 
  const checkUpdate = useSelector((state: RootState) => state.updateApp.updateApp); 
+  const [transactionSurplus, setTransactionSurplus] = useState(0)
   const [totalAmount, setAmount] = useState(0);
   const [totalExpense, setExpense] = useState(0)
 
@@ -25,6 +26,9 @@ export default function Transactions() {
       const currentUser = JSON.parse(data)
       setAmount(currentUser.transactionTotal)
       setExpense(currentUser.transactionExpense)
+
+      const surplus = currentUser.transactionTotal -currentUser.transactionExpense 
+      setTransactionSurplus(Number(surplus.toFixed(2)))
     }
 
   },[checkUpdate])
@@ -43,6 +47,7 @@ export default function Transactions() {
       <div className="flex flex-col sm:flex-row justify-items-start w-full">
         <BalanceContainer activeClick={false} title="Total Income" amount={totalAmount} />
         <BalanceContainer activeClick={false} title="Tota Expense" amount={totalExpense} />
+        <BalanceContainer activeClick={false} title="Surplus" amount={transactionSurplus} />
      
 <AddItemBtn tipText="Add a Transaction" btnFunction={addTransaction} />
        

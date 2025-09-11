@@ -65,13 +65,24 @@ export default function BalanceContainer({ activeClick, title, amount, actOnClic
       }}
     >
 
-      <h4 className="group-hover:text-white text-black text-xs font-light">
+      <h4 
+      // className="group-hover:text-white text-black text-xs font-light"
+      className={`
+        ${amount >= 0 ? "text-black" : "text-red-600"}
+        group-hover:text-white text-xs font-light`
+      }
+      >
         {title}
       </h4>
       {
         !activateInput 
         &&
-        <h2 className="group-hover:text-white text-black font-medium text-lg truncate">
+        <h2
+        //  className="group-hover:text-white text-black font-medium text-lg truncate"
+        className={`group-hover:text-white
+          ${amount >= 0 ? "text-black" : "text-red-600"}
+          font-medium text-lg truncate`}
+         >
         R {amount}
       </h2>
 

@@ -114,17 +114,13 @@ export default async function AddTransaction({
 
           return true;
         } else {
-          if (currentUser.expense <= currentUser.currentBalance) {
-            const expense = currentUser.expense + Amount;
             const transactionExpense = currentUser.transactionExpense + Amount;
             const currentBalance = currentUser.currentBalance - Amount;
 
             const transactionExpenseRounded =
               Math.round(transactionExpense * 100) / 100;
             const roundedBalance = Math.round(currentBalance * 100) / 100;
-            const roundedExpense = Math.round(expense * 100) / 100;
 
-            currentUser.expense = roundedExpense;
             currentUser.currentBalance = roundedBalance;
             currentUser.transactionExpense = transactionExpenseRounded;
             currentUser.transactions.push(newTransaction);
@@ -140,19 +136,12 @@ export default async function AddTransaction({
 
             await updateDoc(matchingUser.ref, {
               currentBalance: roundedBalance,
-              expense: roundedExpense,
               transactionExpense: transactionExpenseRounded,
             });
-          } else {
-            store.dispatch(
-              getMessage("Your expense cant be more than the current balance")
-            );
-            store.dispatch(selectDialog("error"));
-          }
+          
+        
         }
       } catch (error) {
-        //end of try
-
         console.log(error);
       }
     } //end of if
@@ -160,6 +149,7 @@ export default async function AddTransaction({
       alert("No data was found!..");
     }
   } else {
-    alert("Please insert all fields. Category and Type");
+    console.log("Please insert all fields. Category and Type");
+    console.log(`here is category : ${Category} and  type: ${TransactionType}`)
   }
 } //end of add transaction

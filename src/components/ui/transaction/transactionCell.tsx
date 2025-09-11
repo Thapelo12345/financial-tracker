@@ -2,7 +2,7 @@
 import Avatar from "../avatar";
 import { motion } from "framer-motion";
 import { TrashIcon } from "@heroicons/react/20/solid";
-import DeleteTransaction from "../../submitForms/transactionFunctions/deleteTransaction";
+import { DeleteTransaction } from "../../submitForms/transactionFunctions/deleteTransaction";
 import { useGSAP } from '@gsap/react'
 import gsap from "gsap"
 
