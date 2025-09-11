@@ -11,9 +11,9 @@ type Prop = {
 };
 
 type details = {
-  description: string;
-  transactionAmount: number;
-  color: string;
+  DescriptionTitle: string;
+  Amount: number;
+  Color: string;
 };
 
 export default function MiniBudget({ animate }: Prop) {
@@ -27,7 +27,7 @@ export default function MiniBudget({ animate }: Prop) {
 
     if(data){
       const user = JSON.parse(data)
-      setMiniBudget(user.graphDetails)
+      setMiniBudget(user.budgetExpenses)
       setAmount(user.budgetAmount)
     }
   },[checkUpdate])

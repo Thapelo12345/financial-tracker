@@ -3,28 +3,6 @@ import { TrashIcon } from "@heroicons/react/20/solid";
 import { deleteBudgetExpense } from "../submitForms/budgetFunctions/deleteBudgetExpense";
 import gsap from "gsap";
 
-// const graphTransaction = [
-//   {
-//     description: "Entertainment",
-//     transactionAmount: 54.78,
-//     color: "pink",
-//   },
-//   {
-//     description: "Bills",
-//     transactionAmount: 74.78,
-//     color: "lime",
-//   },
-//   {
-//     description: "Dining out",
-//     transactionAmount: 244.43,
-//     color: "cyan",
-//   },
-//   {
-//     description: "Personal care",
-//     transactionAmount: 80.7,
-//     color: "purple",
-//   },
-// ];
 
 type details = {
   budgetExpenseId: number;

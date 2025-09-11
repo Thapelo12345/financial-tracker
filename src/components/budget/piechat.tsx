@@ -1,29 +1,6 @@
 
 import { ResponsiveContainer, Cell, Pie, PieChart } from 'recharts';
 
-// const graphTransaction = [
-//   {
-//     description: 'Entertainment',
-//     transactionAmount: 54.78,
-//     color: 'pink'
-//   },
-//   {
-//     description: 'Bills',
-//     transactionAmount: 74.78,
-//     color: 'lime'
-//   },
-//   {
-//     description: 'Dining out',
-//     transactionAmount: 244.43,
-//     color: 'cyan',
-//   },
-//   {
-//     description: 'Personal care',
-//     transactionAmount: 80.70,
-//     color: 'purple'
-//   }
-// ];
-
 type details = {
   DescriptionTitle: string;
   Amount: number;

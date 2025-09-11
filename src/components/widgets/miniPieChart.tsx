@@ -1,32 +1,9 @@
 import { ResponsiveContainer, Cell, Pie, PieChart } from 'recharts';
 
-// const graphTransaction = [
-//   {
-//     description: 'Entertainment',
-//     transactionAmount: 54.78,
-//     color: 'pink'
-//   },
-//   {
-//     description: 'Bills',
-//     transactionAmount: 74.78,
-//     color: 'lime'
-//   },
-//   {
-//     description: 'Dining out',
-//     transactionAmount: 244.43,
-//     color: 'cyan',
-//   },
-//   {
-//     description: 'Personal care',
-//     transactionAmount: 80.70,
-//     color: 'purple'
-//   }
-// ];
-
 type details = {
-  description: string;
-  transactionAmount: number;
-  color: string;
+  DescriptionTitle: string;
+  Amount: number;
+  Color: string;
 };
 
 type GraphDetailsProps = {
@@ -46,10 +23,10 @@ export default function MiniPiechart({ budgetItem = [], amount }: GraphDetailsPr
               innerRadius={58}
               outerRadius={85}
               paddingAngle={5}
-              dataKey="transactionAmount"
+              dataKey="Amount"
             >
               {budgetItem.map((entry) => (
-                <Cell key={`cell-${entry.description}`} fill={entry.color} />
+                <Cell key={`cell-${entry.DescriptionTitle}`} fill={entry.Color} />
               ))}
             </Pie>
 
