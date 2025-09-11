@@ -6,7 +6,7 @@ type Prop ={
 }
 export default function LabelInputNumber({ title, inputType, setValue}:Prop){
     return(
-        <div className="flex flex-col items-start w-[90%] m-2">
+        <div className="flex flex-col items-start w-fit m-2">
 
             <label
             className={`w-full text-black font-serif font-extrabold  rounded-tr-lg rounded-br-lg m-2 text-lg p-2`}

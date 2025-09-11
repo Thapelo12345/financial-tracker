@@ -1,8 +1,8 @@
 type Props = {
   title: string;
   items: string[];
-  currentValue: string;
-  setValue: (value: string) => void;
+  currentValue?: string;
+  setValue: (value: string | number) => void;
 };
 
 export default function DropDown({ title, items, currentValue, setValue }: Props) {

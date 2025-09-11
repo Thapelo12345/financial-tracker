@@ -6,11 +6,12 @@ import { useDispatch } from "react-redux";
 import { onOffSubmit } from "../../state management/openSubmition";
 import { useState } from "react";
 
-type Bills = string[];
-type Frequent = string[];
-type Status = string[];
+// type Bills = string[];
+// type Frequent = string[];
+// type Status = string[];
+type SelectioDropDown = string[];
 
-const bills: Bills = [
+const bills: SelectioDropDown = [
   "Housing",
   "Utilities",
   "Insurance",
@@ -22,9 +23,14 @@ const bills: Bills = [
   "Business Expenses",
 ];
 
-const frenquent: Frequent = ["daily", "weekly", "monthly", "yearly"];
-
-const status: Status = ["active", "pause", "cancel", "inactive"];
+const frenquent: SelectioDropDown = ["weekly", "monthly", "yearly"];
+const payBefore: SelectioDropDown = [
+  "number of days",
+  "day every month",
+  "date",
+];
+const status: SelectioDropDown = ["active", "pause", "cancel", "inactive"];
+const duration: SelectioDropDown = ["continously", "Set end time"]
 
 export default function SubmitBills() {
   const dispatch = useDispatch();
@@ -35,6 +41,9 @@ export default function SubmitBills() {
   const [state, setStatus] = useState("inactive");
   const [amount, setAmount] = useState(0);
   const [date, setDate] = useState("");
+  const [payBeforeValue, setPayBeforeValue] = useState<string | number>(
+    payBefore[0]
+  );
   const [startDate, setStateDate] = useState("");
 
   return (
@@ -51,13 +60,18 @@ export default function SubmitBills() {
           setValue={setName}
         />
 
-        <LabelInputNumber
-          inputType="number"
-          title="Amount"
-          setValue={setAmount}
+        <LabelInputText
+          stateValue={name}
+          title="Description"
+          inputType="tex"
+          setValue={setName}
         />
 
-        <DateInput title="Due Date" state={date} setValue={setDate} />
+        <LabelInputNumber
+          inputType="number"
+          title="Installment amount"
+          setValue={setAmount}
+        />
 
         <DateInput
           title="Start Date"
@@ -65,17 +79,67 @@ export default function SubmitBills() {
           setValue={setStateDate}
         />
 
-        <div className="flex flex-col sm:flex-row items-center justify-evenly w-full">
-
-          <DropDown title="Category" items={bills} setValue={setCategory} />
+        <div className="flex flex-col sm:flex-row flex-wrap items-center justify-evenly w-full">
+          <DropDown
+            title="Category"
+            items={bills}
+            setValue={(value) => setCategory(value as string)}
+          />
 
           <DropDown
             title="Frenquently"
             items={frenquent}
-            setValue={setFrenquently}
+            setValue={(value) => setFrenquently(value as string)}
           />
 
-          <DropDown title="Status" items={status} setValue={setStatus} />
+          <DropDown
+            title="Duration"
+            items={duration}
+            setValue={(value) => setFrenquently(value as string)}
+          />
+
+          <DropDown
+            title="Status"
+            items={status}
+            setValue={(value) => setStatus(value as string)}
+          />
+        </div>
+
+        <div className="flex flex-col sm:flex-row items-center justify-evenly w-full">
+          <DropDown
+            title="Payment before"
+            items={payBefore}
+            setValue={setPayBeforeValue}
+          />
+
+          {payBeforeValue === "number of days" && (
+            <div className="w-1/2 h-full mt-13">
+              <LabelInputNumber
+                inputType="number"
+                title="number of days"
+                setValue={setAmount}
+              />
+            </div>
+          )}
+
+          {payBeforeValue === "day every month" && (
+            <div className="w-1/2 h-full mt-13">
+              <LabelInputNumber
+                inputType="number"
+                title="Day very month"
+                setValue={setAmount}
+              />
+            </div>
+          )}
+          {payBeforeValue === "date" && (
+            <div className="w-1/2 h-full mt-13">
+              <DateInput
+                title="Due date"
+                state={startDate}
+                setValue={setStateDate}
+              />
+            </div>
+          )}
         </div>
 
         <div className="flex flex-row items-center justify-evenly w-full p-2">

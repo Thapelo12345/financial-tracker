@@ -61,7 +61,7 @@ export default function TransactionSubmit() {
           setCategory("");
           setTransactionType("");
         }}
-        className="flex flex-col w[70%] md:w-1/2 items-center bg-[whitesmoke] mt-10 self-center justify-self-center mb-24 p-2 rounded-lg overflow-x-hidden"
+        className="flex flex-col w[70%] md:w-1/2 items-start bg-[whitesmoke] mt-10 self-center justify-self-center mb-24 p-2 rounded-lg overflow-x-hidden"
       >
         <h1 className="text-black/50 text-2xl font-serif text-center font-bold">
           Transaction
@@ -79,10 +79,11 @@ export default function TransactionSubmit() {
           title="amount"
           setValue={setAmount}
         />
+       
 
         <label className="text-black w-full font-serif rounded-tr-lg rounded-br-lg font-extrabold">
           <textarea
-            className="text-xs ml-12 bg-white/20 border-0 rounded-lg h-15 w-md focus:outline-0 p-2"
+            className="text-xs ml-6 bg-white/20 border-0 rounded-lg h-15 w-md focus:outline-0 p-2"
             style={{
               boxShadow: "inset 2px 2px 5px #BABECC, inset -5px -5px 10px #FFF",
             }}
