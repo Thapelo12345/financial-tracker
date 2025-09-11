@@ -1,5 +1,6 @@
 import { useGSAP } from "@gsap/react";
 import { TrashIcon } from "@heroicons/react/20/solid";
+import { deleteBudgetExpense } from "../submitForms/budgetFunctions/deleteBudgetExpense";
 import gsap from "gsap";
 
 // const graphTransaction = [
@@ -62,7 +63,7 @@ export default function GraphDetails({ budgetItem = [] }: GraphDetailsProps) {
       {budgetItem.map((details) => (
         <div
           key={details.DescriptionTitle}
-          className="details-animation flex flex-row items-center justify-evenly h-8 ml-2"
+          className="details-animation flex flex-row items-center justify-evenly h-8 ml-2 m-2"
         >
         <div
         className="flex flex-row items-center justify-evenly rounded-sm h-full bg-white p-2 shadow-lg m-2"
@@ -81,7 +82,9 @@ export default function GraphDetails({ budgetItem = [] }: GraphDetailsProps) {
         </div>
 
         <button
-        value={details.budgetExpenseId}
+        onClick={()=>{
+          deleteBudgetExpense(details.budgetExpenseId)
+        }}
         >
 <TrashIcon className="w-4 h-4 text-red-500" />
         </button>
