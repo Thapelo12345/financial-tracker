@@ -5,28 +5,27 @@ import BillLabel from "../ui/billLabel";
 import { motion } from "framer-motion";
 
 type Props = {
-  Name: string;
-  Amount: number;
-  DueDate: string;
-  Frequency: string;
-  StartDate: string;
-  Category: string;
-  Status: string;
-  AutoPay: boolean;
-  PaymentMethod: string;
-  ReminderDaysBefore: number;
+  title: string;
+  description: string;
+  amount: number;
+  startDate: string;
+  category: string;
+  // duration: string;
+  frenquently: string;
+  status: string;
+  paymentBeforeType:string
+  paymentBeforeValue:string | number
 };
 export default function BillCard({
-  Name,
-  Amount,
-  DueDate,
-  Frequency,
-  StartDate,
-  Category,
-  Status,
-  AutoPay,
-  PaymentMethod,
-  ReminderDaysBefore,
+  title,
+  amount,
+  startDate,
+  category,
+  // duration,
+  frenquently,
+  status,
+  paymentBeforeType,
+  paymentBeforeValue,
 }: Props) {
   useGSAP(() => {
     gsap.fromTo(
@@ -63,8 +62,8 @@ export default function BillCard({
     >
       {/* name and amount */}
       <div className="name-amount rounded-md flex flex-row justify-between w-[95%] overflow-y-auto p-2 m-2">
-        <h2 className="text-white text-lg text-start font-semibold">{Name}</h2>
-        <h2 className="text-white font-serif text-end">R {Amount}</h2>
+        <h2 className="text-white text-lg text-start font-semibold">{title}</h2>
+        <h2 className="text-white font-serif text-end">R {amount}</h2>
       </div>
 
       {/* dates and status */}
@@ -72,40 +71,29 @@ export default function BillCard({
         {/* first section */}
 
         <div className="m-1 h-52 w-1/2 flex flex-col pt-2">
-          <BillLabel title="Due Date" value={DueDate} />
-          <BillLabel title="Start Date" value={StartDate} />
+          <BillLabel title="Due Date" value={"2025-09-11"} />
+          <BillLabel title="Start Date" value={startDate} />
           <label className="text-black/50 text-font-bold text-xs p-2">
             status:
             <span
               className={`border border-white text-white font-bold p-1 rounded-md ${
-                Status === "inactive" ? "bg-red-500" : "bg-green-300"
+                status === "inactive" ? "bg-red-500" : "bg-green-300"
               }`}
             >
-              {Status}
+              {status}
             </span>
           </label>
-          <BillLabel title="Payment" value={PaymentMethod} />
+          <BillLabel title="Payment" value={paymentBeforeType} />
         </div>
 
         {/* second section  */}
         <div className="m-1 h-52 w-1/2 flex flex-col">
-          <BillLabel title="Frenquently" value={Frequency} />
-          <BillLabel title="Category" value={Category} />
+          <BillLabel title="Frenquently" value={frenquently} />
+          <BillLabel title="Category" value={category} />
 
-          <label className="text-black/30 text-font-bold text-xs p-2">
-            Auto pay:
-            <span
-              className={`text-white font-bold p-2 rounded-md ${
-                AutoPay ? "bg-blue-400" : "bg-orange-500"
-              }`}
-            >
-              {AutoPay ? "Enable" : "Disable"}
-            </span>
-          </label>
-
-          <BillLabel title="Due Date" value={DueDate} />
+          <BillLabel title="Due Date" value={"2025-09-11"} />
           <label className="text-black/70 text-font-bold text-xs p-2">
-            Reminder: <span>{ReminderDaysBefore} Days</span>
+            Reminder: <span>{paymentBeforeValue} Days</span>
           </label>
         </div>
       </div>

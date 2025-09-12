@@ -1,3 +1,4 @@
+import { GetDate } from "../getcurrentDate";
 import { updateDoc, arrayUnion, getDocs, collection } from "firebase/firestore";
 import { db } from "../../../firebaseConfig";
 import { openCloseDialog } from "../../../state management/openCloseDialog";
@@ -27,12 +28,6 @@ export default async function AddTransaction({
     TransactionType !== "" &&
     Description !== ""
   ) {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, "0");
-    const day = String(today.getDate()).padStart(2, "0");
-
-    const formattedDate = `${year}-${month}-${day}`;
 
     type TransactObj = {
       name: string;
@@ -49,7 +44,7 @@ export default async function AddTransaction({
       category: Category,
       description: Description,
       transactionType: TransactionType,
-      date: formattedDate,
+      date: GetDate(),
     };
 
     const data = sessionStorage.getItem("currentUser");
