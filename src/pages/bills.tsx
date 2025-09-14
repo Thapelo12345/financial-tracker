@@ -33,7 +33,7 @@ export default function Bills() {
   }, []);
 
   return (
-    <main className="m-2 p-4 w-screen h-screen overflow-y-auto">
+    <main className="m-2 p-4 pb-15 md:pb-4 w-screen h-screen overflow-y-auto">
       <PageHeader title="Recurring Bills" />
       <div className="flex flex-row flex-wrap justify-start">
         <BalanceContainer activeClick={false} title="Paid Bills" amount={paidBills} />

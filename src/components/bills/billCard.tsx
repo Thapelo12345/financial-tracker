@@ -1,9 +1,17 @@
-import { PencilSquareIcon, TrashIcon } from "@heroicons/react/20/solid";
+import { TrashIcon } from "@heroicons/react/20/solid";
 import { useGSAP } from "@gsap/react";
+import { useState } from "react";
 import gsap from "gsap";
-import BillLabel from "../ui/billLabel";
+// import BillLabel from "../ui/billLabel";
+import BillCardHeader from "../ui/bills/billCardHeader";
 import { motion } from "framer-motion";
+import BillTables from "../ui/bills/billTables";
+import { useContext } from "react";
+import AutoPayButton from "../ui/bills/autPayToggle";
+import { BillContext } from "../submitForms/billsFunctions/billContext";
+import { getNextPaymentDate } from "./billGetnextPayment";
 
+/*
 type Props = {
   title: string;
   description: string;
@@ -16,17 +24,13 @@ type Props = {
   paymentBeforeType:string
   paymentBeforeValue:string | number
 };
-export default function BillCard({
-  title,
-  amount,
-  startDate,
-  category,
-  // duration,
-  frenquently,
-  status,
-  paymentBeforeType,
-  paymentBeforeValue,
-}: Props) {
+*/
+export default function BillCard() {
+  const theme = useContext(BillContext);
+  const [autoPay, setAutoPay] = useState(true);
+  // strat date - due date - frenqulty
+  const nextDueDate = getNextPaymentDate("2025-0813", "2025-10-10", "monthly")
+
   useGSAP(() => {
     gsap.fromTo(
       ".bill-card",
@@ -39,74 +43,81 @@ export default function BillCard({
       {
         scale: 1,
         opacity: 1,
-        boxShadow: "1px 7px 10px rgba(0,0,0,0.5)",
+        boxShadow: "1px 7px 10px rgba(0,0,0,0.5), inset 2px 1px 5px black",
         stagger: 0.2,
       }
     );
   });
 
   return (
-    <motion.div 
-    className="bill-card bg-gradient-to-b from-blue-400 to-white shadow-2xl flex flex-col m-2 w-full sm:w-80 lg:w-[34%] p-1 rounded-lg"
-    whileHover={{
-      scale: 1.04,
-      boxShadow: "0 10px 40px rgba(0, 0, 0, 0.6)",
-      zIndex: 2
-    }}
-
-    transition={{
-      duration: 0.2,
-      type: "tween",
-      ease: "easeInOut",
-    }}
+    <motion.div
+      className="bill-card border-5 border-white flex flex-col m-2 w-[90%] sm:max-w-100 p-1 rounded-lg"
+      style={{
+        backgroundColor: theme.backGround,
+        boxShadow: "0px 1px 10px rgba(0, 0, 0, 0.5),inset 2px 1px 5px black",
+      }}
     >
-      {/* name and amount */}
-      <div className="name-amount rounded-md flex flex-row justify-between w-[95%] overflow-y-auto p-2 m-2">
-        <h2 className="text-white text-lg text-start font-semibold">{title}</h2>
-        <h2 className="text-white font-serif text-end">R {amount}</h2>
+      <BillCardHeader />
+      <BillTables  category = "Dining" duration = "continuesly" dueDate = {nextDueDate} startDate = {"2025-08-13"} frenquently = "weekly"/>
+
+      <div className="flex flex-row w-[85%] justify-between p-2">
+        <label
+          className="text-white font-extrabold text-sm p-2"
+          style={{ textShadow: "1px 1px 5px black" }}
+        >
+          Auto Pay
+        </label>
+        <AutoPayButton pay={autoPay} setAutoPay={setAutoPay} />
       </div>
 
-      {/* dates and status */}
-      <div className="flex flex-row">
-        {/* first section */}
+      <div
+        className={`flex flex-row justify-between ${
+          autoPay ? "hidden" : "block"
+        } p-2`}
+      >
+        <motion.label
+          className="text-white text-xs font-extrabold p-1 w-fit h-fit rounded-lg border-2 border-white"
+          style={{
+            backgroundColor: "hsl(0 100% 58.3%)",
+            boxShadow: "1px 1px 1px black, 1px 5px 10px red",
+            textShadow: "1px 1px 1px black",
+          }}
+          animate={{
+            scale: [0.95, 1],
+            boxShadow: [
+              "1px 1px 1px red, inset 1px 1px 5px white",
+              "1px 5px 20px red, inset 1px 1px 5px white",
+            ],
+          }}
+          transition={{
+            duration: 1.5,
+            repeat: Infinity,
+            repeatType: "reverse",
+            ease: "linear",
+          }}
+        >
+          PEDDING PAYMENT
+        </motion.label>
 
-        <div className="m-1 h-52 w-1/2 flex flex-col pt-2">
-          <BillLabel title="Due Date" value={"2025-09-11"} />
-          <BillLabel title="Start Date" value={startDate} />
-          <label className="text-black/50 text-font-bold text-xs p-2">
-            status:
-            <span
-              className={`border border-white text-white font-bold p-1 rounded-md ${
-                status === "inactive" ? "bg-red-500" : "bg-green-300"
-              }`}
-            >
-              {status}
-            </span>
-          </label>
-          <BillLabel title="Payment" value={paymentBeforeType} />
-        </div>
-
-        {/* second section  */}
-        <div className="m-1 h-52 w-1/2 flex flex-col">
-          <BillLabel title="Frenquently" value={frenquently} />
-          <BillLabel title="Category" value={category} />
-
-          <BillLabel title="Due Date" value={"2025-09-11"} />
-          <label className="text-black/70 text-font-bold text-xs p-2">
-            Reminder: <span>{paymentBeforeValue} Days</span>
-          </label>
-        </div>
+        <button
+          className="text-sm  border-2 border-white rounded-lg p-1 cursor-pointer"
+          style={{ boxShadow: "1px 1px 1px black, inset 1px 1px 5px black" }}
+        >
+          <span className="text-black m-1">Pedding</span>
+        </button>
       </div>
-      
-      {/* buttons holder */}
-      <div className="w- full flex flex-row justify-start">
-        <button className="m-2">
-        <TrashIcon className="w-5 h-5 text-red-500" />
-      </button>
 
-      <button className="m-2">
-        <PencilSquareIcon className="w-5 h-5 text-green-500" />
-      </button>
+      <div className=""></div>
+      {/* descriptio section */}
+      <p className="w-full text-xs text-gray-700 p-2 borde-2 border-white">
+        i had a greate day day dining with my friends today, We shared a hapapy
+        and wonderfuly meal it was all love and play.
+      </p>
+
+      <div className="m-2">
+        <button>
+          <TrashIcon className="w-4 h-4 text-red-500" />
+        </button>
       </div>
     </motion.div>
   );

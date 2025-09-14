@@ -40,7 +40,7 @@ export default function Transactions() {
 
   return (
     <main
-      className="flex flex-col w-screen h-screen m-2 p-4 pb-10 overflow-y-auto"
+      className="flex flex-col w-screen h-screen m-2 p-4 pb-15 md:pb-4overflow-y-auto"
     >
       <PageHeader title="Transactions" />
 

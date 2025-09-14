@@ -22,8 +22,7 @@ const bills: SelectioDropDown = [
 ];
 
 const frenquentArray: SelectioDropDown = ["weekly", "monthly", "yearly"];
-const payBefore: SelectioDropDown = ["number of days","day every month","date",];
-const statusArray: SelectioDropDown = ["active", "pause", "cancel", "inactive"];
+const statusArray: SelectioDropDown = ["active", "pause", "inactive"];
 const durations: SelectioDropDown = ["continously", "Set end time"]
 
 export default function SubmitBills() {
@@ -36,9 +35,8 @@ export default function SubmitBills() {
   const [frenquently, setFrenquently] = useState(frenquentArray[0]);
   const [status, setStatus] = useState(statusArray[0]);
   const [amount, setAmount] = useState(0);
-  const [duePaymentType, setDuePaymentType] = useState("number of days")
-  const [payBeforeValue, setPayBeforeValue] = useState<string | number>(0);
   const [startDate, setStateDate] = useState("");
+  const [dueDate, setDuedate] = useState("")
 
   return (
     <div className="absolute w-screen h-screen overflow-y-auto z-50">
@@ -52,12 +50,11 @@ export default function SubmitBills() {
           description,
           amount,
           startDate,
+          dueDate,
           category,
           duration,
           frenquently,
           status,
-          duePaymentType,
-          payBeforeValue
         )
       }}
       >
@@ -90,6 +87,11 @@ export default function SubmitBills() {
           state={startDate}
           setValue={setStateDate}
         />
+        <DateInput
+          title="Due Date"
+          state={dueDate}
+          setValue={setDuedate}
+        />
 
         <div className="flex flex-col sm:flex-row flex-wrap items-center justify-evenly w-full">
           <DropDown
@@ -115,43 +117,6 @@ export default function SubmitBills() {
             items={statusArray}
             setValue={(value) => setStatus(value as string)}
           />
-        </div>
-
-        <div className="flex flex-col sm:flex-row items-start justify-start w-full overflow-auto">
-          <DropDown
-            title="Payment before"
-            items={payBefore}
-            setValue={(value) => setDuePaymentType(value as string)}
-          />
-
-          {duePaymentType === "number of days" && (
-            <div className="w-1/2 h-full mt-12">
-              <LabelInputNumber
-                inputType="number"
-                title="number of days"
-                setValue={setPayBeforeValue}
-              />
-            </div>
-          )}
-
-          {duePaymentType === "day every month" && (
-            <div className="w-1/2 h-full mt-12">
-              <LabelInputNumber
-                inputType="number"
-                title="Day very month"
-                setValue={setPayBeforeValue}
-              />
-            </div>
-          )}
-          {duePaymentType === "date" && (
-            <div className="w-1/2 h-full mt-12">
-              <DateInput
-                title="Due date"
-                state={startDate}
-                setValue={setPayBeforeValue}
-              />
-            </div>
-          )}
         </div>
 
         <div className="flex flex-row items-center justify-evenly w-full p-2">

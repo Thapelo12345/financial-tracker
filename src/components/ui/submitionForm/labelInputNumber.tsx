@@ -14,6 +14,7 @@ export default function LabelInputNumber({ title, inputType, setValue}:Prop){
 <input 
             // value={stateValue}
             type={inputType}
+            min="0"
             step={0.01}
             placeholder={title}
             onChange={(e) => setValue(Number(e.target.value))}

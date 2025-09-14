@@ -4,8 +4,14 @@ type Props = {
 };
 export default function BillLabel({ title, value }: Props) {
   return (
-    <label className="text-black/50 text-font-bold text-xs p-2">
-      {title} :<span className="text-black font-light"> {value}</span>
+    <label className="text-white font-bold text-sm p-2"
+    style={{textShadow:"1px 0px 5px black"}}>
+      {title} : <span 
+      className="text-black font-bold"
+      style={{textShadow: "0px 0px 0px black"}}
+      > 
+      {value}
+      </span>
     </label>
   );
 }

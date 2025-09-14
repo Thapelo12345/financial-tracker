@@ -24,8 +24,6 @@ export default function LabelInputText({title, inputType, stateValue, setValue}:
 
             </label>
 
-           
-
         </div>
     )
 }

@@ -99,7 +99,7 @@ else{
   };
 
   return (
-    <main className="m-2 p-4 w-screen h-screen overflow-y-auto">
+    <main className="m-2 p-4 pb-15 md:pb-4 w-screen h-screen overflow-y-auto">
       <PageHeader title="Budget" />
 
       <div className="flex flex-col md:flex-row w-full justify-evenly p-2">

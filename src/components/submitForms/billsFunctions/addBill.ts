@@ -13,12 +13,11 @@ interface Bill {
   description: string;
   amount: number;
   startDate: string;
+  dueDate: string;
   category: string;
   duration: string;
   frenquently: string;
   status: string;
-  paymentBeforeType:string
-  paymentBeforeValue:string | number
 }
 
 export async function AddBill(
@@ -26,12 +25,11 @@ export async function AddBill(
   billDescription: string,
   billAmount: number,
   billStartDate: string,
+  billDueDate: string,
   billCategory: string,
   billDuration: string,
   billFrenquently: string,
   billStatus: string,
-  billPaymentBeforeType:string,
-  billpaymentBeforeValue:string | number
  
 ) {
   store.dispatch(selectDialog("load"));
@@ -40,7 +38,8 @@ export async function AddBill(
   const data = sessionStorage.getItem("currentUser");
 
   if (data) {
-    const crrUser = JSON.parse(data);
+ 
+      const crrUser = JSON.parse(data);
     const billId = crrUser.recurringBills.length + 1;
 
     const newBill: Bill = {
@@ -49,12 +48,11 @@ export async function AddBill(
       description: billDescription,
       amount: billAmount,
       startDate: billStartDate === "" ? GetDate() : billStartDate,
+      dueDate: billDueDate,
       category: billCategory,
       duration: billDuration,
       frenquently: billFrenquently,
       status: billStatus,
-      paymentBeforeType: billPaymentBeforeType,
-      paymentBeforeValue: billpaymentBeforeValue
     };
 
     try{
@@ -83,6 +81,7 @@ export async function AddBill(
     }
 
     catch(error){console.log(error)}
+
   } //end of data if
   else {
     store.dispatch(getMessage("User credentials not found"));
