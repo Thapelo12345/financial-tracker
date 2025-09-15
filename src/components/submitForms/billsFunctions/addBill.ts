@@ -1,11 +1,13 @@
 
 import { GetDate } from "../getcurrentDate";
+import { validatePaymentIntervalStrict } from "../../bills/billGetnextPayment";
 import { db } from "../../../firebaseConfig";
 import { getDocs, collection, updateDoc, arrayUnion } from "firebase/firestore";
 import store from "../../../state management/store";
 import { selectDialog } from "../../../state management/selectDialog";
 import { openCloseDialog } from "../../../state management/openCloseDialog";
 import { getMessage } from "../../../state management/dialogMessage";
+import { appUpdated } from "../../../state management/UpdateAllComponents";
 
 interface Bill {
   id: number;
@@ -14,10 +16,14 @@ interface Bill {
   amount: number;
   startDate: string;
   dueDate: string;
+  endDate: string;
   category: string;
   duration: string;
   frenquently: string;
   status: string;
+  autoPay: boolean;
+  settledBill: boolean;
+  daysLeft: number,
 }
 
 export async function AddBill(
@@ -26,11 +32,11 @@ export async function AddBill(
   billAmount: number,
   billStartDate: string,
   billDueDate: string,
+  billEndDate: string,
   billCategory: string,
   billDuration: string,
   billFrenquently: string,
   billStatus: string,
- 
 ) {
   store.dispatch(selectDialog("load"));
   store.dispatch(openCloseDialog());
@@ -39,9 +45,12 @@ export async function AddBill(
 
   if (data) {
  
-      const crrUser = JSON.parse(data);
+    const crrUser = JSON.parse(data);
     const billId = crrUser.recurringBills.length + 1;
+    const validDuration = validatePaymentIntervalStrict(billStartDate, billDueDate)
 
+      if( validDuration === billDuration || validDuration === "custom" ){
+        
     const newBill: Bill = {
       id: billId,
       title: billTitle,
@@ -49,10 +58,14 @@ export async function AddBill(
       amount: billAmount,
       startDate: billStartDate === "" ? GetDate() : billStartDate,
       dueDate: billDueDate,
+      endDate: billEndDate,
       category: billCategory,
       duration: billDuration,
       frenquently: billFrenquently,
       status: billStatus,
+      autoPay: true,
+      settledBill: true,
+      daysLeft: 0
     };
 
     try{
@@ -73,6 +86,7 @@ export async function AddBill(
 
                 store.dispatch(getMessage("Recurring bill added successfully"))
                 store.dispatch(selectDialog("confirm"))
+                store.dispatch(appUpdated())
 
                 setTimeout(()=>{store.dispatch(openCloseDialog())}, 2000)
             })
@@ -81,6 +95,19 @@ export async function AddBill(
     }
 
     catch(error){console.log(error)}
+
+      }// end of validDuration if
+
+else{
+   if(validDuration === "invalid"){
+        store.dispatch(getMessage("Your start date and due date, are not weekly , monthly or yearly payments period!"))
+        store.dispatch(selectDialog("error"))
+   }
+   else{
+    store.dispatch(getMessage("Please Set frenquently to : " + validDuration))
+    store.dispatch(selectDialog("error"))
+   }
+}//end of validDuration else
 
   } //end of data if
   else {

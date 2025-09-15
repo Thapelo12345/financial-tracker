@@ -90,7 +90,7 @@ export default async function AddTransaction({
           currentUser.income = incomeRounded;
           currentUser.transactionTotal = transactionTaotalRounded;
           currentUser.transactions.push(newTransaction);
-          currentUser.date = formattedDate;
+          currentUser.date = GetDate();
           sessionStorage.setItem("currentUser", JSON.stringify(currentUser));
 
           store.dispatch(getMessage("Transaction added successfully!"));

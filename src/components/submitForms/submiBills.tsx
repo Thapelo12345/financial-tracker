@@ -37,6 +37,7 @@ export default function SubmitBills() {
   const [amount, setAmount] = useState(0);
   const [startDate, setStateDate] = useState("");
   const [dueDate, setDuedate] = useState("")
+  const [endDate, setEndDate] = useState("")
 
   return (
     <div className="absolute w-screen h-screen overflow-y-auto z-50">
@@ -51,6 +52,7 @@ export default function SubmitBills() {
           amount,
           startDate,
           dueDate,
+          endDate,
           category,
           duration,
           frenquently,
@@ -117,6 +119,15 @@ export default function SubmitBills() {
             items={statusArray}
             setValue={(value) => setStatus(value as string)}
           />
+
+          {
+            duration === "Set end time" &&
+          <DateInput
+          title="End date"
+          state={endDate}
+          setValue={setEndDate}
+        />
+          }
         </div>
 
         <div className="flex flex-row items-center justify-evenly w-full p-2">
