@@ -1,6 +1,6 @@
 import { TrashIcon } from "@heroicons/react/20/solid";
 import { useGSAP } from "@gsap/react";
-import { useState, useEffect, useContext, useRef } from "react";
+import { useState, useEffect, useContext } from "react";
 import { DaysLeft } from "./billGetnextPayment";
 import gsap from "gsap";
 import type { DataBaseBill } from "./billInterface";
@@ -59,12 +59,22 @@ export default function BillCard({
   const [countDays, setCountDays] = useState(days);
   const [load, setLoad] = useState(false);
 
-  const prevStatusThemeRef = useRef(theme.statusTheme);
-  const prevAutoPayRef = useRef(autoPay);
-  const prevPaidRef = useRef(paid);
-
   // strat date - due date - frenqulty
   const nextDueDate = getNextPaymentDate(startDate, dueDate, frenquently);
+
+  function currentBill(): DataBaseBill | null {
+    const data = sessionStorage.getItem("currentUser");
+
+    if (data) {
+      const user = JSON.parse(data);
+
+      const currentBill = user.recurringBills.find(
+        (item: DataBaseBill) => item.id === billId
+      );
+      return currentBill !== undefined ? currentBill : null;
+    }
+    return null;
+  }
 
   useEffect(() => {
     theme.setTheme(status);
@@ -109,37 +119,26 @@ export default function BillCard({
 
   useEffect(() => {
     if (load == true) {
-      const data = sessionStorage.getItem("currentUser");
+      const crrBill = currentBill();
 
-      if (data) {
-        const user = JSON.parse(data);
-
-        const currentBill = user.recurringBills.find(
-          (item: DataBaseBill) => item.id === billId
-        );
-
-        if (currentBill !== undefined) {
-          // call nessary function here!
-
-          if (prevStatusThemeRef.current !== theme.statusTheme) {
-            console.log("starus updated run!..");
-            currentBill.status = theme.statusTheme;
-            UpdateBill(currentBill, setLoad);
-          }
-
-          if (prevAutoPayRef.current !== autoPay) {
-            console.log("Auto pay run!..");
-            currentBill.autoPay = autoPay;
-            UpdateBill(currentBill, setLoad);
-          }
-
-          if (prevPaidRef.current !== paid) {
-            console.log("paid run!..");
-          }
-        } //end of currentBill if
+      if (crrBill !== null) {
+        crrBill.status = theme.statusTheme;
+        UpdateBill(crrBill, setLoad);
       }
-    }
-  }, [theme.statusTheme, autoPay, paid]);
+    } //end of currentBill if
+  }, [theme.statusTheme]);
+
+  useEffect(() => {
+    if (load == true) {
+
+      const crrBill = currentBill();
+
+      if (crrBill !== null) {
+        crrBill.autoPay = autoPay;
+        UpdateBill(crrBill, setLoad);
+      }
+    } //end of currentBill if
+  }, [autoPay]);
 
   useGSAP(() => {
     gsap.fromTo(
@@ -160,6 +159,8 @@ export default function BillCard({
   });
 
   return (
+      <LoadContext.Provider value={{ load: setLoad }}>
+
     <motion.div
       className="bill-card relative border-5 border-white flex flex-col m-2 w-[90%] sm:max-w-100 p-1 rounded-lg"
       style={{
@@ -169,9 +170,7 @@ export default function BillCard({
     >
       {load && <BillLoader />}
 
-      <LoadContext.Provider value={{ load: setLoad }}>
         <BillCardHeader name={title} installment={amount} />
-      </LoadContext.Provider>
 
       <BillTables
         category={category}
@@ -189,7 +188,7 @@ export default function BillCard({
         >
           Auto Pay
         </label>
-        <AutoPayButton pay={autoPay} setAutoPay={setAutoPay} />
+        <AutoPayButton pay={autoPay} setPay={setAutoPay} />
       </div>
 
       <div
@@ -240,6 +239,8 @@ export default function BillCard({
             HAVE PAID
           </span>
         </button>
+
+        
       </div>
 
       <div className=""></div>
@@ -254,5 +255,7 @@ export default function BillCard({
         </button>
       </div>
     </motion.div>
+      </LoadContext.Provider>
+
   );
 }

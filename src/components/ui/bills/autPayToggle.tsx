@@ -3,11 +3,11 @@ import { BillContext, LoadContext } from "../../submitForms/billsFunctions/billC
 
 type Props = {
   pay: boolean;
-  setAutoPay:(value: boolean) => void;
+  setPay:(value: boolean) => void;
 }
-export default function AutoPayButton({ pay, setAutoPay}:Props) {
+export default function AutoPayButton({ pay, setPay}:Props) {
     const theme = useContext(BillContext)
-    const loading = useContext(LoadContext)
+    const load = useContext(LoadContext)
 
   return (
     <div
@@ -16,8 +16,8 @@ export default function AutoPayButton({ pay, setAutoPay}:Props) {
         boxShadow: "0px 1px 1px black, inset 1px 1px 5px black",
       }}
       onClick={() => {
-        loading.load(true)
-        setAutoPay(!pay)
+        load.load(true)
+        setPay(!pay)
       }}
     >
       <div
