@@ -5,6 +5,7 @@ interface billContext {
     backGround: string,
     headColor:string,
     setTheme: (theme: string) => void;
+    
 }
 
 export const BillContext = createContext<billContext>({
@@ -13,3 +14,11 @@ export const BillContext = createContext<billContext>({
     headColor:"120, 100%, 90%)",
     setTheme: () => {}
 });
+
+interface LoadingContext{
+    load: (value: boolean) => void
+}
+
+export const LoadContext = createContext<LoadingContext>({ 
+    load: ()=>{}
+})

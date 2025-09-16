@@ -1,6 +1,5 @@
 
 import { GetDate } from "../getcurrentDate";
-import { validatePaymentIntervalStrict } from "../../bills/billGetnextPayment";
 import { db } from "../../../firebaseConfig";
 import { getDocs, collection, updateDoc, arrayUnion } from "firebase/firestore";
 import store from "../../../state management/store";
@@ -47,9 +46,6 @@ export async function AddBill(
  
     const crrUser = JSON.parse(data);
     const billId = crrUser.recurringBills.length + 1;
-    const validDuration = validatePaymentIntervalStrict(billStartDate, billDueDate)
-
-      if( validDuration === billDuration || validDuration === "custom" ){
         
     const newBill: Bill = {
       id: billId,
@@ -96,18 +92,7 @@ export async function AddBill(
 
     catch(error){console.log(error)}
 
-      }// end of validDuration if
 
-else{
-   if(validDuration === "invalid"){
-        store.dispatch(getMessage("Your start date and due date, are not weekly , monthly or yearly payments period!"))
-        store.dispatch(selectDialog("error"))
-   }
-   else{
-    store.dispatch(getMessage("Please Set frenquently to : " + validDuration))
-    store.dispatch(selectDialog("error"))
-   }
-}//end of validDuration else
 
   } //end of data if
   else {

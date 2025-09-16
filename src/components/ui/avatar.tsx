@@ -1,3 +1,8 @@
+import { useContext, useEffect, useState } from "react";
+import { useLocation } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { SettingsContext } from "../dash/settingsContext";
+
 const colors: string[] = [
   "Navy",
   "DarkRed",
@@ -24,7 +29,7 @@ const colors: string[] = [
   "Chocolate",
   "DimGray",
   "DarkViolet",
-  "Brown"
+  "Brown",
 ];
 
 const alphabet: string[] = Array.from({ length: 26 }, (_, i) =>
@@ -38,36 +43,51 @@ type Props = {
 
 function getInitials(name: string): string {
   const words = name.trim().split(" ");
-  const initials = words.length > 1 
-    ? words[0][0] + words[words.length - 1][0] 
-    : words[0][0];
+  const initials =
+    words.length > 1 ? words[0][0] + words[words.length - 1][0] : words[0][0];
   return initials.toUpperCase();
 }
 
-export default function Avatar({ name,  avatar }: Props){
+export default function Avatar({ name, avatar }: Props) {
+  const navigate = useNavigate()
+  const location = useLocation()
+  const setting = useContext(SettingsContext)
 
-    return(
-        <div
-        className={`shadow-lg rounded-full 
-          ${avatar === "" ? "w-[calc(2.5rem-8px)] h-[calc(2.5rem-8px)] border-4 border-white" : "w-15 h-15 border-0 overflow-hidden"}  
-          flex items-center justify-center m-2`}
-        style={{ backgroundColor: colors[alphabet.indexOf(name[0].toUpperCase()) % colors.length] }}
-        >
+  const [currentPath, setCurrentPath] = useState("")
 
-        {
-          avatar === "" &&
-          <h1 className="text-md text-white font-bold">{getInitials(name)}</h1>
-        }
+  useEffect(()=>{
+    if(currentPath !== "/home/settings") { setCurrentPath(location.pathname) }
+  }, [])
 
-        {
-          avatar !== "" &&
-          <img
-          className="w-full h-full cover"
+  return (
+    <div
+      className={`shadow-lg rounded-full 
+          ${
+            avatar === ""
+              ? "w-[calc(2.5rem-8px)] h-[calc(2.5rem-8px)] border-4 border-white"
+              : "w-15 h-15 border-0 overflow-hidden"
+          }  
+          flex items-center justify-center m-2 cursor-pointer`}
+      style={{
+        backgroundColor:
+          colors[alphabet.indexOf(name[0].toUpperCase()) % colors.length],
+      }}
+      onClick={()=>{
+        navigate(location.pathname !== "/home/settings"? "/home/settings" : currentPath )
+        setting.closeSettings(!setting.currentValue)
+      }}
+    >
+      {avatar === "" && (
+        <h1 className="text-md text-white font-bold">{getInitials(name)}</h1>
+      )}
+
+      {avatar !== "" && (
+        <img
+          className="text-sm text-center w-full h-full cover"
           src={avatar}
-          alt="User image"
-          >
-          </img>
-        }
-        </div>
-    )
+          alt="User"
+        ></img>
+      )}
+    </div>
+  );
 }

@@ -32,8 +32,6 @@ export default async function DeleteBill( billId: number){
         store.dispatch(selectDialog("load"))
         store.dispatch(openCloseDialog())
 
-        
-
         const crrBill = crrUser.recurringBills.find((bill: Bill) => bill.id === billId)
 
         try {

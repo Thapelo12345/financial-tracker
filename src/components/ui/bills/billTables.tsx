@@ -1,4 +1,4 @@
-import BillLabel from "../billLabel";
+import BillLabel from "./billLabel";
 
 type Props = {
     category: string;

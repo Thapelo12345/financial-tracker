@@ -1,6 +1,6 @@
 import { motion } from "framer-motion"
 import { useContext } from "react"
-import { BillContext } from "../../submitForms/billsFunctions/billContext"
+import { BillContext, LoadContext } from "../../submitForms/billsFunctions/billContext"
 
 type status = string[]
 
@@ -9,6 +9,7 @@ const statusArray:status = ["active", "pause", "inactive"]
 export default function BillStatusButton(){
 
     const theme = useContext(BillContext)
+    const load = useContext(LoadContext)
 
     return(
         <motion.div
@@ -35,6 +36,7 @@ export default function BillStatusButton(){
             ease: "linear"
         }}
         onClick={()=>{
+            load.load(true)
             const indexPosition = statusArray.indexOf(theme.statusTheme)
             
             if(indexPosition + 1 !< statusArray.length){theme.setTheme(statusArray[indexPosition + 1])}

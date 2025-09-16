@@ -1,20 +1,24 @@
 import { TrashIcon } from "@heroicons/react/20/solid";
 import { useGSAP } from "@gsap/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import { DaysLeft } from "./billGetnextPayment";
 import gsap from "gsap";
+import type { DataBaseBill } from "./billInterface";
 import BillCardHeader from "../ui/bills/billCardHeader";
 import DeleteBill from "../submitForms/billsFunctions/deleteBill";
 import { motion } from "framer-motion";
 import BillTables from "../ui/bills/billTables";
-import { useContext } from "react";
 import AutoPayButton from "../ui/bills/autPayToggle";
-import { BillContext } from "../submitForms/billsFunctions/billContext";
-// import BillLoader from "./billCardLoad";
+import {
+  BillContext,
+  LoadContext,
+} from "../submitForms/billsFunctions/billContext";
+import BillLoader from "./billCardLoad";
 import { getNextPaymentDate } from "./billGetnextPayment";
+import { UpdateBill } from "../submitForms/billsFunctions/updateBill";
 
 type Props = {
-  billId: number,
+  billId: number;
   title: string;
   description: string;
   amount: number;
@@ -27,7 +31,7 @@ type Props = {
   status: string;
   AutoPay: boolean;
   settleBill: boolean;
-  days: number,
+  days: number;
 };
 
 export default function BillCard({
@@ -44,57 +48,98 @@ export default function BillCard({
   status,
   AutoPay,
   settleBill,
-  days
-}:Props) {
-  
+  days,
+}: Props) {
   const theme = useContext(BillContext);
-  theme.setTheme(status)
 
   const [billMessage, setBillMessage] = useState("bill paid");
   const [billMessageColor, setBillMessageColor] = useState("lime");
   const [autoPay, setAutoPay] = useState(AutoPay);
   const [paid, setPaid] = useState(settleBill);
-  // const [currentStatus, setCurrentStatus] = useState(status) 
   const [countDays, setCountDays] = useState(days);
-  // const [load, setLoad] = useState(false);
+  const [load, setLoad] = useState(false);
+
+  const prevStatusThemeRef = useRef(theme.statusTheme);
+  const prevAutoPayRef = useRef(autoPay);
+  const prevPaidRef = useRef(paid);
 
   // strat date - due date - frenqulty
   const nextDueDate = getNextPaymentDate(startDate, dueDate, frenquently);
 
   useEffect(() => {
-    const letfDays = DaysLeft("2025-09-20");
+    theme.setTheme(status);
+    const letfDays = DaysLeft(dueDate);
 
-    if (letfDays <= 10 && countDays === 0) {
-      setPaid(false);
-      setCountDays(letfDays);
-    }
+    if (frenquently === "monthly") {
+      if (letfDays <= 10 && countDays === 0) {
+        setPaid(false);
+        setCountDays(letfDays);
+      } else if (letfDays > 10 && countDays !== 0) {
+        setCountDays(0);
+      }
+    } //end of monthly if
+    else if (frenquently === "weekly") {
+      if (letfDays <= 3 && countDays === 0) {
+        setPaid(false);
+        setCountDays(letfDays);
+      } else if (letfDays > 3 && countDays !== 0) {
+        setCountDays(0);
+      }
+    } //end of weekly else if
   }, []);
 
   useEffect(() => {
     const letfDays = DaysLeft(dueDate);
 
-    if (letfDays <= 10 && letfDays > 5 && !paid) {
-      setCountDays(letfDays);
-      setBillMessage("payment Due");
-      setBillMessageColor("hsl(333 100% 58.8%)");
-
-    } else if (letfDays <= 5 && !paid) {
-      setCountDays(letfDays);
-      setBillMessage("pending");
-      setBillMessageColor("hsl(0 100% 58.3%)");
-    } 
-    else {
-      setBillMessage("bill paid");
-      setBillMessageColor("lime");
-    }
+    if (frenquently === "monthly") {
+      if (letfDays <= 10 && letfDays > 5 && !paid) {
+        setCountDays(letfDays !== 0 ? letfDays : -1);
+        setBillMessage("payment Due");
+        setBillMessageColor("hsl(333 100% 58.8%)");
+      } else if (letfDays <= 5 && !paid) {
+        setCountDays(letfDays !== 0 ? letfDays : -1);
+        setBillMessage("pending");
+        setBillMessageColor("hsl(0 100% 58.3%)");
+      } else {
+        setBillMessage("bill paid");
+        setBillMessageColor("lime");
+      }
+    } //end of mothly if
   }, []);
 
-  useEffect(()=>{
-  },[theme.statusTheme])
-
   useEffect(() => {
-    // if(countDays)
-  }, [paid]);
+    if (load == true) {
+      const data = sessionStorage.getItem("currentUser");
+
+      if (data) {
+        const user = JSON.parse(data);
+
+        const currentBill = user.recurringBills.find(
+          (item: DataBaseBill) => item.id === billId
+        );
+
+        if (currentBill !== undefined) {
+          // call nessary function here!
+
+          if (prevStatusThemeRef.current !== theme.statusTheme) {
+            console.log("starus updated run!..");
+            currentBill.status = theme.statusTheme;
+            UpdateBill(currentBill, setLoad);
+          }
+
+          if (prevAutoPayRef.current !== autoPay) {
+            console.log("Auto pay run!..");
+            currentBill.autoPay = autoPay;
+            UpdateBill(currentBill, setLoad);
+          }
+
+          if (prevPaidRef.current !== paid) {
+            console.log("paid run!..");
+          }
+        } //end of currentBill if
+      }
+    }
+  }, [theme.statusTheme, autoPay, paid]);
 
   useGSAP(() => {
     gsap.fromTo(
@@ -122,12 +167,11 @@ export default function BillCard({
         boxShadow: "0px 1px 10px rgba(0, 0, 0, 0.5),inset 2px 1px 5px black",
       }}
     >
-      {/* {
-        load && 
-      <BillLoader />
-      } */}
+      {load && <BillLoader />}
 
-      <BillCardHeader name={title} installment={amount}/>
+      <LoadContext.Provider value={{ load: setLoad }}>
+        <BillCardHeader name={title} installment={amount} />
+      </LoadContext.Provider>
 
       <BillTables
         category={category}
@@ -189,7 +233,9 @@ export default function BillCard({
             style={{
               textShadow: "1px 0px 0px black",
             }}
-            onClick={() => setPaid(true)}
+            onClick={() => {
+              setPaid(true);
+            }}
           >
             HAVE PAID
           </span>
@@ -199,13 +245,11 @@ export default function BillCard({
       <div className=""></div>
       {/* descriptio section */}
       <p className="w-full text-xs text-gray-700 p-2 borde-2 border-white">
-       {description}
+        {description}
       </p>
 
       <div className="m-2">
-        <button
-        onClick={()=> DeleteBill(billId)}
-        >
+        <button onClick={() => DeleteBill(billId)}>
           <TrashIcon className="w-4 h-4 text-red-500" />
         </button>
       </div>

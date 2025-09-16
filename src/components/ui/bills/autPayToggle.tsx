@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { BillContext } from "../../submitForms/billsFunctions/billContext";
+import { BillContext, LoadContext } from "../../submitForms/billsFunctions/billContext";
 
 type Props = {
   pay: boolean;
@@ -7,13 +7,18 @@ type Props = {
 }
 export default function AutoPayButton({ pay, setAutoPay}:Props) {
     const theme = useContext(BillContext)
+    const loading = useContext(LoadContext)
+
   return (
     <div
       className="relative border-2 border-white m-0 p-0 rounded-lg flex flex-row"
       style={{
         boxShadow: "0px 1px 1px black, inset 1px 1px 5px black",
       }}
-      onClick={() => setAutoPay(!pay)}
+      onClick={() => {
+        loading.load(true)
+        setAutoPay(!pay)
+      }}
     >
       <div
         className={`

@@ -5,6 +5,7 @@ import Budget from "./budget";
 import Pots from "./pots";
 import Bills from "./bills";
 import Overview from "./overview";
+import SettingsPage from "./settingPage";
 // import TransactionSubmit from "../components/dialogs/transactionSubmit";
 import SubmitContainer from "../components/submitForms/submitContainer";
 import { Routes, Route } from "react-router-dom";
@@ -36,6 +37,7 @@ export default function Home() {
         <Route path="budget" element={<Budget />} />
         <Route path="pots" element={<Pots />} />
         <Route path="bills" element={<Bills />} />
+        <Route path="settings" element={<SettingsPage />} />
 
       </Routes>
     </div>
