@@ -1,6 +1,6 @@
 import { TrashIcon } from "@heroicons/react/20/solid";
 import { useGSAP } from "@gsap/react";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { DaysLeft } from "./billGetnextPayment";
 import gsap from "gsap";
 import type { DataBaseBill } from "./billInterface";
@@ -27,7 +27,7 @@ type Props = {
   category: string;
   duration: string;
   frenquently: string;
-  status: string;
+  billStatus: string;
 };
 
 export default function BillCard({
@@ -41,11 +41,30 @@ export default function BillCard({
   category,
   duration,
   frenquently,
+  billStatus,
 }: Props) {
-  const theme = useContext(BillContext);
+  const currentColor = (value: string): string => {
+    switch (value) {
+      case "active":
+        return "lime";
+        break;
+
+      case "pause":
+        return "orange";
+        break;
+
+      case "inactive":
+        return "hsl(37 7.7% 30%)";
+        break;
+      default:
+        return "white";
+    }
+  };
 
   const [billMessage, setBillMessage] = useState("bill up to date");
   const [billMessageColor, setBillMessageColor] = useState("lime");
+  const [status, setStatus] = useState(billStatus);
+  const [color, setColor] = useState(currentColor(billStatus));
   const [load, setLoad] = useState(false);
 
   // strat date - due date - frenqulty
@@ -66,15 +85,17 @@ export default function BillCard({
   }
 
   useEffect(() => {
+    setColor(currentColor(status));
+
     if (load == true) {
       const crrBill = currentBill();
 
       if (crrBill !== null) {
-        crrBill.status = theme.statusTheme;
+        crrBill.status = status;
         UpdateBill(crrBill, setLoad);
       }
     } //end of currentBill if
-  }, [theme.statusTheme]);
+  }, [status]);
 
   useEffect(() => {
     const days = DaysLeft(nextDueDate);
@@ -130,80 +151,77 @@ export default function BillCard({
 
   return (
     <LoadContext.Provider value={{ load: setLoad }}>
-      <motion.div
-        className="bill-card relative flex flex-col m-2 w-[90%] sm:max-w-100 p-1 rounded-lg"
-        style={{
-          backgroundColor: "whitesmoke",
-          boxShadow: `1px 1px 5px black`,
-        }}
+      <BillContext.Provider
+        value={{ statusTheme: status, headColor: color, setTheme: setStatus }}
       >
-        {load && <BillLoader />}
-
-        <BillCardHeader name={title} installment={amount} />
-
-        <BillTables
-          category={category}
-          duration={duration}
-          dueDate={nextDueDate}
-          startDate={startDate}
-          frenquently={frenquently}
-          endDate={endDate}
-        />
-
-        <div className="flex flex-row justify-between">
-          <motion.label
-          initial={{
-            scale: 0.9,
-            boxShadow: "none"
-          }}
-
-          animate={{
-            scale: 1, 
-            boxShadow: `1px 9px 20px rgba(0, 0, 0, 0.5)`
-          }}
-          transition={{
-            duration: 1,
-            repeat: Infinity,
-            repeatType: "reverse"
-          }}
-            className="text-white text-xs self-center font-extrabold p-2 ml-10 w-fit h-fit rounded-sm"
-            style={{
-              backgroundColor: billMessageColor,
-              boxShadow: `1px 9px 20px rgba(0, 0, 0, 0.5)`,
-              textShadow: "1px 1px 1px black",
-            }}
-          >
-            {billMessage.toUpperCase()}
-          </motion.label>
-        </div>
-
- {/* descriptio section */}
-        <div className="flex flex-col items-center m-2">
-          <label
-          className="text-md text-white font-extrabold underline"
+        <motion.div
+          className="bill-card relative flex flex-col m-2 w-[90%] sm:max-w-100 p-1 rounded-lg"
           style={{
-            WebkitTextStrokeColor: "black",
-            WebkitTextStrokeWidth: "0.5px",
-            textShadow: "1px 0px 2px black"
+            backgroundColor: "whitesmoke",
+            boxShadow: `1px 1px 5px black`,
           }}
-          >Description</label>
-        <p className="text-sm font-bold bg-black/20 rounded-md text-white p-2 m-2 "
-        style={{
-          // textShadow: "0px 0px 3px black"
-        }
-        }
         >
-          {description}
-        </p>
-        </div>
-       
+          {load && <BillLoader />}
 
-        <div className="m-2">
-          <button onClick={() => DeleteBill(billId)}>
-            <TrashIcon className="w-5 h-5 text-red-500" />
-          </button>
-        </div>
-      </motion.div>
+          <BillCardHeader name={title} installment={amount} />
+
+          <BillTables
+            category={category}
+            duration={duration}
+            dueDate={nextDueDate}
+            startDate={startDate}
+            frenquently={frenquently}
+            endDate={endDate}
+          />
+
+          <div className="flex flex-row justify-between">
+            <motion.label
+              initial={{
+                scale: 0.9,
+                boxShadow: "none",
+              }}
+              animate={{
+                scale: 1,
+                boxShadow: `1px 9px 20px rgba(0, 0, 0, 0.5)`,
+              }}
+              transition={{
+                duration: 1,
+                repeat: Infinity,
+                repeatType: "reverse",
+              }}
+              className="text-white text-xs self-center font-extrabold p-2 ml-10 w-fit h-fit rounded-sm"
+              style={{
+                backgroundColor: billMessageColor,
+                boxShadow: `1px 9px 20px rgba(0, 0, 0, 0.5)`,
+                textShadow: "1px 1px 1px black",
+              }}
+            >
+              {billMessage.toUpperCase()}
+            </motion.label>
+          </div>
+
+          {/* descriptio section */}
+          <div className="flex flex-col items-center m-2">
+            <label className="text-md text-black/30 font-semibold">
+              Description
+            </label>
+            <p
+              className="text-sm font-bold bg-black/10 font-serif rounded-md text-white p-2 m-2 "
+              style={{
+                textShadow: "0px 0px 2px black",
+              }}
+            >
+              {description}
+            </p>
+          </div>
+
+          <div className="m-2">
+            <button onClick={() => DeleteBill(billId)}>
+              <TrashIcon className="w-5 h-5 text-red-500" />
+            </button>
+          </div>
+        </motion.div>
+      </BillContext.Provider>
     </LoadContext.Provider>
   );
 }

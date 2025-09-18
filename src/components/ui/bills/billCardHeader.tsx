@@ -12,18 +12,19 @@ export default function BillCardHeader({ name, installment }: Prop) {
           className="text-md text-center text-white bg-black/10 font-extrabold p-2 m-2 rounded-md w-[90%] h-fit "
           style={{
             textShadow: "0px 0px 1px black",
-            WebkitBoxReflect: "below 5px linear-gradient(to bottom, rgba(0,0,0, 0.0), rgba(0,0,0,0.4))"
+            WebkitBoxReflect:
+              "below 5px linear-gradient(to bottom, rgba(0,0,0, 0.0), rgba(0,0,0,0.4))",
           }}
         >
           {name.toUpperCase()}
         </h1>
         <h2
           className="text-lg text-white bg-black/10 font-extrabold w-fit h-fit p-2 m-2 rounded-md"
-       style={{
+          style={{
             boxShadow: "1px -2px 5px rgba(0, 0, 0, 0.7)",
             textShadow: "0px 0px 1px black",
             WebkitTextStrokeColor: "black",
-            WebkitTextStrokeWidth: "0.3px"
+            WebkitTextStrokeWidth: "0.3px",
           }}
         >
           R {installment}
@@ -31,7 +32,6 @@ export default function BillCardHeader({ name, installment }: Prop) {
       </div>
 
       <BillStatusButton />
-      
     </header>
   );
 }

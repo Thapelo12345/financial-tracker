@@ -39,8 +39,6 @@ export default function Bills() {
             getNextPaymentDate(bill.startDate, bill.dueDate, bill.frenquently)
           );
 
-          console.log(countDays)
-
           const counter = (): number => {
             switch (bill.frenquently) {
               case "weekly":
