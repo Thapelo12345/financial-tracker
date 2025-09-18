@@ -1,20 +1,18 @@
 import { TrashIcon } from "@heroicons/react/20/solid";
 import { useGSAP } from "@gsap/react";
 import { useState, useEffect } from "react";
-import { DaysLeft } from "./billGetnextPayment";
+import { DaysLeft } from "../functions/bill/billGetnextPayment";
 import gsap from "gsap";
-import type { DataBaseBill } from "./billInterface";
+import type { DataBaseBill } from "../functions/bill/billInterface";
 import BillCardHeader from "../ui/bills/billCardHeader";
-import DeleteBill from "../submitForms/billsFunctions/deleteBill";
+import DeleteBill from "../functions/bill/deleteBill";
 import { motion } from "framer-motion";
 import BillTables from "../ui/bills/billTables";
-import {
-  BillContext,
-  LoadContext,
-} from "../submitForms/billsFunctions/billContext";
+import { BillContext, LoadContext } from "../functions/bill/billContext";
 import BillLoader from "./billCardLoad";
-import { getNextPaymentDate } from "./billGetnextPayment";
-import { UpdateBill } from "../submitForms/billsFunctions/updateBill";
+import { getNextPaymentDate } from "../functions/bill/billGetnextPayment";
+import { UpdateBill } from "../functions/bill/updateBill";
+
 
 type Props = {
   billId: number;
@@ -174,7 +172,7 @@ export default function BillCard({
             endDate={endDate}
           />
 
-          <div className="flex flex-row justify-between">
+          <div className={`${status === "inactive" ? "hidden" : "block"} flex flex-row justify-between`}>
             <motion.label
               initial={{
                 scale: 0.9,

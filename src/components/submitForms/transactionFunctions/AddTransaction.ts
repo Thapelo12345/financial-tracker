@@ -1,4 +1,4 @@
-import { GetDate } from "../getcurrentDate";
+import { GetDate } from "../../functions/bill/getcurrentDate";
 import { updateDoc, arrayUnion, getDocs, collection } from "firebase/firestore";
 import { db } from "../../../firebaseConfig";
 import { openCloseDialog } from "../../../state management/openCloseDialog";
@@ -28,7 +28,6 @@ export default async function AddTransaction({
     TransactionType !== "" &&
     Description !== ""
   ) {
-
     type TransactObj = {
       name: string;
       amount: number;
@@ -109,32 +108,30 @@ export default async function AddTransaction({
 
           return true;
         } else {
-            const transactionExpense = currentUser.transactionExpense + Amount;
-            const currentBalance = currentUser.currentBalance - Amount;
+          const transactionExpense = currentUser.transactionExpense + Amount;
+          const currentBalance = currentUser.currentBalance - Amount;
 
-            const transactionExpenseRounded =
-              Math.round(transactionExpense * 100) / 100;
-            const roundedBalance = Math.round(currentBalance * 100) / 100;
+          const transactionExpenseRounded =
+            Math.round(transactionExpense * 100) / 100;
+          const roundedBalance = Math.round(currentBalance * 100) / 100;
 
-            currentUser.currentBalance = roundedBalance;
-            currentUser.transactionExpense = transactionExpenseRounded;
-            currentUser.transactions.push(newTransaction);
-            sessionStorage.setItem("currentUser", JSON.stringify(currentUser));
-            store.dispatch(getMessage("Transaction added successfully!"));
+          currentUser.currentBalance = roundedBalance;
+          currentUser.transactionExpense = transactionExpenseRounded;
+          currentUser.transactions.push(newTransaction);
+          sessionStorage.setItem("currentUser", JSON.stringify(currentUser));
+          store.dispatch(getMessage("Transaction added successfully!"));
 
-            store.dispatch(selectDialog("confirm"));
-            //closing the dialog
-            setTimeout(() => {
-              store.dispatch(openCloseDialog());
-            }, 1500);
-            store.dispatch(appUpdated());
+          store.dispatch(selectDialog("confirm"));
+          //closing the dialog
+          setTimeout(() => {
+            store.dispatch(openCloseDialog());
+          }, 1500);
+          store.dispatch(appUpdated());
 
-            await updateDoc(matchingUser.ref, {
-              currentBalance: roundedBalance,
-              transactionExpense: transactionExpenseRounded,
-            });
-          
-        
+          await updateDoc(matchingUser.ref, {
+            currentBalance: roundedBalance,
+            transactionExpense: transactionExpenseRounded,
+          });
         }
       } catch (error) {
         console.log(error);
@@ -145,6 +142,6 @@ export default async function AddTransaction({
     }
   } else {
     console.log("Please insert all fields. Category and Type");
-    console.log(`here is category : ${Category} and  type: ${TransactionType}`)
+    console.log(`here is category : ${Category} and  type: ${TransactionType}`);
   }
 } //end of add transaction

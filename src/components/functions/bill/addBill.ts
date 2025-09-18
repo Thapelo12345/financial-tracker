@@ -1,4 +1,4 @@
-import { GetDate } from "../getcurrentDate";
+import { GetDate } from "../../functions/bill/getcurrentDate";
 import { db } from "../../../firebaseConfig";
 import { getDocs, collection, updateDoc, arrayUnion } from "firebase/firestore";
 import store from "../../../state management/store";
@@ -6,7 +6,7 @@ import { selectDialog } from "../../../state management/selectDialog";
 import { openCloseDialog } from "../../../state management/openCloseDialog";
 import { getMessage } from "../../../state management/dialogMessage";
 import { appUpdated } from "../../../state management/UpdateAllComponents";
-import type { DataBaseBill } from "../../bills/billInterface";
+import type { DataBaseBill } from "../../functions/bill/billInterface";
 
 export async function AddBill(
   billTitle: string,

@@ -36,9 +36,6 @@ interface user {
   potsValue: number;
   pots: [];
   transactions: [];
-  paidBills: number;
-  billsDue: number;
-  upcomingBills: number;
   recurringBills: [];
 }
 
@@ -98,9 +95,6 @@ if(querySnapshot2.empty) {
           potsValue: 0,
           pots: [],
           transactions: [],
-          paidBills: 0,
-          billsDue: 0,
-          upcomingBills: 0,
           recurringBills: [],
         };
 

@@ -27,9 +27,6 @@ interface user {
   potsValue:number;
   pots: [];
   transactions: [];
-  paidBills: number;
-  billsDue: number;
-  upcomingBills: number;
   recurringBills: [];
 }
 
@@ -69,9 +66,6 @@ export async function handleGooglAthentication(navigate: NavigateFunction) {
         potsValue: 0,
         pots: [],
         transactions: [],
-        paidBills: 0,
-        billsDue: 0,
-        upcomingBills: 0,
         recurringBills: [],
       };
 

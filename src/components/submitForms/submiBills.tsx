@@ -2,7 +2,7 @@ import DateInput from "../ui/submitionForm/dateInputs";
 import DropDown from "../ui/submitionForm/dropDown";
 import LabelInputNumber from "../ui/submitionForm/labelInputNumber";
 import LabelInputText from "../ui/submitionForm/labelInputText";
-import { AddBill } from "./billsFunctions/addBill";
+import { AddBill } from "../functions/bill/addBill";
 import { useDispatch } from "react-redux";
 import { onOffSubmit } from "../../state management/openSubmition";
 import { useState } from "react";
@@ -23,42 +23,42 @@ const bills: SelectioDropDown = [
 
 const frenquentArray: SelectioDropDown = ["weekly", "monthly", "yearly"];
 const statusArray: SelectioDropDown = ["active", "pause", "inactive"];
-const durations: SelectioDropDown = ["continously", "Set end time"]
+const durations: SelectioDropDown = ["continously", "Set end time"];
 
 export default function SubmitBills() {
   const dispatch = useDispatch();
 
   const [name, setName] = useState("");
-  const [duration, setDuration] = useState("continously")
+  const [duration, setDuration] = useState("continously");
   const [category, setCategory] = useState("Housing");
-  const [description, setDescription] = useState("")
+  const [description, setDescription] = useState("");
   const [frenquently, setFrenquently] = useState(frenquentArray[0]);
   const [status, setStatus] = useState(statusArray[0]);
   const [amount, setAmount] = useState(0);
   const [startDate, setStateDate] = useState("");
-  const [dueDate, setDuedate] = useState("")
-  const [endDate, setEndDate] = useState("")
+  const [dueDate, setDuedate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   return (
     <div className="absolute w-screen h-screen overflow-y-auto z-50">
-      <form 
-      className="w-[70%] md:w-1/2 bg-[whitesmoke] m-auto mb-24 p-2 rounded-lg h-auto"
-      onSubmit={(e)=>{
-        e.preventDefault()
-        dispatch(onOffSubmit())
-        AddBill(
-          name,
-          description,
-          amount,
-          startDate,
-          dueDate,
-          endDate,
-          category,
-          duration,
-          frenquently,
-          status,
-        )
-      }}
+      <form
+        className="w-[70%] md:w-1/2 bg-[whitesmoke] m-auto mb-24 p-2 rounded-lg h-auto"
+        onSubmit={(e) => {
+          e.preventDefault();
+          dispatch(onOffSubmit());
+          AddBill(
+            name,
+            description,
+            amount,
+            startDate,
+            dueDate,
+            endDate,
+            category,
+            duration,
+            frenquently,
+            status
+          );
+        }}
       >
         <h1 className="text-black/50 text-2xl font-serif text-center font-bold">
           Add Bill
@@ -89,11 +89,7 @@ export default function SubmitBills() {
           state={startDate}
           setValue={setStateDate}
         />
-        <DateInput
-          title="Due Date"
-          state={dueDate}
-          setValue={setDuedate}
-        />
+        <DateInput title="Due Date" state={dueDate} setValue={setDuedate} />
 
         <div className="flex flex-col sm:flex-row flex-wrap items-center justify-evenly w-full">
           <DropDown
@@ -120,14 +116,9 @@ export default function SubmitBills() {
             setValue={(value) => setStatus(value as string)}
           />
 
-          {
-            duration === "Set end time" &&
-          <DateInput
-          title="End date"
-          state={endDate}
-          setValue={setEndDate}
-        />
-          }
+          {duration === "Set end time" && (
+            <DateInput title="End date" state={endDate} setValue={setEndDate} />
+          )}
         </div>
 
         <div className="flex flex-row items-center justify-evenly w-full p-2">

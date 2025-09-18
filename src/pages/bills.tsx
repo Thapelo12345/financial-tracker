@@ -7,9 +7,9 @@ import { settingSelected } from "../state management/selectSubmit";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import type { RootState } from "../state management/store";
-import { DaysLeft } from "../components/bills/billGetnextPayment";
-import { getNextPaymentDate } from "../components/bills/billGetnextPayment";
-import type { DataBaseBill } from "../components/bills/billInterface";
+import { DaysLeft } from "../components/functions/bill/billGetnextPayment";
+import { getNextPaymentDate } from "../components/functions/bill/billGetnextPayment";
+import type { DataBaseBill } from "../components/functions/bill/billInterface";
 import AddItemBtn from "../components/ui/addItemBtn";
 
 export default function Bills() {

@@ -33,34 +33,30 @@ export function validatePaymentIntervalStrict(
 export function getNextPaymentDate(startDate: string, dueDate: string, frequency: string): string {
     const currentDate = new Date();
     const start = new Date(startDate);
+    const due = new Date(dueDate);
     
-    // If start date has passed, calculate the adjusted start date
-    if (start <= currentDate) {
-        let cyclesPassed = 0;
-        const tempDate = new Date(start);
+    // If due date is in the past, we need to calculate the next cycle
+    if (due <= currentDate) {
+        const nextDate = new Date(due);
         
         switch(frequency) {
             case "weekly":
-                while (tempDate <= currentDate) {
-                    tempDate.setDate(tempDate.getDate() + 7);
-                    cyclesPassed++;
+                while (nextDate <= currentDate) {
+                    nextDate.setDate(nextDate.getDate() + 7);
                 }
                 break;
             case "monthly":
-                while (tempDate <= currentDate) {
-                    tempDate.setMonth(tempDate.getMonth() + 1);
-                    cyclesPassed++;
+                while (nextDate <= currentDate) {
+                    nextDate.setMonth(nextDate.getMonth() + 1);
                 }
                 break;
             case "yearly":
-                while (tempDate <= currentDate) {
-                    tempDate.setFullYear(tempDate.getFullYear() + 1);
-                    cyclesPassed++;
+                while (nextDate <= currentDate) {
+                    nextDate.setFullYear(nextDate.getFullYear() + 1);
                 }
                 break;
-            default:{
-                // For invalid frequency, just return the due date
-                const due = new Date(dueDate);
+            default: {
+                // For invalid frequency, return due date as is
                 const dueYear = due.getFullYear();
                 const dueMonth = String(due.getMonth() + 1).padStart(2, '0');
                 const dueDay = String(due.getDate()).padStart(2, '0');
@@ -68,53 +64,43 @@ export function getNextPaymentDate(startDate: string, dueDate: string, frequency
             }
         }
         
-        // Calculate the new start date (the most recent payment date that has passed)
-        const newStartDate = new Date(start);
+        // Format the future date
+        const year = nextDate.getFullYear();
+        const month = String(nextDate.getMonth() + 1).padStart(2, '0');
+        const day = String(nextDate.getDate()).padStart(2, '0');
         
-        switch(frequency) {
-            case "weekly":
-                newStartDate.setDate(start.getDate() + (7 * (cyclesPassed - 1)));
-                break;
-            case "monthly":
-                newStartDate.setMonth(start.getMonth() + (cyclesPassed - 1));
-                break;
-            case "yearly":
-                newStartDate.setFullYear(start.getFullYear() + (cyclesPassed - 1));
-                break;
-        }
-        
-        // Update the start date to the adjusted date
-        start.setTime(newStartDate.getTime());
+        return `${year}-${month}-${day}`;
     }
     
-    // Calculate the next payment date from the (possibly adjusted) start date
+    // If due date is in the future, calculate next payment from start date
     const nextDate = new Date(start);
-
-    switch(frequency){
+    
+    switch(frequency) {
         case "weekly":
-            nextDate.setDate(start.getDate() + 7);
+            while (nextDate <= currentDate) {
+                nextDate.setDate(nextDate.getDate() + 7);
+            }
             break;
         case "monthly":
-            nextDate.setMonth(start.getMonth() + 1);
+            while (nextDate <= currentDate) {
+                nextDate.setMonth(nextDate.getMonth() + 1);
+            }
             break;
         case "yearly":
-            nextDate.setFullYear(start.getFullYear() + 1);
+            while (nextDate <= currentDate) {
+                nextDate.setFullYear(nextDate.getFullYear() + 1);
+            }
             break;
-        default:{
-            console.error("Invalid frequency provided");
-            // Format dueDate to ensure consistent return format
-            const due = new Date(dueDate);
+        default: {
             const dueYear = due.getFullYear();
             const dueMonth = String(due.getMonth() + 1).padStart(2, '0');
             const dueDay = String(due.getDate()).padStart(2, '0');
             return `${dueYear}-${dueMonth}-${dueDay}`;
         }
     }
-
-    const due = new Date(dueDate);
     
-    // Determine which date to return and format it
-    const resultDate = nextDate > due ? due : nextDate;
+    // Return the earlier of next payment date or due date
+    const resultDate = nextDate < due ? nextDate : due;
     
     // Format as YYYY-MM-DD
     const year = resultDate.getFullYear();

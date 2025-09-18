@@ -51,8 +51,7 @@ export default function Barchart({ budgetItem = [] }: GraphDetailsProps) {
           />
           <Bar dataKey="Amount" radius={[4, 4, 0, 0]}>
             {budgetItem.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={entry.Color}
-              />
+              <Cell key={`cell-${index}`} fill={entry.Color} />
             ))}
           </Bar>
         </BarChart>

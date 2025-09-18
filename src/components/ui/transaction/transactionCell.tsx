@@ -1,10 +1,9 @@
-
 import Avatar from "../avatar";
 import { motion } from "framer-motion";
 import { TrashIcon } from "@heroicons/react/20/solid";
 import { DeleteTransaction } from "../../submitForms/transactionFunctions/deleteTransaction";
-import { useGSAP } from '@gsap/react'
-import gsap from "gsap"
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
 type Props = {
   Date: string;
@@ -23,40 +22,40 @@ export default function TransactionCell({
   Category,
   Type,
   Amount,
-  itemId
+  itemId,
 }: Props) {
-
   useGSAP(() => {
-    gsap.fromTo(".transac", {
-      x: 970
-    },
-     {
+    gsap.fromTo(
+      ".transac",
+      {
+        x: 970,
+      },
+      {
         x: 0,
         duration: 0.7,
         stagger: 0.2,
-        ease: "power4"
-     })
-  })
+        ease: "power4",
+      }
+    );
+  });
 
   return (
-
-    <motion.li 
-    className="transac group shadow-md flex flex-row flex-nowrap items-start m-2 w-full p-2"
-    whileHover={{
-      scale: 1.01,
-      boxShadow: "0px 10px 10px rgba(0,0,0, 0.7), inset 0px 0px 3px rgba(0, 0, 0, 0.5)",
-      backgroundColor: "white",
-      borderRadius: "105px",
-    }}
-
-    transition={{
-      duration: 0.5
-    }}
+    <motion.li
+      className="transac group shadow-md flex flex-row flex-nowrap items-start m-2 w-full p-2"
+      whileHover={{
+        scale: 1.01,
+        boxShadow:
+          "0px 10px 10px rgba(0,0,0, 0.7), inset 0px 0px 3px rgba(0, 0, 0, 0.5)",
+        backgroundColor: "white",
+        borderRadius: "105px",
+      }}
+      transition={{
+        duration: 0.5,
+      }}
     >
       <Avatar name={Name} avatar="" />
 
       <div className="flex flex-col w-full h-full">
-
         <div className="flex flex-row justify-between">
           <label className="text-black text-md text-start font-semibold">
             {Name}
@@ -68,8 +67,6 @@ export default function TransactionCell({
           >
             {Type === "Income" ? "+ " : "- "}R {Amount}
           </label>
-
-        
         </div>
 
         <div className="flex flex-row justify-between">
@@ -78,30 +75,29 @@ export default function TransactionCell({
           </label>
           <label className="text-black/50 text-xs text-end">{Date}</label>
         </div>
-
-  
       </div>
 
-        <button 
+      <button
         className="m-2 self-end"
-        onClick={()=>{
-          DeleteTransaction({ transactionId: itemId })
+        onClick={() => {
+          DeleteTransaction({ transactionId: itemId });
         }}
-        >
-          <TrashIcon className="w-5 h-5 text-red-400 m-2" />
-        </button>
-{/* Description tag */}
+      >
+        <TrashIcon className="w-5 h-5 text-red-400 m-2" />
+      </button>
+      {/* Description tag */}
 
-  <div 
-  className="bg-[whitesmoke] font-serif hidden group-hover:block left-48 rounded-md top-10 z-10 absolute p-2"
-  style={{
-    boxShadow: "-1px -9px 15px rgba(0, 0, 0, 0.5), 1px 9px 10px rgba(0, 0, 0, 0.5), inset 2px 2px 6px black, inset -2px -2px 6px white"}}
-  >
-<p
-className="text-black/50 text-xs font-extrabold p-2"
->{Description}</p>
+      <div
+        className="bg-[whitesmoke] font-serif hidden group-hover:block left-48 rounded-md top-10 z-10 absolute p-2"
+        style={{
+          boxShadow:
+            "-1px -9px 15px rgba(0, 0, 0, 0.5), 1px 9px 10px rgba(0, 0, 0, 0.5), inset 2px 2px 6px black, inset -2px -2px 6px white",
+        }}
+      >
+        <p className="text-black/50 text-xs font-extrabold p-2">
+          {Description}
+        </p>
       </div>
-
     </motion.li>
   );
 }

@@ -1,9 +1,6 @@
 import { motion } from "framer-motion";
 import { useContext } from "react";
-import {
-  BillContext,
-  LoadContext,
-} from "../../submitForms/billsFunctions/billContext";
+import { BillContext, LoadContext } from "../../functions/bill/billContext";
 
 type status = string[];
 
