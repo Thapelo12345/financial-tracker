@@ -1,5 +1,4 @@
 
-
 export interface DataBaseBill {
   id: number;
   title: string;
@@ -12,9 +11,6 @@ export interface DataBaseBill {
   duration: string;
   frenquently: string;
   status: string;
-  autoPay: boolean;
-  settledBill: boolean;
-  daysLeft: number,
 }
 
 export default interface Bill {

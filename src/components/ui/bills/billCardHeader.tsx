@@ -1,32 +1,29 @@
-import { BillContext } from "../../submitForms/billsFunctions/billContext";
 import BillStatusButton from "./billStatusBtn";
-import { useContext } from "react";
 
 type Prop = {
   name: string;
   installment: number;
 };
 export default function BillCardHeader({ name, installment }: Prop) {
-  const theme = useContext(BillContext);
   return (
     <header className="flex flex-row items-center justify-between [perspective:1000px] p-2">
-      <div className="flex flex-col">
+      <div className="flex flex-col w-full">
         <h1
-          className="text-sm text-white font-extrabold p-2 rounded-md border-4 border-white w-fit h-fit "
+          className="text-md text-center text-white bg-black/10 font-extrabold p-2 m-2 rounded-md w-[90%] h-fit "
           style={{
-            backgroundColor: theme.headColor,
-            textShadow: "2px 0px 2px black",
-            boxShadow: "inset 1px 1px 5px black",
+            textShadow: "0px 0px 1px black",
+            WebkitBoxReflect: "below 5px linear-gradient(to bottom, rgba(0,0,0, 0.0), rgba(0,0,0,0.4))"
           }}
         >
           {name.toUpperCase()}
         </h1>
         <h2
-          className="text-xs text-white font-extrabold w-fit h-fit p-2 rounded-md border-4 border-white"
-          style={{
-            backgroundColor: theme.headColor,
-            textShadow: "2px 0px 2px black",
-            boxShadow: "inset 1px 1px 5px black",
+          className="text-lg text-white bg-black/10 font-extrabold w-fit h-fit p-2 m-2 rounded-md"
+       style={{
+            boxShadow: "1px -2px 5px rgba(0, 0, 0, 0.7)",
+            textShadow: "0px 0px 1px black",
+            WebkitTextStrokeColor: "black",
+            WebkitTextStrokeWidth: "0.3px"
           }}
         >
           R {installment}

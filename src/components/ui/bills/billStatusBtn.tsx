@@ -13,28 +13,24 @@ export default function BillStatusButton(){
 
     return(
         <motion.div
-        className="relative text-white text-sm font-bold p-2 rounded-[20px] cursor-pointer"
-
+        className="relative text-white text-sm font-bold p-2 rounded-sm cursor-pointer"
         style={{
             backgroundColor: theme.headColor,
-            border: "2px solid white",
-            boxShadow: "0px 1px 5px rgba(0, 0, 0, 0.6), inset 0px 0px 5px white",
+            boxShadow: "0px 1px 5px rgba(0, 0, 0, 0.6)",
             textShadow: "0px 0px 1px black",
         WebkitBoxReflect: "below 10px linear-gradient(to bottom, rgba(0,0,0, 0.0), rgba(0,0,0,0.4))"
         }}
-
-        animate={{
-            rotateX: [0, 10, 0, -10, 0],
-            x:[2, 0, -2, 0],
-            rotateY: [0, 10, 0, -10, 0],
+      
+        whileTap={{
+            scale: 1.1,
+            rotateY: 360,
         }}
 
         transition={{
-            duration: 1.5,
-            repeat: Infinity,
-            type:"tween",
-            ease: "linear"
+            duration: 0.5,
+            repeatType: "reverse"
         }}
+      
         onClick={()=>{
             load.load(true)
             const indexPosition = statusArray.indexOf(theme.statusTheme)

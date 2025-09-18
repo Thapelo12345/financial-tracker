@@ -8,7 +8,6 @@ import BillCardHeader from "../ui/bills/billCardHeader";
 import DeleteBill from "../submitForms/billsFunctions/deleteBill";
 import { motion } from "framer-motion";
 import BillTables from "../ui/bills/billTables";
-import AutoPayButton from "../ui/bills/autPayToggle";
 import {
   BillContext,
   LoadContext,
@@ -29,9 +28,6 @@ type Props = {
   duration: string;
   frenquently: string;
   status: string;
-  AutoPay: boolean;
-  settleBill: boolean;
-  days: number;
 };
 
 export default function BillCard({
@@ -45,18 +41,11 @@ export default function BillCard({
   category,
   duration,
   frenquently,
-  status,
-  AutoPay,
-  settleBill,
-  days,
 }: Props) {
   const theme = useContext(BillContext);
 
-  const [billMessage, setBillMessage] = useState("bill paid");
+  const [billMessage, setBillMessage] = useState("bill up to date");
   const [billMessageColor, setBillMessageColor] = useState("lime");
-  const [autoPay, setAutoPay] = useState(AutoPay);
-  const [paid, setPaid] = useState(settleBill);
-  const [countDays, setCountDays] = useState(days);
   const [load, setLoad] = useState(false);
 
   // strat date - due date - frenqulty
@@ -77,47 +66,6 @@ export default function BillCard({
   }
 
   useEffect(() => {
-    theme.setTheme(status);
-    const letfDays = DaysLeft(dueDate);
-
-    if (frenquently === "monthly") {
-      if (letfDays <= 10 && countDays === 0) {
-        setPaid(false);
-        setCountDays(letfDays);
-      } else if (letfDays > 10 && countDays !== 0) {
-        setCountDays(0);
-      }
-    } //end of monthly if
-    else if (frenquently === "weekly") {
-      if (letfDays <= 3 && countDays === 0) {
-        setPaid(false);
-        setCountDays(letfDays);
-      } else if (letfDays > 3 && countDays !== 0) {
-        setCountDays(0);
-      }
-    } //end of weekly else if
-  }, []);
-
-  useEffect(() => {
-    const letfDays = DaysLeft(dueDate);
-
-    if (frenquently === "monthly") {
-      if (letfDays <= 10 && letfDays > 5 && !paid) {
-        setCountDays(letfDays !== 0 ? letfDays : -1);
-        setBillMessage("payment Due");
-        setBillMessageColor("hsl(333 100% 58.8%)");
-      } else if (letfDays <= 5 && !paid) {
-        setCountDays(letfDays !== 0 ? letfDays : -1);
-        setBillMessage("pending");
-        setBillMessageColor("hsl(0 100% 58.3%)");
-      } else {
-        setBillMessage("bill paid");
-        setBillMessageColor("lime");
-      }
-    } //end of mothly if
-  }, []);
-
-  useEffect(() => {
     if (load == true) {
       const crrBill = currentBill();
 
@@ -129,16 +77,38 @@ export default function BillCard({
   }, [theme.statusTheme]);
 
   useEffect(() => {
-    if (load == true) {
+    const days = DaysLeft(nextDueDate);
+    const counter = (): number => {
+      switch (frenquently) {
+        case "weekly":
+          return 4;
+          break;
 
-      const crrBill = currentBill();
+        case "monthly":
+          return 10;
+          break;
 
-      if (crrBill !== null) {
-        crrBill.autoPay = autoPay;
-        UpdateBill(crrBill, setLoad);
+        case "yearlty":
+          return 20;
+          break;
+
+        default:
+          return 0;
+          break;
       }
-    } //end of currentBill if
-  }, [autoPay]);
+    };
+
+    if (days <= counter() && days > counter() * 0.5) {
+      setBillMessage("Next Bill Payment");
+      setBillMessageColor("skyblue");
+    } else if (days <= counter() * 0.5 && counter() > 0) {
+      setBillMessage("bill due");
+      setBillMessageColor("red");
+    } else {
+      setBillMessage("bill up to date");
+      setBillMessageColor("lime");
+    }
+  }, []);
 
   useGSAP(() => {
     gsap.fromTo(
@@ -152,110 +122,88 @@ export default function BillCard({
       {
         scale: 1,
         opacity: 1,
-        boxShadow: "1px 7px 10px rgba(0,0,0,0.5), inset 2px 1px 5px black",
+        boxShadow: "1px 7px 10px rgba(0,0,0,0.5)",
         stagger: 0.2,
       }
     );
   });
 
   return (
-      <LoadContext.Provider value={{ load: setLoad }}>
-
-    <motion.div
-      className="bill-card relative border-5 border-white flex flex-col m-2 w-[90%] sm:max-w-100 p-1 rounded-lg"
-      style={{
-        backgroundColor: theme.backGround,
-        boxShadow: "0px 1px 10px rgba(0, 0, 0, 0.5),inset 2px 1px 5px black",
-      }}
-    >
-      {load && <BillLoader />}
+    <LoadContext.Provider value={{ load: setLoad }}>
+      <motion.div
+        className="bill-card relative flex flex-col m-2 w-[90%] sm:max-w-100 p-1 rounded-lg"
+        style={{
+          backgroundColor: "whitesmoke",
+          boxShadow: `1px 1px 5px black`,
+        }}
+      >
+        {load && <BillLoader />}
 
         <BillCardHeader name={title} installment={amount} />
 
-      <BillTables
-        category={category}
-        duration={duration}
-        dueDate={nextDueDate}
-        startDate={startDate}
-        frenquently={frenquently}
-        endDate={endDate}
-      />
+        <BillTables
+          category={category}
+          duration={duration}
+          dueDate={nextDueDate}
+          startDate={startDate}
+          frenquently={frenquently}
+          endDate={endDate}
+        />
 
-      <div className="flex flex-row w-[85%] justify-between p-2">
-        <label
-          className="text-white font-extrabold text-sm p-2"
-          style={{ textShadow: "1px 1px 5px black" }}
-        >
-          Auto Pay
-        </label>
-        <AutoPayButton pay={autoPay} setPay={setAutoPay} />
-      </div>
-
-      <div
-        className={`flex flex-row justify-between ${
-          autoPay ? "hidden" : "block"
-        } p-2`}
-      >
-        <motion.label
-          className="text-white text-xs font-extrabold p-1 w-fit h-fit rounded-lg border-2 border-white"
-          style={{
-            // backgroundColor: "hsl(0 100% 58.3%)",
-            backgroundColor: billMessageColor,
-            boxShadow: `1px 1px 1px black, 1px 5px 10px ${billMessageColor}`,
-            textShadow: "1px 1px 1px black",
+        <div className="flex flex-row justify-between">
+          <motion.label
+          initial={{
+            scale: 0.9,
+            boxShadow: "none"
           }}
+
           animate={{
-            scale: [0.95, 1],
-            boxShadow: [
-              `1px 1px 1px ${billMessageColor}, inset 1px 1px 5px white`,
-              `1px 5px 20px ${billMessageColor}, inset 1px 1px 5px white`,
-            ],
+            scale: 1, 
+            boxShadow: `1px 9px 20px rgba(0, 0, 0, 0.5)`
           }}
           transition={{
-            duration: 1.5,
+            duration: 1,
             repeat: Infinity,
-            repeatType: "reverse",
-            ease: "linear",
+            repeatType: "reverse"
           }}
-        >
-          {billMessage.toUpperCase()}
-        </motion.label>
-
-        <button
-          className={`${
-            billMessage === "bill paid" ? "hidden" : "block"
-          } bg-green-400 text-sm  border-2 border-white rounded-lg p-1 cursor-pointer`}
-          style={{ boxShadow: "1px 1px 1px black, inset 1px 1px 5px black" }}
-        >
-          <span
-            className="text-white font-bold m-1 w-full h-full"
+            className="text-white text-xs self-center font-extrabold p-2 ml-10 w-fit h-fit rounded-sm"
             style={{
-              textShadow: "1px 0px 0px black",
-            }}
-            onClick={() => {
-              setPaid(true);
+              backgroundColor: billMessageColor,
+              boxShadow: `1px 9px 20px rgba(0, 0, 0, 0.5)`,
+              textShadow: "1px 1px 1px black",
             }}
           >
-            HAVE PAID
-          </span>
-        </button>
+            {billMessage.toUpperCase()}
+          </motion.label>
+        </div>
 
-        
-      </div>
+ {/* descriptio section */}
+        <div className="flex flex-col items-center m-2">
+          <label
+          className="text-md text-white font-extrabold underline"
+          style={{
+            WebkitTextStrokeColor: "black",
+            WebkitTextStrokeWidth: "0.5px",
+            textShadow: "1px 0px 2px black"
+          }}
+          >Description</label>
+        <p className="text-sm font-bold bg-black/20 rounded-md text-white p-2 m-2 "
+        style={{
+          // textShadow: "0px 0px 3px black"
+        }
+        }
+        >
+          {description}
+        </p>
+        </div>
+       
 
-      <div className=""></div>
-      {/* descriptio section */}
-      <p className="w-full text-xs text-gray-700 p-2 borde-2 border-white">
-        {description}
-      </p>
-
-      <div className="m-2">
-        <button onClick={() => DeleteBill(billId)}>
-          <TrashIcon className="w-4 h-4 text-red-500" />
-        </button>
-      </div>
-    </motion.div>
-      </LoadContext.Provider>
-
+        <div className="m-2">
+          <button onClick={() => DeleteBill(billId)}>
+            <TrashIcon className="w-5 h-5 text-red-500" />
+          </button>
+        </div>
+      </motion.div>
+    </LoadContext.Provider>
   );
 }
