@@ -47,13 +47,15 @@ function getInitials(name: string): string {
 }
 
 export default function Avatar({ name, avatar }: Props) {
-  const setting = useContext(SettingsContext)
+  const setting = useContext(SettingsContext);
 
-  const [currentPath, setCurrentPath] = useState("")
+  const [currentPath, setCurrentPath] = useState("");
 
-  useEffect(()=>{
-    if(currentPath !== "/home/settings") { setCurrentPath(location.pathname) }
-  }, [])
+  useEffect(() => {
+    if (currentPath !== "/home/settings") {
+      setCurrentPath(location.pathname);
+    }
+  }, []);
 
   return (
     <div
@@ -68,19 +70,23 @@ export default function Avatar({ name, avatar }: Props) {
         backgroundColor:
           colors[alphabet.indexOf(name[0].toUpperCase()) % colors.length],
       }}
-      onClick={()=>{
+      onClick={() => {
+        if (setting.clicked !== "updateImage") {
+          setting.setClicked("updateImage");
+        } //end of if
 
-        if(setting.clicked !== "updateImage"){setting.setClicked("updateImage")}//end of if 
-
-        if(!setting.currentValue){
-        setTimeout(()=>{setting.setSettingsInput(true)}, 200)
-        setting.closeSettings(!setting.currentValue)
-        }
-        else{
-          setting.setSettingsInput(false)
-          setTimeout(()=>{setting.closeSettings(!setting.currentValue)}, 200)
-        }
-       
+        if (!setting.currentValue) {
+          setTimeout(() => {
+            setting.setSettingsInput(true);
+          }, 200);
+          setting.closeSettings(!setting.currentValue);
+        } //end not currentValue if
+        else {
+          setting.setSettingsInput(false);
+          setTimeout(() => {
+            setting.closeSettings(!setting.currentValue);
+          }, 200);
+        } //end  of current value else
       }}
     >
       {avatar === "" && (
