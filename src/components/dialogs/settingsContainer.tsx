@@ -1,5 +1,8 @@
 import { useContext } from "react";
 import { SettingsContext } from "../dash/settingsContext";
+import UploadImages from "../dash/settingsInput/uploadImage";
+import EditName from "../dash/settingsInput/editName";
+import DeletAccount from "../dash/settingsInput/deleteAcc";
 
 export default function SettingsContainer() {
   const settings = useContext(SettingsContext);
@@ -13,11 +16,16 @@ export default function SettingsContainer() {
       <h1 className="text-white font-extrabold text-4xl text-center">
         Settings
       </h1>
-      <div className="w-100 duration-500 rounded-sm shadow-2xl h-60 bg-white z-10 mt-40"
+      <div className="w-100 duration-500 rounded-sm shadow-2xl h-60 bg-[whitesmoke] z-10 mt-40"
       style={{
         transform: settings.settingsInput ? "translateX(200px)" : "translateX(-400px)"
       }}
-      ></div>
+      >
+        {settings.clicked === "updateName" && <EditName />}
+        {settings.clicked === "updateImage" && <UploadImages />}
+        {settings.clicked === "delete" && <DeletAccount />}
+        
+      </div>
     </div>
   );
 }

@@ -35,7 +35,8 @@ export default function Settings() {
          m-4 p-2 cursor-pointer`}
         onClick={() => {
           if (settings.clicked !== "updateImage") {
-            settings.setClicked("updateImage");
+            
+            setTimeout(()=>{settings.setClicked("updateImage");},200)
             settings.setSettingsInput(false);
             setTimeout(() => {
               settings.setSettingsInput(true);
@@ -60,7 +61,8 @@ export default function Settings() {
         }  m-4 cursor-pointer`}
         onClick={() => {
           if (settings.clicked !== "updateName") {
-            settings.setClicked("updateName");
+            
+            setTimeout(()=>{settings.setClicked("updateName");}, 200)
             settings.setSettingsInput(false);
             setTimeout(() => {
               settings.setSettingsInput(true);
@@ -83,7 +85,8 @@ export default function Settings() {
         } rounded-tr-lg rounded-br-lg cursor-pointer`}
         onClick={() => {
           if (settings.clicked !== "delete") {
-            settings.setClicked("delete");
+            
+            setTimeout(()=>{settings.setClicked("delete");}, 200)
             settings.setSettingsInput(false);
             setTimeout(() => {
               settings.setSettingsInput(true);
