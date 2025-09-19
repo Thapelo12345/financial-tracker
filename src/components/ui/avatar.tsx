@@ -1,6 +1,4 @@
 import { useContext, useEffect, useState } from "react";
-import { useLocation } from 'react-router-dom';
-import { useNavigate } from "react-router-dom";
 import { SettingsContext } from "../dash/settingsContext";
 
 const colors: string[] = [
@@ -49,8 +47,6 @@ function getInitials(name: string): string {
 }
 
 export default function Avatar({ name, avatar }: Props) {
-  const navigate = useNavigate()
-  const location = useLocation()
   const setting = useContext(SettingsContext)
 
   const [currentPath, setCurrentPath] = useState("")
@@ -73,7 +69,6 @@ export default function Avatar({ name, avatar }: Props) {
           colors[alphabet.indexOf(name[0].toUpperCase()) % colors.length],
       }}
       onClick={()=>{
-        navigate(location.pathname !== "/home/settings"? "/home/settings" : currentPath )
         setting.closeSettings(!setting.currentValue)
       }}
     >

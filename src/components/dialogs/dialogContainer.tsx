@@ -9,9 +9,13 @@ export default function DialogContainer() {
   const selectDialog = useSelector(
     (state: RootState) => state.selectedDialog.selectedDialog
   );
-  
-  const openDialog = useSelector((state: RootState) => state.openDialog.openDialog);
-  const changeDialog =  useSelector((state: RootState)=> state.selectedDialog.selectedDialog)
+
+  const openDialog = useSelector(
+    (state: RootState) => state.openDialog.openDialog
+  );
+  const changeDialog = useSelector(
+    (state: RootState) => state.selectedDialog.selectedDialog
+  );
 
   const [showDialog, setShowDialog] = useState(false);
   const [useDialog, setUseDialog] = useState("");
@@ -20,7 +24,6 @@ export default function DialogContainer() {
     setUseDialog(selectDialog);
     setShowDialog(openDialog);
   }, [openDialog, changeDialog]);
-  
 
   return (
     <div

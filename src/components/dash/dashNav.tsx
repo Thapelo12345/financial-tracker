@@ -9,7 +9,7 @@ import {
 
 export default function DashNav() {
   return (
-    <nav className="flex flex-col">
+    <nav className="flex flex-col w-1/2">
       <LinkBtns pageUrl="/home" linkText="Overview" icon={<HomeIcon />} />
 
       <LinkBtns

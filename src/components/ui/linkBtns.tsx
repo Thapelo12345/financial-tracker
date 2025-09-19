@@ -26,7 +26,7 @@ export default function LinkBtns({ pageUrl, linkText, icon }: Props){
       <Link 
       className={
           currentLocation === pageUrl 
-            ? 'flex flex-row p-2 bg-white text-xs text-black font-bold m-2 rounded-tr-lg rounded-br-lg'
+            ? 'flex flex-row p-2 bg-white text-xs w-fit pr-4 text-black font-bold m-2 rounded-tr-lg rounded-br-lg'
             : 'flex flex-row p-2 text-xs text-white font-bold m-2 rounded-tr-lg rounded-br-lg'
         }
       to={pageUrl}>
