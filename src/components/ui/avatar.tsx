@@ -69,7 +69,18 @@ export default function Avatar({ name, avatar }: Props) {
           colors[alphabet.indexOf(name[0].toUpperCase()) % colors.length],
       }}
       onClick={()=>{
+
+        if(setting.clicked !== "updateImage"){setting.setClicked("updateImage")}//end of if 
+
+        if(!setting.currentValue){
+        setTimeout(()=>{setting.setSettingsInput(true)}, 200)
         setting.closeSettings(!setting.currentValue)
+        }
+        else{
+          setting.setSettingsInput(false)
+          setTimeout(()=>{setting.closeSettings(!setting.currentValue)}, 200)
+        }
+       
       }}
     >
       {avatar === "" && (

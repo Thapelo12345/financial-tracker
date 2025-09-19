@@ -13,7 +13,11 @@ export default function SettingsContainer() {
       <h1 className="text-white font-extrabold text-4xl text-center">
         Settings
       </h1>
-      <div className="w-20 h-30 bg-white z-10"></div>
+      <div className="w-100 duration-500 rounded-sm shadow-2xl h-60 bg-white z-10 mt-40"
+      style={{
+        transform: settings.settingsInput ? "translateX(200px)" : "translateX(-400px)"
+      }}
+      ></div>
     </div>
   );
 }

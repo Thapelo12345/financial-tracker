@@ -26,16 +26,15 @@ export default function Dash() {
 
   return (
     <header
-      className={`w-[190px] h-full m-0 rounded-tr-lg rounded-br-lg items-center z-50 overflow-hidden`}
+      className={`w-[190px] h-full m-0 rounded-tr-lg rounded-br-lg items-center z-50 overflow-y-auto overflow-x-hidden`}
       style={{
         backgroundColor: "rgba(0, 0, 0, 0.9)",
       }}
     >
       <DashAvatar username={username} avatar={userAvatar} />
       <div 
-      className="flex duration-400 flex-row m-0 items-center justify-start gap-2 w-90 h-[60%]"
+      className="flex duration-400 flex-row m-0 items-center justify-start w-90 h-70"
       style={{
-        
         transform: settings.currentValue ? "translateX(-50%)" : "translateX(0%)",
       }}
       >
