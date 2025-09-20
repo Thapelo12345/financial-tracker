@@ -9,7 +9,6 @@ export default function Dash() {
 
   const [username, setUsername] = useState("User not found!");
   const [userAvatar, setAvatar] = useState("");
-  // const [openSettings, setOpenSettings] = useState(false)
 
   useEffect(() => {
     const currentUser = sessionStorage.getItem("currentUser");
@@ -32,11 +31,13 @@ export default function Dash() {
       }}
     >
       <DashAvatar username={username} avatar={userAvatar} />
-      <div 
-      className="flex duration-400 flex-row m-0 items-center justify-start w-90 h-70"
-      style={{
-        transform: settings.currentValue ? "translateX(-50%)" : "translateX(0%)",
-      }}
+      <div
+        className="flex duration-400 flex-row m-0 items-center justify-start w-90 h-70"
+        style={{
+          transform: settings.currentValue
+            ? "translateX(-50%)"
+            : "translateX(0%)",
+        }}
       >
         <DashNav />
         <Settings />

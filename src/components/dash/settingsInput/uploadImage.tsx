@@ -7,7 +7,7 @@ export default function UploadImages(){
             <SettingsHeader title={"upload An image"} />
 
             <div className="flex items-center justify-center w-1/2">
-        <UserIcon className="text-black w-16 h-16"/>
+        <UserIcon className="text-black/20 w-16 h-16"/>
           </div>
 
           <form className="flex flex-col w-1/2 p-2">
