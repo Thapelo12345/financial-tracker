@@ -3,6 +3,8 @@ import {
   CameraIcon,
   TrashIcon,
 } from "@heroicons/react/20/solid";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 import { useContext, useState, useEffect } from "react";
 import { SettingsContext } from "./settingsContext";
 
@@ -10,6 +12,14 @@ export default function MobileSettings() {
   const settings = useContext(SettingsContext);
 
   const [active, setActive] = useState("updateImage");
+
+  useGSAP(()=>{
+    gsap.from(".mobileSettingsBtn", {
+      x: settings.currentValue ? "-500px" : "0px",
+      duration: 0.5,
+      stagger: 0.3,
+    })
+  }, [settings.currentValue])
 
   useEffect(() => {
     if (settings.clicked !== "") {
@@ -28,7 +38,7 @@ export default function MobileSettings() {
     >
       <nav className="flex flex-col ">
         <button
-          className={`rounded-tr-lg rounded-br-lg
+          className={`mobileSettingsBtn rounded-tr-lg rounded-br-lg
             ${
               active === "updateImage"
                 ? "bg-white text-black"
@@ -44,7 +54,7 @@ export default function MobileSettings() {
           Update image
         </button>
         <button
-          className={`rounded-tr-lg rounded-br-lg
+          className={`mobileSettingsBtn rounded-tr-lg rounded-br-lg
           ${
             active === "updateName"
               ? "text-black bg-white"
@@ -60,7 +70,7 @@ export default function MobileSettings() {
           Update name
         </button>
         <button
-          className={`rounded-tr-lg rounded-br-lg
+          className={`mobileSettingsBtn rounded-tr-lg rounded-br-lg
           ${
             active === "delete" ? "text-black bg-white" : "text-white bg-none"
           } border border-white flex flex-row items-center justify-evenly m-2 p-1 w-fit text-xs`}

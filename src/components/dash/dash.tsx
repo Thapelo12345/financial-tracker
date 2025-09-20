@@ -3,8 +3,11 @@ import DashNav from "./dashNav";
 import Settings from "./settings";
 import { SettingsContext } from "./settingsContext";
 import { useEffect, useState, useContext } from "react";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../state management/store";
 
 export default function Dash() {
+  const checkUpdate = useSelector((state: RootState) => state.updateApp.updateApp);
   const settings = useContext(SettingsContext);
 
   const [username, setUsername] = useState("User not found!");
@@ -21,7 +24,7 @@ export default function Dash() {
     } catch (error) {
       console.error("Error parsing user data:", error);
     }
-  }, []);
+  }, [checkUpdate]);
 
   return (
     <header

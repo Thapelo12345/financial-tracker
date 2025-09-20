@@ -60,11 +60,18 @@ export default function Bills() {
           };
 
           if (countDays <= counter() && countDays > counter() * 0.5) {
-            setUpcoming(upcoming + bill.amount);
+            
+            const formatAmount = upcoming + bill.amount
+            setUpcoming(Number(formatAmount.toFixed(2)));
+
           } else if (countDays <= counter() * 0.5 && counter() > 0) {
-            setDueBills(dueBills + bill.amount);
+            const formatAmount = dueBills + bill.amount
+            setDueBills(Number(formatAmount.toFixed(2)));
+
           } else {
-            setPaidBills(paidBills + bill.amount);
+            
+            const formatAmount = paidBills + bill.amount
+            setPaidBills(Number(formatAmount.toFixed(2)));
           }
         });
       } //end of if array length

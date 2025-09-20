@@ -62,7 +62,7 @@ export default function Avatar({ name, avatar }: Props) {
       className={`shadow-lg rounded-full 
           ${
             avatar === ""
-              ? "w-[calc(2.5rem-8px)] h-[calc(2.5rem-8px)] border-4 border-white"
+              ? "w-10 md:w-[calc(2.5rem-8px)] h-7 md:h-[calc(2.5rem-8px)] border-4 border-white"
               : "w-15 h-15 border-0 overflow-hidden"
           }  
           flex items-center justify-center m-2 cursor-pointer`}
@@ -90,7 +90,9 @@ export default function Avatar({ name, avatar }: Props) {
       }}
     >
       {avatar === "" && (
-        <h1 className="text-md text-white font-bold">{getInitials(name)}</h1>
+        <h1 className="text-sm md:text-md text-white font-bold">
+          {getInitials(name)}
+        </h1>
       )}
 
       {avatar !== "" && (

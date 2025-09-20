@@ -41,7 +41,7 @@ export default function TransactionCell({
 
   return (
     <motion.li
-      className="transac group shadow-md flex flex-row flex-nowrap items-start m-2 w-full p-2"
+      className="transac group shadow-md flex flex-row flex-nowrap items-start m-1 md:m-2 w-full p-1 md:p-2"
       whileHover={{
         scale: 1.01,
         boxShadow:
@@ -57,13 +57,13 @@ export default function TransactionCell({
 
       <div className="flex flex-col w-full h-full">
         <div className="flex flex-row justify-between">
-          <label className="text-black text-md text-start font-semibold">
+          <label className="text-black text-sm md:text-md text-start font-semibold">
             {Name}
           </label>
           <label
             className={`${
               Type === "Income" ? "text-green-500" : "text-red-500"
-            } text-md text-end font-semibold  `}
+            } text-xs md:text-md text-end font-semibold  `}
           >
             {Type === "Income" ? "+ " : "- "}R {Amount}
           </label>
@@ -83,7 +83,7 @@ export default function TransactionCell({
           DeleteTransaction({ transactionId: itemId });
         }}
       >
-        <TrashIcon className="w-5 h-5 text-red-400 m-2" />
+        <TrashIcon className="w-4 md:w-5 h-4 md:h-5 text-red-400 m-2" />
       </button>
       {/* Description tag */}
 
