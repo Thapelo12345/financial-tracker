@@ -12,8 +12,7 @@ export default function MobileSettings() {
   const [active, setActive] = useState("updateImage");
 
   useEffect(() => {
-    if(settings.clicked !== ""){
-
+    if (settings.clicked !== "") {
       setActive(settings.clicked);
     }
   }, [settings.clicked]);
@@ -24,7 +23,7 @@ export default function MobileSettings() {
       style={{
         transform: !settings.currentValue
           ? "translateY(250px)"
-          : "translateY(0)",
+          : "translateY(30px)",
       }}
     >
       <nav className="flex flex-col ">
@@ -35,7 +34,7 @@ export default function MobileSettings() {
                 ? "bg-white text-black"
                 : "bg-none text-white"
             } border border-white flex flex-row items-center justify-evenly m-2 p-1 w-fit text-xs`}
-            onClick={()=> settings.setClicked("updateImage")}
+          onClick={() => settings.setClicked("updateImage")}
         >
           <CameraIcon
             className={`w-4 h-4 mr-1 ${
@@ -51,13 +50,12 @@ export default function MobileSettings() {
               ? "text-black bg-white"
               : "text-white bg-none"
           } border border-white flex flex-row items-center justify-evenly m-2 p-1 w-fit text-xs`}
-          onClick={()=> settings.setClicked("updateName")}
+          onClick={() => settings.setClicked("updateName")}
         >
           <ClipboardIcon
             className={`w-4 h-4 mr-1 ${
               active === "updateName" ? "text-green-400" : "text-white"
             }`}
-            
           />
           Update name
         </button>
@@ -66,7 +64,7 @@ export default function MobileSettings() {
           ${
             active === "delete" ? "text-black bg-white" : "text-white bg-none"
           } border border-white flex flex-row items-center justify-evenly m-2 p-1 w-fit text-xs`}
-          onClick={()=> settings.setClicked("delete")}
+          onClick={() => settings.setClicked("delete")}
         >
           <TrashIcon
             className={`w-4 h-4 mr-1 ${

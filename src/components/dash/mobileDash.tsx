@@ -67,6 +67,7 @@ export default function MobileDash() {
         <button
         className="text-white m-1 bg-black/90 p-2 absolute left-0 bottom-13 rounded-sm z-20"
         onClick={()=>{
+          settings.setSettingsInput(!settings.settingsInput)
           settings.closeSettings(!settings.currentValue)
         }}
         >

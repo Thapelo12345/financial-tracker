@@ -18,7 +18,7 @@ export default function DeletAccount(){
            >Are Sure!</h1>
 
            <button
-           className="p-1 m-2 border-2 border-white w-fit h-fit bg-red-400 text-lg text-white rounded-sm cursor-pointer"
+           className="p-1 m-1 md:m-2 border-2 border-white w-fit h-fit bg-red-400 text-sm md:text-lg text-white rounded-sm cursor-pointer"
            style={{
             boxShadow: "1px 1px 5px black",
             textShadow: "1px 1px 3px black"

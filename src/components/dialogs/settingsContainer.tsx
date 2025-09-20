@@ -16,9 +16,9 @@ export default function SettingsContainer() {
       <h1 className="text-white font-extrabold text-4xl text-center">
         Settings
       </h1>
-      <div className="w-100 duration-500 rounded-sm shadow-2xl h-auto bg-[whitesmoke] z-10 mt-40"
+      <div className={`w-[95%] md:w-100 duration-500 rounded-sm shadow-2xl h-auto bg-[whitesmoke] z-10 ${window.innerWidth > 768 ? "mt-40" : "mt-3"}`}
       style={{
-        transform: settings.settingsInput ? "translateX(200px)" : "translateX(-400px)"
+        transform: settings.settingsInput ? window.innerWidth > 768 ? "translateX(200px)" : "translateX(10px)" : "translateX(-400px)"
       }}
       >
         {settings.clicked === "updateName" && <EditName />}
