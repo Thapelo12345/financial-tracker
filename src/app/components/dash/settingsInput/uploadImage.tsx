@@ -22,7 +22,7 @@ import { SettingsContext } from "@/app/context/settingsContext";
 export default function UploadImages() {
   const setting = useContext(SettingsContext);
   const dispatch = useDispatch();
-  // const [progress, setProgress] = useState(0);
+ 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const abortController = new AbortController();
 
@@ -76,7 +76,7 @@ export default function UploadImages() {
       return;
     }
 
-    // Extract the first file f rom the file input
+    // Extract the first file from the file input
     const file = fileInput.files[0];
 
     // Retrieve authentication parameters for the upload.
@@ -95,9 +95,7 @@ export default function UploadImages() {
     try {
       const data = sessionStorage.getItem("currentUser");
 
-      if (!data) {
-        throw new Error("use Credentials not found");
-      }
+      if (!data) throw new Error("use Credentials not found");
 
       const user = JSON.parse(data);
       const validate = await deleteImage(user.imageId);

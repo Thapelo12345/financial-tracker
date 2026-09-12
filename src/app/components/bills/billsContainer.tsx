@@ -111,7 +111,7 @@ export default function BillsContainer({setPaid, setDue, setUpcoming}:PROPS) {
   }, [checkUpdate, changedBills]);
 
   return (
-    <div className="flex flex-row items-start gap-1 flex-wrap md:justify-start m-1 w-full md:w-[90%] h-[80%] overflow-x-hidden">
+    <div className="flex flex-row items-start gap-1 flex-wrap md:justify-start px-2 sm:px-0 m-1 w-full md:w-[90%] h-[80%] overflow-x-hidden">
       {bills.map((bill) => (
         <BillCard
           key={bill.id}
