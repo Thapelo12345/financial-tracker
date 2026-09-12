@@ -1,11 +1,17 @@
-/** @type {import('next').NextConfig} */
+import type { NextConfig } from "next";
 
-const nextConfig = {
-  output: 'export', // Tells Next.js to export your app as static HTML/CSS/JS
-  basePath: '/finacial-tracker-0.2', // Matches your GitHub repository name
+const isGitHubPagesBuild = process.env.GITHUB_ACTIONS === "true";
+
+const nextConfig: NextConfig = {
+  output: "export",
+  basePath: isGitHubPagesBuild ? "/finacial-tracker-0.2" : "",
+  assetPrefix: isGitHubPagesBuild ? "/finacial-tracker-0.2/" : undefined,
   images: {
-    unoptimized: true, // Required because GitHub Pages doesn't support Next.js default image optimization
+    unoptimized: true,
+  },
+  turbopack: {
+    root: __dirname,
   },
 };
 
-module.exports = nextConfig;
+export default nextConfig;
