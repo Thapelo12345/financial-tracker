@@ -100,7 +100,7 @@ export default function Budget() {
   };
 
   return (
-    <main className="m-2 p-4 pb-15 md:pb-4 w-screen h-screen overflow-y-auto">
+    <main className="m-2 p-4 pb-15 md:pb-4 w-screen h-screen overflow-x-hidden overflow-y-auto">
       <PageHeader title="Budget" />
 
       <div className="flex flex-col md:flex-row w-full justify-evenly p-2">
@@ -129,7 +129,7 @@ export default function Budget() {
 
       <AddItemBtn tipText="Add Expense" btnFunction={addBudgetExpense} />
 
-      <div className="flex flex-col-reverse sm:flex-row w-full h-full md:h-[50%] p-1">
+      <div className="grid grid-cols-1 md:grid-cols-2 grid-[repeat(2,1fr)] gap-2 w-full h-fit p-1">
         <Barchart budgetItem={budgetExpenses} />
         <Piechart budgetItem={budgetExpenses} amount={budgetAmount} />
       </div>

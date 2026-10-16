@@ -69,7 +69,7 @@ export default function Avatar({ name, avatar }: Props) {
           flex items-center justify-center m-2 cursor-pointer`}
       style={{
         backgroundColor:
-          colors[alphabet.indexOf(name[0].toUpperCase()) % colors.length],
+        colors[alphabet.indexOf(name[0].toUpperCase()) % colors.length],
       }}
       onClick={() => {
         if (setting.clicked !== "updateImage") {
@@ -91,7 +91,7 @@ export default function Avatar({ name, avatar }: Props) {
       }}
     >
       {avatar === "" && (
-        <h1 className="text-sm md:text-md text-white font-bold">
+        <h1 className="text-xs p-0.5 md:text-md text-white font-bold rounded-full">
           {getInitials(name)}
         </h1>
       )}

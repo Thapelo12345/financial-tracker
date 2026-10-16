@@ -1,4 +1,5 @@
 "use client";
+import { useId } from "react";
 import {
   ResponsiveContainer,
   BarChart,
@@ -15,19 +16,30 @@ type details = {
   Color: string;
 };
 
-type GraphDetailsProps = {
-  budgetItem?: details[]; // Make it optional with a default value
-};
+type GraphDetailsProps = {budgetItem?: details[]};
 
 export default function Barchart({ budgetItem = [] }: GraphDetailsProps) {
+  const shadowId = `bar-shadow-${useId().replace(/:/g, "")}`;
+
   return (
-    <div className="w-full md:w-1/2 h-[300px] bg-white rounded-lg p-0 md:p-4 border border-gray-200">
+    <div className="w-full  h-[300px] bg-white rounded-lg p-0 md:p-4">
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
           data={budgetItem}
           margin={{ top: 20, right: 20, left: 20, bottom: 20 }}
           barSize={35}
         >
+          <defs>
+            <filter id={shadowId} x="-50%" y="-50%" width="200%" height="200%">
+              <feDropShadow
+                dx="0"
+                dy="3"
+                stdDeviation="3"
+                floodColor="black"
+                floodOpacity="0.2"
+              />
+            </filter>
+          </defs>
           <XAxis
             dataKey="DescriptionTitle"
             axisLine={false}
@@ -50,7 +62,11 @@ export default function Barchart({ budgetItem = [] }: GraphDetailsProps) {
             formatter={(value) => [`R ${value}`, "Amount"]}
             labelStyle={{ fontWeight: 500, color: "#111827" }}
           />
-          <Bar dataKey="Amount" radius={[4, 4, 0, 0]}>
+          <Bar
+            dataKey="Amount"
+            radius={[4, 4, 0, 0]}
+            filter={`url(#${shadowId})`}
+          >
             {budgetItem.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={entry.Color} />
             ))}
